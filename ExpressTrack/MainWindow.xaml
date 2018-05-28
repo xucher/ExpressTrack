@@ -5,11 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExpressTrack"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" WindowStartupLocation="CenterScreen">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
             <RowDefinition />
-            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
+        <Label Grid.ColumnSpan="2" Content="物流轨迹跟踪系统" Background="#FF99A4D6" />
+        <StackPanel Grid.Row="1" Background="#FFE0C7C7">
+            <Label Content="快递列表" HorizontalContentAlignment="Center"/>
+        </StackPanel>
+        <Frame Grid.Row="1" Grid.Column="1" Source="/ExpressTrack;component/ExpressListPage.xaml" />
     </Grid>
 </Window>
