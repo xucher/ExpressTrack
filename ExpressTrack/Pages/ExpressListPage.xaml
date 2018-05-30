@@ -1,0 +1,22 @@
+﻿<Page x:Class="ExpressTrack.ExpressListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ExpressTrack"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="880"
+      Title="ExpressListPage" Initialized="Page_Initialized" Height="Auto" Width="Auto">
+
+    <Grid>
+        <DataGrid x:Name="DG_expressList" AutoGenerateColumns="False" Grid.RowSpan="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Header="快递编号" CanUserResize="False"/>
+                <DataGridTextColumn Binding="{Binding Name}" Header="快递名称" Width="*" CanUserResize="False"/>
+                <DataGridTextColumn Binding="{Binding Name}" Header="发出点" Width="*" CanUserResize="False"/>
+                <DataGridTextColumn Binding="{Binding Name}" Header="终点" Width="*" CanUserResize="False"/>
+                <DataGridTextColumn Binding="{Binding Name}" Header="发出时间" Width="*" CanUserResize="False"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

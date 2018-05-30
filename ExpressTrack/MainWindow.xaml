@@ -5,20 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExpressTrack"
         mc:Ignorable="d"
-        Title="MainWindow" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" MouseDown="Window_MouseDown" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="1000" Height="650">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="120"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="50"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Label Grid.ColumnSpan="2" Content="物流轨迹跟踪系统" Background="#FF99A4D6" />
-        <StackPanel Grid.Row="1" Background="#FFE0C7C7">
-            <Label Content="快递列表" HorizontalContentAlignment="Center"/>
+        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">
+            <StackPanel.Background>
+                <SolidColorBrush Color="#FF1C2438"/>
+            </StackPanel.Background>
+            <Label Content="物流轨迹跟踪系统" FontSize="20" Margin="50,0,0,0" VerticalAlignment="Center" Foreground="#FF2D8CF0" />
         </StackPanel>
-        <Frame Grid.Row="1" Grid.Column="1" Source="/ExpressTrack;component/ExpressListPage.xaml" />
+        <TreeView x:Name="actionTree" Grid.Row="1" PreviewMouseUp="TreeView_PreviewMouseUp" FontSize="16">
+            <TreeViewItem Header="快递管理" IsExpanded="True">
+                <TreeViewItem Header="快递列表"/>
+                <TreeViewItem Header="快递入库"/>
+                <TreeViewItem Header="快递出库"/>
+            </TreeViewItem>
+            <TreeViewItem Header="用户列表"/>
+            <TreeViewItem Header="职员列表"/>
+            <TreeViewItem Header="库存明细"/>
+            <TreeViewItem Header="快递详情"/>
+        </TreeView>
+        <Frame x:Name="mainFrame" Grid.Row="1" Grid.Column="1" Source="/ExpressTrack;component/Pages/ExpressListPage.xaml" FontWeight="Bold" NavigationUIVisibility="Hidden" Padding="5">
+            <Frame.Background>
+                <SolidColorBrush Color="{DynamicResource DefaultColor4}"/>
+            </Frame.Background>
+        </Frame>
     </Grid>
+
 </Window>

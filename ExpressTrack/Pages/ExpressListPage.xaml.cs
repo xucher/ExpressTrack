@@ -15,16 +15,13 @@ using System.Windows.Shapes;
 using ExpressTrack.Models;
 
 namespace ExpressTrack {
-	/// <summary>
-	/// Interaction logic for ExpressListPage.xaml
-	/// </summary>
 	public partial class ExpressListPage : Page {
+		private List<Express> expresses = new List<Express>();
 		public ExpressListPage() {
 			InitializeComponent();
 		}
 
 		private void Page_Initialized(object sender, EventArgs e) {
-			List<Express> expresses = new List<Express>();
 			for (int i = 1;i < 10;i++) {
 				expresses.Add(new Express(i, "express" + i));
 			}
