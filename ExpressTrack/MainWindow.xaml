@@ -3,25 +3,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ExpressTrack"
         mc:Ignorable="d"
-        Title="MainWindow" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" MouseDown="Window_MouseDown" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="1000" Height="650">
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="14"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="MainWindow" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" MouseDown="Window_MouseDown" Width="1000" Height="650">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="140"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">
-            <StackPanel.Background>
-                <SolidColorBrush Color="#FF1C2438"/>
-            </StackPanel.Background>
-            <Label Content="物流轨迹跟踪系统" FontSize="20" Margin="50,0,0,0" VerticalAlignment="Center" Foreground="#FF2D8CF0" />
+        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Background="#FF1C2438">
+            <Label Content="物流轨迹跟踪系统" FontSize="{DynamicResource HeaderTitleSize}" Margin="50,0,0,0" VerticalAlignment="Center" Foreground="#FF2D8CF0" />
         </StackPanel>
-        <TreeView x:Name="actionTree" Grid.Row="1" PreviewMouseUp="TreeView_PreviewMouseUp" FontSize="16">
+        <TreeView x:Name="actionTree" Grid.Row="1" PreviewMouseUp="TreeView_PreviewMouseUp" FontSize="15" Background="#FF495060" Foreground="#B2FFFFFF">
             <TreeViewItem Header="快递管理" IsExpanded="True">
                 <TreeViewItem Header="快递列表"/>
                 <TreeViewItem Header="快递入库"/>
@@ -32,11 +34,7 @@
             <TreeViewItem Header="库存明细"/>
             <TreeViewItem Header="快递详情"/>
         </TreeView>
-        <Frame x:Name="mainFrame" Grid.Row="1" Grid.Column="1" Source="/ExpressTrack;component/Pages/ExpressListPage.xaml" FontWeight="Bold" NavigationUIVisibility="Hidden" Padding="5">
-            <Frame.Background>
-                <SolidColorBrush Color="{DynamicResource DefaultColor4}"/>
-            </Frame.Background>
-        </Frame>
+        <Frame x:Name="mainFrame" Grid.Row="1" Grid.Column="1" Source="/ExpressTrack;component/Pages/ExpressListPage.xaml" NavigationUIVisibility="Hidden" Padding="10,5" Background="LightGray"/>
     </Grid>
 
 </Window>
