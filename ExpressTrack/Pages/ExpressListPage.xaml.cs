@@ -6,14 +6,14 @@ using System.Windows.Controls;
 
 namespace ExpressTrack {
     public partial class ExpressListPage : Page {
-		private List<Express> expresses = new List<Express>();
-		public ExpressListPage() {
-			InitializeComponent();
+        private List<Express> expresses = new List<Express>();
+        public ExpressListPage() {
+            InitializeComponent();
         }
 
-		private void Page_Initialized(object sender, EventArgs e) {
+        private void Page_Initialized(object sender, EventArgs e) {
             for (int i = 1; i < 10; i++) {
-                expresses.Add(new Express(i, "express" + i));
+                expresses.Add(new Express { Id = i, Name = "express" + i });
             }
             DG_expressList.ItemsSource = expresses;
         }

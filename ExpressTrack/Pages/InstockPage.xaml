@@ -17,20 +17,20 @@
         <Label Content="快递入库单" FontSize="{DynamicResource HeaderTitleSize}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0" />
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,5" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Label Content="中转站编号："/>
-            <ComboBox Width="100" />
+            <ComboBox Width="100"/>
             <Label Content="仓库编号" Margin="80,0,0,0"/>
             <ComboBox Width="100" />
             <Label Content="入库单号" Margin="80,0,0,0"/>
-            <TextBox Width="100" />
+            <TextBox Width="100" Text="{Binding InStockId}"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="2">
+        <DataGrid Grid.Row="2" ItemsSource="{Binding Expresses}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="快递编号" Width="*"/>
-                <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="名称" Width="*"/>
-                <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="发出地" Width="*"/>
-                <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="金额" Width="*"/>
-                <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="备注" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Id}" Header="快递编号" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Name}" Header="名称" Width="*"/>
+                <DataGridTextColumn Header="发出地" Width="*"/>
+                <DataGridTextColumn Header="金额" Width="*"/>
+                <DataGridTextColumn Header="备注" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 

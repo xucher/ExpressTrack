@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using ExpressTrack.ViewModels;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace ExpressTrack
-{
-    /// <summary>
-    /// InstockPage.xaml 的交互逻辑
-    /// </summary>
+namespace ExpressTrack {
     public partial class InstockPage : Page
     {
         public InstockPage()
         {
             InitializeComponent();
+            var expresses = new ObservableCollection<Models.Express>();
+            for(int i = 0;i < 10;i++) {
+                expresses.Add(new Models.Express { Id = i, Name = "express" + i });
+            };
+            var viewModel = new InStockViewModel {
+                StationId = "001",
+                StockId = "12",
+                InStockId = "201806031159",
+                Expresses = expresses
+            };
+            DataContext = viewModel;
         }
     }
 }
