@@ -31,6 +31,6 @@
             <TreeViewItem Header="库存明细"/>
             <TreeViewItem Header="快递详情"/>
         </TreeView>
-        <Frame x:Name="mainFrame" Grid.Row="1" Grid.Column="1" Source="/ExpressTrack;component/Pages/ExpressListPage.xaml" NavigationUIVisibility="Hidden" Padding="10,5" Background="LightGray"/>
+        <Frame x:Name="mainFrame" Grid.Row="1" Grid.Column="1" Source="/ExpressTrack;component/Pages/InStockPage.xaml" NavigationUIVisibility="Hidden" Padding="10,5" Background="LightGray"/>
     </Grid>
 </Page>

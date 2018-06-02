@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       d:DesignHeight="600" d:DesignWidth="880"
       Title="InstockPage">
 
@@ -16,11 +17,11 @@
         </Grid.RowDefinitions>
         <Label Content="快递入库单" FontSize="{DynamicResource HeaderTitleSize}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0" />
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,5" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="中转站编号："/>
-            <ComboBox Width="100"/>
-            <Label Content="仓库编号" Margin="80,0,0,0"/>
-            <ComboBox Width="100" />
-            <Label Content="入库单号" Margin="80,0,0,0"/>
+            <Label Content="中转站编号：" />
+            <ComboBox Width="100" materialDesign:ComboBoxAssist.ClassicMode="true" />
+            <Label Content="仓库编号：" Margin="80,0,0,0"/>
+            <ComboBox Width="100" materialDesign:ComboBoxAssist.ClassicMode="true" />
+            <Label Content="入库单号：" Margin="80,0,0,0"/>
             <TextBox Width="100" Text="{Binding InStockId}"/>
         </StackPanel>
 

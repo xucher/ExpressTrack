@@ -22,14 +22,12 @@
                 </Grid.RowDefinitions>
 
                 <DockPanel Grid.Row="0">
-                    <Label Content="员工编号：" Width="100"
-                           VerticalContentAlignment="Bottom"/>
+                    <Label Content="员工编号：" Width="100"/>
                     <TextBox materialDesign:HintAssist.Hint="员工编号" DockPanel.Dock="Right"
                              Width="200"/>
                 </DockPanel>
                 <DockPanel Grid.Row="1" >
-                    <Label Content="密码：" VerticalContentAlignment="Bottom"
-                           Width="100"/>
+                    <Label Content="密码：" Width="100"/>
                     <PasswordBox materialDesign:HintAssist.Hint="密码" Width="200" DockPanel.Dock="Right"/>
                 </DockPanel>
                 <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
