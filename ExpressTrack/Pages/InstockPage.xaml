@@ -10,24 +10,32 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition />
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Label Content="快递入库单" FontSize="{DynamicResource HeaderTitleSize}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0" />
+        <DockPanel>
+            <Label Content="快递入库单" FontSize="{DynamicResource HeaderTitleSize}"
+                   VerticalContentAlignment="Center" Margin="350,0,0,0"/>
+            <StackPanel Orientation="Horizontal" Margin="300,0,0,0">
+                <Label Content="设备状态：" VerticalContentAlignment="Center"/>
+                <Label Content="N" Style="{StaticResource LabelState}"/>
+            </StackPanel>
+        </DockPanel>
+
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,5" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Label Content="中转站编号：" />
-            <ComboBox Width="100" materialDesign:ComboBoxAssist.ClassicMode="true" />
+            <ComboBox Width="100" materialDesign:ComboBoxAssist.ClassicMode="true" ItemsSource="{Binding StationIds}"/>
             <Label Content="仓库编号：" Margin="80,0,0,0"/>
-            <ComboBox Width="100" materialDesign:ComboBoxAssist.ClassicMode="true" />
+            <ComboBox Width="100" materialDesign:ComboBoxAssist.ClassicMode="true" ItemsSource="{Binding StockIds}"/>
             <Label Content="入库单号：" Margin="80,0,0,0"/>
-            <TextBox Width="100" Text="{Binding InStockId}"/>
+            <TextBox Width="100" Text="{Binding InStockId}" IsEnabled="False"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="2" ItemsSource="{Binding Expresses}" AutoGenerateColumns="False">
+        <DataGrid Grid.Row="2" ItemsSource="{Binding Expresses}" AutoGenerateColumns="False" Margin="10">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Id}" Header="快递编号" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Id}" Header="快递编号"/>
                 <DataGridTextColumn Binding="{Binding Name}" Header="名称" Width="*"/>
                 <DataGridTextColumn Header="发出地" Width="*"/>
                 <DataGridTextColumn Header="金额" Width="*"/>
@@ -35,12 +43,12 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        
+
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Content="制单日期" VerticalContentAlignment="Center"/>
-            <DatePicker Width="100" VerticalContentAlignment="Center"/>
-            <Label Content="制单人" VerticalContentAlignment="Center" Margin="100,0,0,0"/>
-            <TextBox Width="80" />
+            <Label Content="制单日期：" />
+            <DatePicker Width="100" VerticalAlignment="Bottom" />
+            <Label Content="制单人：" Margin="100,0,0,0"/>
+            <TextBox Width="80" Text="{Binding OptStaff}"/>
             <Button Content="保存" Width="80" Margin="100,0,0,0" />
         </StackPanel>
     </Grid>

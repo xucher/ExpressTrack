@@ -4,4 +4,21 @@
     <Style TargetType="Label">
         <Setter Property="VerticalContentAlignment" Value="Bottom"/>
     </Style>
+
+    <Style x:Key="LabelState" TargetType="Label">
+        <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="Width" Value="15"></Setter>
+        <Setter Property="Height" Value="15"></Setter>
+        <Setter Property="Padding" Value="0"></Setter>
+        <Setter Property="Background">
+            <Setter.Value>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FF673AB7" Offset="1"/>
+                    <GradientStop Offset="1"/>
+                </RadialGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
 </ResourceDictionary>

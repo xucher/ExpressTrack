@@ -5,36 +5,34 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="880"
+      d:DesignHeight="650" d:DesignWidth="1020"
       Title="LoginPage">
-    <DockPanel>
-        <DockPanel.Background>
-            <ImageBrush ImageSource="/ExpressTrack;component/Resources/kuaidi.jpg"/>
-        </DockPanel.Background>
-        <GroupBox Header="物流轨迹跟踪系统" Opacity="0.9"
+    <Page.Background>
+        <ImageBrush ImageSource="/ExpressTrack;component/Resources/kuaidi.jpg"/>
+    </Page.Background>
+    <GroupBox Header="物流轨迹跟踪系统" Opacity="0.9"
           Width="400" Height="300" Background="White" FontSize="20">
-            <Grid Margin="30">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
+        <Grid Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
 
-                <DockPanel Grid.Row="0">
-                    <Label Content="员工编号：" Width="100"/>
-                    <TextBox materialDesign:HintAssist.Hint="员工编号" DockPanel.Dock="Right"
+            <DockPanel Grid.Row="0">
+                <Label Content="员工编号：" Width="100"/>
+                <TextBox materialDesign:HintAssist.Hint="员工编号" DockPanel.Dock="Right"
                              Width="200"/>
-                </DockPanel>
-                <DockPanel Grid.Row="1" >
-                    <Label Content="密码：" Width="100"/>
-                    <PasswordBox materialDesign:HintAssist.Hint="密码" Width="200" DockPanel.Dock="Right"/>
-                </DockPanel>
-                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="登录" Width="100" />
-                    <Button Content="退出" Width="100" Margin="80,0,0,0"/>
-                </StackPanel>
-            </Grid>
-        </GroupBox>
-    </DockPanel>
+            </DockPanel>
+            <DockPanel Grid.Row="1" >
+                <Label Content="密码：" Width="100"/>
+                <PasswordBox materialDesign:HintAssist.Hint="密码" Width="200" DockPanel.Dock="Right"/>
+            </DockPanel>
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="登录" Width="100" />
+                <Button Content="退出" Width="100" Margin="80,0,0,0"/>
+            </StackPanel>
+        </Grid>
+    </GroupBox>
 </Page>

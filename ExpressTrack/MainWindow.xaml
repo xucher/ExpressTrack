@@ -12,6 +12,6 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        MouseDown="Window_MouseDown" Width="1000" Height="650">
+        MouseDown="Window_MouseDown" Width="{DynamicResource WindowWidth}" Height="{DynamicResource WindowHeight}">
     <Frame Source="/ExpressTrack;component/Pages/MainPage.xaml" NavigationUIVisibility="Hidden"/>
 </Window>
