@@ -1,0 +1,36 @@
+﻿<Page x:Class="ExpressTrack.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ExpressTrack.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="650" d:DesignWidth="1000"
+      Title="MainPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="140"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Background="#FF1C2438">
+            <Label Content="物流轨迹跟踪系统" FontSize="{DynamicResource HeaderTitleSize}" Margin="50,0,0,0" VerticalAlignment="Center" Foreground="#FF2D8CF0" />
+        </StackPanel>
+        <TreeView x:Name="actionTree" Grid.Row="1" PreviewMouseUp="TreeView_PreviewMouseUp" FontSize="15" Background="#FF495060" Foreground="#B2FFFFFF">
+            <TreeViewItem Header="快递管理" IsExpanded="True">
+                <TreeViewItem Header="快递列表"/>
+                <TreeViewItem Header="快递入库"/>
+                <TreeViewItem Header="快递出库"/>
+            </TreeViewItem>
+            <TreeViewItem Header="用户列表"/>
+            <TreeViewItem Header="职员列表"/>
+            <TreeViewItem Header="库存明细"/>
+            <TreeViewItem Header="快递详情"/>
+        </TreeView>
+        <Frame x:Name="mainFrame" Grid.Row="1" Grid.Column="1" Source="/ExpressTrack;component/Pages/ExpressListPage.xaml" NavigationUIVisibility="Hidden" Padding="10,5" Background="LightGray"/>
+    </Grid>
+</Page>
