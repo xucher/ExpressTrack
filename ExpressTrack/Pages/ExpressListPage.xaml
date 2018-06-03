@@ -13,10 +13,10 @@
             <RowDefinition Height="559*"/>
             <RowDefinition Height="41*"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="DG_expressList" AutoGenerateColumns="False">
+        <DataGrid x:Name="DG_expressList" AutoGenerateColumns="False" CellEditEnding="DG_expressList_CellEditEnding" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Id}" Header="快递编号" CanUserResize="False"/>
-                <DataGridTextColumn Binding="{Binding Name}" Header="快递名称" Width="*" CanUserResize="False"/>
+                <DataGridTextColumn Binding="{Binding Id}" Header="快递编号" CanUserResize="False" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="快递名称" Width="*" CanUserResize="False"/>
                 <DataGridTextColumn Binding="{Binding Name}" Header="发出点" Width="*" CanUserResize="False"/>
                 <DataGridTextColumn Binding="{Binding Name}" Header="终点" Width="*" CanUserResize="False"/>
                 <DataGridTextColumn Binding="{Binding Name}" Header="发出时间" Width="*" CanUserResize="False"/>

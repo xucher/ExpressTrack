@@ -73,6 +73,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DB\ExpressDBContext.cs" />
     <Compile Include="Libs\LocalSense.cs" />
     <Compile Include="Pages\ExpressDetailPage.xaml.cs">
       <DependentUpon>ExpressDetailPage.xaml</DependentUpon>
@@ -174,7 +175,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models.cs" />
+    <Compile Include="DB\Models.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
