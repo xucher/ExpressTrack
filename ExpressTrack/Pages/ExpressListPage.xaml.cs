@@ -7,37 +7,86 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 
 namespace ExpressTrack {
-    public partial class ExpressListPage : Page {
-        private ObservableCollection<Express> expresses = new ObservableCollection<Express>();
+    public partial class ExpressListPage : Page {       
         public ExpressListPage() {
             InitializeComponent();
         }
 
+        private ObservableCollection<Express> expresses = new ObservableCollection<Express>();
+        private int NextExpressID;
+        private ExpressDBContext db = new ExpressDBContext();
+
         private void Page_Initialized(object sender, EventArgs e) {
-            DG_expressList.ItemsSource = expresses;
+            //expressSeed();
+
             getExpress();
+            DG_expressList.ItemsSource = expresses;
+
+            if (expresses.Count > 0) {
+                NextExpressID = Helpers.parseExpressCoding(expresses.Last().Coding) + 1;
+            } else {
+                NextExpressID = 1;
+            }
         }
 
+        // 从数据库中获取所有Express
         private void getExpress() {
+            expresses.Clear();
             List<Express> result;
             using (ExpressDBContext db = new ExpressDBContext()) {
                 var query = from e in db.Express
                             select e;
                 result = query.ToList();
             }
-            expresses.Clear();
             foreach (var item in result) {
                 expresses.Add(item);
             };
         }
 
+        // 添加更改标记
         private void DG_expressList_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e) {
+            //var index = e.Row.GetIndex();
+            // 新增
+            //if (index == expresses.Count - 1) {
+
+            //}
             var express = e.Row.Item as Express;
-            using (ExpressDBContext db = new ExpressDBContext()) {
-                    db.Express.Attach(express);
-                    db.Entry(express).State = EntityState.Modified;
-                    db.SaveChanges();   
+            
+            db.Express.Attach(express);
+            db.Entry(express).State = EntityState.Modified;
+            
+            //Console.WriteLine("Count: " + expresses.Count);
+            //foreach (Express item in expresses) {
+            //    Console.WriteLine(item.Coding+ ":" +item.Name);
+            //}
+        }
+
+        // 更新数据到数据库
+        private void btnUpdate_Click(object sender, System.Windows.RoutedEventArgs e) {
+            if (db.SaveChanges() > 0) {
+                Console.WriteLine("modified");
+            };
+        }
+
+
+        // 数据库初始化数据
+        private void expressSeed() {
+            var expressList = new List<Express>();
+            for (int i = 0;i < 10;i++) {
+                expressList.Add(new Express {
+                    Coding=Helpers.convertExpressCoding(i),
+                    Name = "express" + i,
+                    Start = "start",
+                    Destination = "des",
+                    StartDate = DateTime.Now.ToString()
+                });
             }
+            db.Express.AddRange(expressList);
+            db.SaveChanges();
+        }
+
+        private void Page_Unloaded(object sender, System.Windows.RoutedEventArgs e) {
+            // 关闭数据库连接
         }
     }
 }

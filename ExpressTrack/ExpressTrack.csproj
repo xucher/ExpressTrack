@@ -74,6 +74,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DB\ExpressDBContext.cs" />
+    <Compile Include="Libs\Helpers.cs" />
     <Compile Include="Libs\LocalSense.cs" />
     <Compile Include="Pages\ExpressDetailPage.xaml.cs">
       <DependentUpon>ExpressDetailPage.xaml</DependentUpon>
