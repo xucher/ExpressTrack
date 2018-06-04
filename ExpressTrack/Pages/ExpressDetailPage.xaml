@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ExpressTrack"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
+      FontSize="16"
       d:DesignHeight="600" d:DesignWidth="880"
       Title="ExpressDetail">
 
@@ -14,10 +15,39 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="400"/>
             <ColumnDefinition />
+            <ColumnDefinition Width="400"/>
         </Grid.ColumnDefinitions>
-        <Canvas Grid.Column="1" Background="#FFEAE1E1" Width="450" Margin="15,0">
+        <StackPanel Grid.RowSpan="2" Margin="0,0,10,0">
+            <Grid Margin="0,0,0,30" Height="120">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="9*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Label Content="快递编号：" VerticalContentAlignment="Center"/>
+                <Label Content="{Binding ExpressCoding}" Grid.Column="1" VerticalContentAlignment="Center"/>
+
+                <Label Content="快递名称：" VerticalContentAlignment="Center" Grid.Row="1"/>
+                <Label Content="{Binding ExpressName}" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="1"/>
+
+                <Label Content="预定路线：" VerticalContentAlignment="Center" Grid.Row="2"/>
+                <!--<Label Content="{Binding PreTrack}" Grid.Row="2" Grid.Column="1"/>-->
+                <ListBox ItemsSource="{Binding PreTrack}" Grid.Row="2" Grid.Column="1">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+            </Grid>
+            <ListView Height="400" ItemsSource="{Binding Shipments}"/>
+        </StackPanel>
+        <Canvas Grid.Column="1" Background="#FFEAE1E1">
             <Path Stroke="Black">
                 <Path.Data>
                     <PathGeometry x:Name="trackGeometry" />

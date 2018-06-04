@@ -1,26 +1,40 @@
 ﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
 //using WebSocketSharp;
-//using System.Text;
-//using System.Threading.Tasks;
 
 //namespace ExpressTrack.Device {
+//    //class LocalSense {
+//    //    public delegate void ConnectLocalSenseEventHandler(object sender, EventArgs e);
+//    //    public event ConnectLocalSenseEventHandler ConnectLocalSense;
+//    //    //public PositionData OnConnect() {
+//    //    //    var position = new PositionData();
+//    //    //    return position;
+//    //    //}
+//    //    public void OnConnect() {
+//    //        ClientWebSocket ws = new ClientWebSocket();
+
+//    //        ConnectLocalSense?.Invoke(this, new EventArgs());
+//    //    }
+//    //}
+//    //class PositionData {
+//    //    int Id;   // 设备编号
+//    //    int X;
+//    //    int Y;
+//    //}
 //    class LocalSense {
-//        public delegate void ConnectHandle(WebSocketHandle w, EventArgs e);
-//        public event ConnectHandle OnConnect;
-//        public int[] location = null
-//            ;
+//        public int[] location = null;
 //        public int[] connect_server() {
 //            //连接服务器
-//            WebSocket ws = new WebSocket("ws://" + "192.168.0.151" + ":9001", "localSensePush-protocol");
+//            WebSocket ws = new WebSocket(url:"ws://192.168.0.151:9001", protocols:"localSensePush-protocol");
+//            ws.Connect();
+//            ws.OnMessage += e => {
 
+//            }
 //            int id;
 //            int x;
 //            int y;
 
 //            ws.OnOpen += (sender, e) => MessageBox.Show("已经与服务器建立连接");
-//            ws.OnMessage += (sender, e) => {
+//            ws.OnMessage += (e) => {
 //                string data = e.Data;
 //                string[] tempdata = data.Split('-');
 //                int msgtype;

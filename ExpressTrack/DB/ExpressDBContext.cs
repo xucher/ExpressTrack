@@ -7,5 +7,8 @@ namespace ExpressTrack {
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ExpressDBContext>());
         }
         public DbSet<Express> Express { get; set; }
+        public DbSet<Shipment> Shipment { get; set; }
+        public DbSet<Station> Station { get; set; }
+        public DbSet<User> User { get; set; }
     }
 }

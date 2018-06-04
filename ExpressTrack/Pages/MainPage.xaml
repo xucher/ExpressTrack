@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ExpressTrack.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="650" d:DesignWidth="1020"
+      d:DesignHeight="650" d:DesignWidth="1040"
       Title="MainPage">
 
     <Grid>
@@ -31,6 +31,6 @@
             <TreeViewItem Header="库存明细"/>
             <TreeViewItem Header="快递详情"/>
         </TreeView>
-        <Frame x:Name="mainFrame" Grid.Row="1" Grid.Column="1" Source="/ExpressTrack;component/Pages/ExpressListPage.xaml" NavigationUIVisibility="Hidden" Padding="10,5" Background="LightGray"/>
+        <Frame x:Name="mainFrame" Grid.Row="1" Grid.Column="1" Source="/ExpressTrack;component/Pages/ExpressDetailPage.xaml" NavigationUIVisibility="Hidden" Padding="10,5" Background="LightGray"/>
     </Grid>
 </Page>

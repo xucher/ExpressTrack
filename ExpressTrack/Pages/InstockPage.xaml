@@ -46,7 +46,8 @@
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Label Content="制单日期：" />
-            <DatePicker Width="100" VerticalAlignment="Bottom" />
+            <DatePicker Width="100" VerticalAlignment="Bottom" 
+                SelectedDate="{Binding Date, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Content="制单人：" Margin="100,0,0,0"/>
             <TextBox Width="80" Text="{Binding OptStaff}"/>
             <Button Content="保存" Width="80" Margin="100,0,0,0" />

@@ -1,4 +1,5 @@
 ﻿using ExpressTrack.ViewModels;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 
@@ -18,7 +19,8 @@ namespace ExpressTrack {
                 StationIds = stations,
                 StockIds = stocks,
                 InStockId = "201806031159",
-                Expresses = expresses
+                Expresses = expresses,
+                Date = DateTime.Now
             };
             DataContext = viewModel;
         }

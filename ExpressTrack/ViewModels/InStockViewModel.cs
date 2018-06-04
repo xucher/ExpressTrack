@@ -1,4 +1,5 @@
 ﻿using ExpressTrack.Models;
+using System;
 using System.Collections.ObjectModel;
 
 namespace ExpressTrack.ViewModels {
@@ -16,6 +17,8 @@ namespace ExpressTrack.ViewModels {
         public ObservableCollection<Express> Expresses { get; set; }
         // 操作员
         public string OptStaff { get; set; }
+        // 入库时间
+        public DateTime Date { get; set; }
         #endregion
 
 
