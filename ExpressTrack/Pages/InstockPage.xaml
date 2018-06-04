@@ -33,7 +33,7 @@
             <TextBox Width="100" Text="{Binding InStockId}" IsEnabled="False"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="2" ItemsSource="{Binding Expresses}" AutoGenerateColumns="False" Margin="10">
+        <DataGrid Grid.Row="2" ItemsSource="{Binding Shipments}" AutoGenerateColumns="False" Margin="10">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" Header="快递编号"/>
                 <DataGridTextColumn Binding="{Binding Name}" Header="名称" Width="*"/>

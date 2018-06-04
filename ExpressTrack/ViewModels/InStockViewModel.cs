@@ -14,7 +14,7 @@ namespace ExpressTrack.ViewModels {
         // 入库单号
         public string InStockId { get; set; }
         // 入库快递列表
-        public ObservableCollection<Express> Expresses { get; set; }
+        public ObservableCollection<Shipment> Shipments { get; set; }
         // 操作员
         public string OptStaff { get; set; }
         // 入库时间

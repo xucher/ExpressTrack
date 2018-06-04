@@ -19,10 +19,11 @@ namespace ExpressTrack {
 
         // 解析localsense数据
         public static int[] parseLocalsenseBlob(string data) {
+            // Blob example:  CC-5F-01-01-3A-41-00-00-01-6C-00-00-02-E1-00-AE-01-02-00-03-58-F2-AC-01-01-27-07-AA-BB
             //location:  id(设备编号), x, y
             int[] location = new int[3];
             string[] tempdata = data.Split('-');
-            int msgtype;
+            int msgtype = -1;
 
             if (tempdata[0] == "CC" && tempdata[1] == "5F" && tempdata[2] == "01") {
                 msgtype = 1;//表示标签实时信息

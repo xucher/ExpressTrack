@@ -19,12 +19,13 @@
             <ColumnDefinition Width="400"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.RowSpan="2" Margin="0,0,10,0">
-            <Grid Margin="0,0,0,30" Height="120">
+            <Grid Margin="0,0,0,30" Height="160">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="9*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
@@ -44,6 +45,9 @@
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                 </ListBox>
+
+                <Label Content="当前坐标：" VerticalContentAlignment="Center" Grid.Row="3"/>
+                <Label Content="{Binding NowAddress, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Grid.Row="3" Grid.Column="1"/>
             </Grid>
             <ListView Height="400" ItemsSource="{Binding Shipments}"/>
         </StackPanel>
@@ -55,9 +59,9 @@
             </Path>
         </Canvas>
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="50,10">
-            <Button x:Name="btnStart" Content="开始" Click="btnStart_Click" />
-            <Button x:Name="btnAddPoint" Content="添加坐标" Margin="30,0,0,0" Click="btnAddPoint_Click" IsEnabled="False" />
-            <Button x:Name="btnResetPoint" Content="重置" Margin="30,0,0,0" Click="btnResetPoint_Click" IsEnabled="False" />
+            <Button x:Name="btnStart" Content="开始追踪" Click="btnStart_Click" />
+            <Button x:Name="btnClose" Content="断开连接" Margin="30,0,0,0" Click="btnClose_Click" IsEnabled="False" />
+            <Button x:Name="btnReset" Content="重置" Margin="30,0,0,0" Click="btnReset_Click" IsEnabled="False" />
         </StackPanel>
     </Grid>
 </Page>
