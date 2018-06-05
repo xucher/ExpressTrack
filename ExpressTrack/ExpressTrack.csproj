@@ -76,6 +76,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BoolInvertConverter.cs" />
     <Compile Include="DB\ExpressDBContext.cs" />
     <Compile Include="Libs\Helpers.cs" />
     <Compile Include="Libs\LocalSense.cs" />
@@ -218,9 +219,7 @@
   <ItemGroup>
     <Resource Include="Resources\kuaidi.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converters\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.3.0.3\build\Fody.targets" Condition="Exists('..\packages\Fody.3.0.3\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

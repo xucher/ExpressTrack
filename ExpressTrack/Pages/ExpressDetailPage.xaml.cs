@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using WebSocketSharp;
 
@@ -33,9 +34,8 @@ namespace ExpressTrack {
         private WebSocket ws;
         private Stopwatch timer;
         private int flag = 1;   // 标识是否为第一个数据
-
         // 处理获得的坐标数据
-        private void HandleLocalSense(object sender, MessageEventArgs e) {   
+        private void handleLocalSense(object sender, MessageEventArgs e) {   
             if (!timer.IsRunning) {
                 timer.Start();
             }
@@ -71,32 +71,42 @@ namespace ExpressTrack {
 
         // 开始追踪
         private void btnStart_Click(object sender, RoutedEventArgs e) {
-            timer = new Stopwatch();
-
-            btnStart.IsEnabled = false;
-            btnClose.IsEnabled = true;
-            btnReset.IsEnabled = true;
+            if (timer == null) {
+                timer = new Stopwatch();
+            }
+            
             initWebsocket();
+            btnStart.IsEnabled = false;
             ws.Connect();
+            
         }
 
         // 初始化websocket
         private void initWebsocket() {
             ws = new WebSocket(url: "ws://192.168.0.151:9001", protocols: "localSensePush-protocol");
-            ws.OnMessage += HandleLocalSense;
+            
+            ws.OnOpen += (sender, e) => {
+                btnClose.IsEnabled = true;
+                btnReset.IsEnabled = true;
+                Console.WriteLine("onOpen: " + ws.ReadyState);
+            };
+            ws.OnMessage += handleLocalSense;
             ws.OnClose += (sender, e) => {
+                Console.WriteLine("onClose: " + ws.ReadyState);
                 Console.WriteLine("断开连接");
             };
             ws.OnError += (sender, e) => {
+                Console.WriteLine("onError: " + ws.ReadyState);
                 Console.WriteLine("Websocket异常，错误信息为" + e.Message);
             };
         }
 
         // 关闭连接
         private void btnClose_Click(object sender, RoutedEventArgs e) {
-            ws.Close();
             btnClose.IsEnabled = false;
             btnStart.IsEnabled = true;
+            btnReset.IsEnabled = false;
+            ws.Close();
         }
 
         // 重置轨迹
