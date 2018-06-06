@@ -8,9 +8,6 @@
       FontSize="16"
       d:DesignHeight="600" d:DesignWidth="880"
       Title="ExpressDetail">
-    <Page.Resources>
-        <localConverter:BoolInvertConverter x:Key="boolInvert"/>
-    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />

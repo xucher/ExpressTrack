@@ -8,9 +8,6 @@ namespace ExpressTrack.ViewModels {
         // 中转站编号
         public ObservableCollection<string> StationIds { get; set; }
         public string SelectedStation { get; set; }
-        // 仓库编号
-        public ObservableCollection<string> StockIds { get; set; }
-        public string SelectedStock { get; set; }
         // 入库单号
         public string InStockId { get; set; }
         // 入库快递列表
@@ -19,6 +16,8 @@ namespace ExpressTrack.ViewModels {
         public string OptStaff { get; set; }
         // 入库时间
         public DateTime Date { get; set; }
+        // 设备状态
+        public bool DeviceState { get; set; }
         #endregion
 
 

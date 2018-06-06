@@ -10,14 +10,18 @@ namespace ExpressTrack.Libs {
             public string TID;
             public string EPC;
         }
+        public int state = 0;
+        public const string ANT1 = "192.168.0.101";
+        public const string ANT2 = "192.168.0.102";
+        public const string ANT3 = "192.168.0.103";
 
         private Reader reader;
         private Mutex temp = new Mutex();
         public Dictionary<string, TagInfo> tagDic = new Dictionary<string, TagInfo>();
 
-        //  连接天线
-        public int ConnectAnt(string antIp) {
-            if (antIp == "192.168.0.101" | antIp == "192.168.0.102") {
+        // 连接天线
+        public void ConnectAnt(string antIp) {
+            if (antIp == ANT1 | antIp == ANT2) {
                 reader = Reader.Create(antIp, ModuleTech.Region.NA, 1);
 
                 int[] ants = new int[] { 1 };
@@ -34,11 +38,12 @@ namespace ExpressTrack.Libs {
 
                 EmbededCmdData ecd = new EmbededCmdData(ModuleTech.Gen2.MemBank.TID, 0, 12);
                 reader.ParamSet("EmbededCmdOfInventory", ecd);
-                if (antIp == "192.168.0.101")
-                    return 1;
-                else return 2;
+                if (antIp == ANT1)
+                    state = 1;
+                else
+                    state = 2;
             }
-            if (antIp == "192.168.0.103") {
+            if (antIp == ANT3) {
                 reader = Reader.Create(antIp, ModuleTech.Region.NA, 4);
 
                 int[] ants = new int[] { 3 };//货柜19
@@ -56,10 +61,8 @@ namespace ExpressTrack.Libs {
                 EmbededCmdData ecd = new EmbededCmdData(ModuleTech.Gen2.MemBank.TID, 0, 12);
                 reader.ParamSet("EmbededCmdOfInventory", ecd);
 
-                return 3;
+                state = 3;
             }
-
-            return 0;
         }
 
         // 关闭连接
@@ -67,45 +70,23 @@ namespace ExpressTrack.Libs {
             reader.Disconnect();
         }
 
-        // 读取数据
-        public int ReadData() {
+        public TagInfo ReadData() {
+            TagInfo data = null;
             temp.WaitOne();
             try {
                 TagReadData[] tags = reader.Read(500);
                 if (tags.Length != 0) {
-                    if (!Char.IsLetter(tags[0].EPCString.Substring(0, 1), 0)) {
-                        if (!tags[0].EPCString.StartsWith("4"))
-                            AddDic(tags[0]);
-                    }
-
+                    data = new TagInfo {
+                        TID = tags[0].EMDDataString,
+                        EPC = tags[0].EPCString
+                    };
                 }
-            } catch (ModuleLibrary.OpFaidedException notagexp) {
-                if (notagexp.ErrCode == 0x400)
-                    return 1;
-                else
-                    return 2;
+            } catch (ModuleLibrary.OpFaidedException e) {
+               Console.WriteLine(e.ErrCode);
             }
 
             temp.ReleaseMutex();
-            return 0;
-        }
-
-        //读出的芯片信息填入
-        public void AddDic(TagReadData tag) {
-            temp.WaitOne();
-            string keystr = tag.EMDDataString;
-            if (!Char.IsLetter(tag.EPCString.Substring(0, 1), 0)) {
-                if (tag != null) {
-                    //判断是否是同一件商品
-                    if (!tagDic.ContainsKey(keystr)) {
-                        TagInfo tempo = new TagInfo {
-                            TID = tag.EMDDataString, EPC=tag.EPCString
-                        };
-                        tagDic.Add(keystr, tempo);
-                    }
-                }
-            }
-            temp.ReleaseMutex();
+            return data;
         }
     }
 }

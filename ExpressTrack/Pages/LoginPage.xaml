@@ -22,15 +22,15 @@
 
             <DockPanel Grid.Row="0">
                 <Label Content="员工编号：" Width="100"/>
-                <TextBox materialDesign:HintAssist.Hint="员工编号" DockPanel.Dock="Right"
+                <TextBox x:Name="userCoding" materialDesign:HintAssist.Hint="员工编号" DockPanel.Dock="Right"
                              Width="200"/>
             </DockPanel>
             <DockPanel Grid.Row="1" >
                 <Label Content="密码：" Width="100"/>
-                <PasswordBox materialDesign:HintAssist.Hint="密码" Width="200" DockPanel.Dock="Right"/>
+                <PasswordBox x:Name="userPassword" materialDesign:HintAssist.Hint="密码" Width="200" DockPanel.Dock="Right"/>
             </DockPanel>
             <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="登录" Width="100" />
+                <Button x:Name="btnLogin" Content="登录" Width="100" Click="btnLogin_Click" />
                 <Button Content="退出" Width="100" Margin="80,0,0,0"/>
             </StackPanel>
         </Grid>

@@ -10,8 +10,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="559*"/>
-            <RowDefinition Height="41*"/>
+            <RowDefinition />
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <DataGrid x:Name="DG_expressList" AutoGenerateColumns="False" CellEditEnding="DG_expressList_CellEditEnding" CanUserAddRows="False">
             <DataGrid.Columns>
@@ -19,6 +19,7 @@
                 <DataGridTextColumn Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="快递名称" Width="*" CanUserResize="False"/>
                 <DataGridTextColumn Binding="{Binding Start, UpdateSourceTrigger=PropertyChanged}" Header="发出点" Width="*" CanUserResize="False"/>
                 <DataGridTextColumn Binding="{Binding Destination, UpdateSourceTrigger=PropertyChanged}" Header="终点" Width="*" CanUserResize="False"/>
+                <DataGridTextColumn Binding="{Binding PreTrack, UpdateSourceTrigger=PropertyChanged}" Header="预定路线" Width="*" CanUserResize="False"/>
                 <DataGridTextColumn Binding="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}" Header="发货时间" Width="*" CanUserResize="False"/>
             </DataGrid.Columns>
         </DataGrid>

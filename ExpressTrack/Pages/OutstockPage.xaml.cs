@@ -24,5 +24,13 @@ namespace ExpressTrack
         {
             InitializeComponent();
         }
+
+        private void btnStart_Click(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void btnEnd_Click(object sender, RoutedEventArgs e) {
+
+        }
     }
 }

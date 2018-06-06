@@ -21,10 +21,12 @@ namespace ExpressTrack.Models {
     [Table("shipment")]
     public class Shipment {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string ExpressCoding { get; set; }
         public string FromStation { get; set; }
         public string ToStation { get; set; }
+        public string CheckDate { get; set; }
 
         [ForeignKey("ExpressCoding")]
         public virtual Express Express { get; set; }
@@ -33,16 +35,17 @@ namespace ExpressTrack.Models {
     [Table("station")]
     public class Station {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
-        public int AddressX { get; set; }
-        public int AddressY { get; set; }
+        public int? AddressX { get; set; }
+        public int? AddressY { get; set; }
     }
 
     [Table("user")]
     public class User {
         [Key]
-        public string Id { get; set; }
+        public string Coding { get; set; }
         public string Name { get; set; }
         public string PassWord { get; set; }
     }

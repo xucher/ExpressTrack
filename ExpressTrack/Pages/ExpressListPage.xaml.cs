@@ -69,18 +69,24 @@ namespace ExpressTrack {
         }
 
 
-        // 数据库初始化数据
+        // 数据库初始数据
         private void expressSeed() {
             var expressList = new List<Express>();
-            for (int i = 0;i < 10;i++) {
-                expressList.Add(new Express {
-                    Coding=Helpers.convertExpressCoding(i),
-                    Name = "express" + i,
-                    Start = "start",
-                    Destination = "des",
-                    StartDate = DateTime.Now.ToString()
-                });
-            }
+            
+            expressList.Add(new Express {
+                Coding=Helpers.convertExpressCoding(1),
+                Name = "Express1",
+                Start = "StationA",
+                Destination = "StationD",
+                StartDate = DateTime.Now.ToString()
+            });
+            expressList.Add(new Express {
+                Coding = Helpers.convertExpressCoding(2),
+                Name = "Express2",
+                Start = "StationA",
+                Destination = "StationE",
+                StartDate = DateTime.Now.ToString()
+            });
             db.Express.AddRange(expressList);
             db.SaveChanges();
         }
