@@ -18,6 +18,36 @@ namespace ExpressTrack.Models {
         public string StartDate { get; set; }
     }
 
+    [Table("instock")]
+    public class Instock {
+        [Key]
+        [StringLength(8)]
+        public string Coding { get; set; }
+        public string ExpressCoding { get; set; }
+        public int FromStation { get; set; }
+        public int ArriveStation { get; set; }
+        [StringLength(30)]
+        public string CheckDate { get; set; }
+
+        [ForeignKey("ExpressCoding")]
+        public virtual Express Express { get; set; }
+    }
+
+    [Table("outstock")]
+    public class Outstock {
+        [Key]
+        [StringLength(8)]
+        public string Coding { get; set; }
+        public string ExpressCoding { get; set; }
+        public int NowStation { get; set; }
+        public int ToStation { get; set; }
+        [StringLength(30)]
+        public string CheckDate { get; set; }
+
+        [ForeignKey("ExpressCoding")]
+        public virtual Express Express { get; set; }
+    }
+
     [Table("shipment")]
     public class Shipment {
         [Key]
@@ -26,6 +56,7 @@ namespace ExpressTrack.Models {
         public string ExpressCoding { get; set; }
         public string FromStation { get; set; }
         public string ToStation { get; set; }
+        [StringLength(30)]
         public string CheckDate { get; set; }
 
         [ForeignKey("ExpressCoding")]
