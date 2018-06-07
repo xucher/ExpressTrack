@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ExpressTrack.Models {
@@ -14,6 +15,9 @@ namespace ExpressTrack.Models {
         [StringLength(50)]
         public string Destination { get; set; }
         public string PreTrack { get; set; }
+        // 0: 初始   1: 运送中  2：中转站内  3：结束
+        [DefaultValue(0)]
+        public int State { get; set; }
         [StringLength(30)]
         public string StartDate { get; set; }
     }
@@ -28,9 +32,7 @@ namespace ExpressTrack.Models {
         public int ArriveStation { get; set; }
         [StringLength(30)]
         public string CheckDate { get; set; }
-
-        [ForeignKey("ExpressCoding")]
-        public virtual Express Express { get; set; }
+        public bool State { get; set; } 
     }
 
     [Table("outstock")]
@@ -43,9 +45,7 @@ namespace ExpressTrack.Models {
         public int ToStation { get; set; }
         [StringLength(30)]
         public string CheckDate { get; set; }
-
-        [ForeignKey("ExpressCoding")]
-        public virtual Express Express { get; set; }
+        public bool State { get; set; }
     }
 
     [Table("shipment")]
@@ -58,9 +58,6 @@ namespace ExpressTrack.Models {
         public string ToStation { get; set; }
         [StringLength(30)]
         public string CheckDate { get; set; }
-
-        [ForeignKey("ExpressCoding")]
-        public virtual Express Express { get; set; }
     }
 
     [Table("station")]
