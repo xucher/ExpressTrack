@@ -11,8 +11,8 @@ namespace ExpressTrack {
             InitializeComponent();
 
             // 连接天线
-            mReader = new FixedReader();
-            mReader.ConnectAnt(FixedReader.ANT1);
+            //mReader = new FixedReader();
+            //mReader.ConnectAnt(FixedReader.ANT1);
             setDataContext();
         }
 

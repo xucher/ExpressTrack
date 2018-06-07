@@ -4,13 +4,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ExpressTrack.Pages"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="650" d:DesignWidth="1040"
+      d:DesignHeight="650" d:DesignWidth="1050"
       Title="MainPage">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="140"/>
+            <ColumnDefinition Width="150"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -20,17 +21,34 @@
         <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Background="#FF1C2438">
             <Label Content="物流轨迹跟踪系统" FontSize="{DynamicResource HeaderTitleSize}" Margin="50,0,0,0" VerticalAlignment="Center" Foreground="#FF2D8CF0" />
         </StackPanel>
-        <TreeView x:Name="actionTree" Grid.Row="1" PreviewMouseUp="TreeView_PreviewMouseUp" FontSize="15" Background="#FF495060" Foreground="#B2FFFFFF">
-            <TreeViewItem Header="快递管理" IsExpanded="True">
-                <TreeViewItem Header="快递列表"/>
-                <TreeViewItem Header="快递入库"/>
-                <TreeViewItem Header="快递出库"/>
-            </TreeViewItem>
-            <TreeViewItem Header="用户列表"/>
-            <TreeViewItem Header="职员列表"/>
-            <TreeViewItem Header="库存明细"/>
-            <TreeViewItem Header="快递详情"/>
-        </TreeView>
-        <Frame x:Name="mainFrame" Grid.Row="1" Grid.Column="1" Source="/ExpressTrack;component/Pages/ExpressListPage.xaml" NavigationUIVisibility="Hidden" Padding="10,5" Background="LightGray"/>
+        <Grid Grid.Row="1" Background="#FF495060">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="2"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal" Margin="20, 0">
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="#ccc">
+                    <Image Source="/ExpressTrack;component/Resources/avatar01.jpg" />
+                </Button>
+                <Label Content="Admin" VerticalContentAlignment="Center" Margin="10,0,0,0"
+                       Foreground="White"/>
+            </StackPanel>
+
+            <Border Grid.Row="1" Background="#FF4B4B9C" Height="1"/>
+            <TreeView x:Name="actionTree" Grid.Row="2" PreviewMouseUp="TreeView_PreviewMouseUp" FontSize="15" Foreground="#B2FFFFFF">
+                <TreeViewItem Header="快递管理" IsExpanded="True">
+                    <TreeViewItem Header="快递列表"/>
+                    <TreeViewItem Header="快递入站"/>
+                    <TreeViewItem Header="快递出站"/>
+                    <TreeViewItem Header="快递详情"/>
+                </TreeViewItem>
+                <TreeViewItem Header="用户列表"/>
+                <TreeViewItem Header="职员列表"/>
+                <TreeViewItem Header="库存明细"/>
+            </TreeView>
+        </Grid>
+        <Frame x:Name="mainFrame" Grid.Row="1" Grid.Column="1" Source="/ExpressTrack;component/Pages/InstockPage.xaml" NavigationUIVisibility="Hidden" Padding="10,5" Background="LightGray"/>
     </Grid>
 </Page>

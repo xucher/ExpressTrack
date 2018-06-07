@@ -18,41 +18,40 @@
             <RowDefinition />
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <DockPanel>
+        <DockPanel LastChildFill="False">
             <Label Content="快递入库单" FontSize="{DynamicResource HeaderTitleSize}"
-                   VerticalContentAlignment="Center" Margin="350,0,0,0"/>
-            <StackPanel Orientation="Horizontal" Margin="300,0,0,0">
+                   VerticalContentAlignment="Center" Margin="370,0,0,0"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,10,0" DockPanel.Dock="Right">
                 <Label Content="设备状态：" VerticalContentAlignment="Center"/>
                 <Label Content="{Binding DeviceState, Converter={StaticResource StateConverter}}" Style="{StaticResource LabelState}"/>
             </StackPanel>
         </DockPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,5" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="中转站编号：" />
-            <ComboBox Width="100" materialDesign:ComboBoxAssist.ClassicMode="true" ItemsSource="{Binding StationIds}"/>
-            <Label Content="入库单号：" Margin="80,0,0,0"/>
+            <Label Content="入库单号："/>
             <TextBox Width="100" Text="{Binding InStockId}" IsEnabled="False"/>
+
+            <Label Content="到达中转站：" Margin="80,0,0,0"/>
+            <ComboBox Width="100" materialDesign:ComboBoxAssist.ClassicMode="true" ItemsSource="{Binding StationIds}"/>
+
+            <Label Content="日期：" Margin="80,0,0,0"/>
+            <DatePicker Width="100" VerticalAlignment="Bottom" 
+                SelectedDate="{Binding Date, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
         <DataGrid Grid.Row="2" ItemsSource="{Binding Shipments}" AutoGenerateColumns="False" Margin="10">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding ExpressCoding}" Header="快递编号" Width="*"/>
                 <DataGridTextColumn Header="名称" Width="*"/>
-                <DataGridTextColumn Binding="{Binding FromStation}" Header="发往站点" Width="*"/>
-                <DataGridTextColumn Binding="{Binding CheckDate}"  Header="入库时间" Width="*"/>
+                <DataGridTextColumn Binding="{Binding FromStation}" Header="发自站点" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Content="制单日期：" />
-            <DatePicker Width="80" VerticalAlignment="Bottom" 
-                SelectedDate="{Binding Date, UpdateSourceTrigger=PropertyChanged}"/>
-            <Label Content="制单人：" Margin="60,0,0,0"/>
-            <TextBox Width="80" Text="{Binding OptStaff}"/>
-            <Button x:Name="btnStart" Content="开始录入" Margin="60,0,0,0" Click="btnStart_Click" IsEnabled="{Binding DeviceState}"/>
-            <Button x:Name="btnEnd" Content="结束录入" Margin="50,0,0,0" Click="btnEnd_Click" IsEnabled="False"/>
-            <Button x:Name="btnSave" Content="保存" Width="60" Margin="50,0,0,0" IsEnabled="False"/>
+            <Button x:Name="btnStart" Content="开始录入" Click="btnStart_Click" IsEnabled="{Binding DeviceState}"/>
+            <Button x:Name="btnEnd" Content="结束录入" Margin="80,0,0,0" Click="btnEnd_Click" IsEnabled="False"/>
+            <Button x:Name="btnSave" Content="保存" Margin="80,0,0,0" IsEnabled="False"/>
         </StackPanel>
     </Grid>
 </Page>
