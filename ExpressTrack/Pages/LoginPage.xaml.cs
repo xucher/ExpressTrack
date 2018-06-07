@@ -4,9 +4,6 @@ using System.Linq;
 using System.Windows.Controls;
 
 namespace ExpressTrack.Pages {
-    /// <summary>
-    /// Interaction logic for LoginPage.xaml
-    /// </summary>
     public partial class LoginPage : Page {
         public LoginPage() {
             InitializeComponent();
@@ -60,6 +57,10 @@ namespace ExpressTrack.Pages {
             } else {
                 passwordError.Content = "";
             }
+        }
+
+        private void btnExit_Click(object sender, RoutedEventArgs e) {
+            Application.Current.Shutdown();
         }
     }
 }

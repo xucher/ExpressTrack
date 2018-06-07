@@ -34,7 +34,7 @@
             <Label Grid.Row="3" x:Name="passwordError" Style="{StaticResource LabelError}" Margin="100, 0, 0, 0"/>
             <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                 <Button x:Name="btnLogin" Content="登录" Width="100" Click="btnLogin_Click"/>
-                <Button Content="退出" Width="100" Margin="80,0,0,0"/>
+                <Button x:Name="btnExit"  Content="退出" Width="100" Margin="80,0,0,0" Click="btnExit_Click"/>
             </StackPanel>
         </Grid>
     </GroupBox>
