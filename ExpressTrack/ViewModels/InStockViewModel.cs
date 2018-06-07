@@ -1,25 +1,28 @@
-﻿using ExpressTrack.Models;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 
 namespace ExpressTrack.ViewModels {
-    public class InStockViewModel: BaseViewModel {
+    public class InStockViewModel {
         #region Properties
-        // 中转站编号
-        public ObservableCollection<string> StationIds { get; set; }
-        public string SelectedStation { get; set; }
         // 入库单号
         public string InStockId { get; set; }
-        // 入库快递列表
-        public ObservableCollection<Shipment> Shipments { get; set; }
-        // 操作员
-        public string OptStaff { get; set; }
+        // 中转站
+        public string NowStation { get; set; }
         // 入库时间
-        public DateTime Date { get; set; }
+        public DateTime CheckDate { get; set; }
         // 设备状态
         public bool DeviceState { get; set; }
+
+        // 入库快递列表
+        public ObservableCollection<InstockModel> InstockExpresses { get; set; }
         #endregion
 
 
+    }
+
+    public class InstockModel {
+        public string Coding { get; set; }
+        public string Name { get; set; }
+        public string FromStation { get; set; } 
     }
 }
