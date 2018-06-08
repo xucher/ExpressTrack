@@ -1,9 +1,13 @@
 ﻿using ExpressTrack.DB;
 using ExpressTrack.Libs;
+using ExpressTrack.Style.Animations;
 using ExpressTrack.ViewModels;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 namespace ExpressTrack {
@@ -40,7 +44,7 @@ namespace ExpressTrack {
                     var data = mReader.ReadData();
                     if (data != null) {
                         // TODO: data.Epc需要重新编码
-                        geneInstockByCoding(data.EPC, 0, true);
+                        geneInstockByCoding(data.EPC, -1);
                     }
                 });
                 mTimer.Interval = new TimeSpan(0, 0, 1);
@@ -66,13 +70,13 @@ namespace ExpressTrack {
             }
         }
 
-        private void geneInstockByCoding(string coding, int index, bool isAuto= false) {
+        private void geneInstockByCoding(string coding, int index) {
             InStockViewModel mInstockModel = DataContext as InStockViewModel;
             var express = MySqlHelper.getExpressByCoding(coding);
             if (express != null) {
                 string fromStation = MySqlHelper.getFromStationByExpress(coding, mInstockModel.NowStation);
                 if (fromStation != "") {
-                    if (isAuto == false) {
+                    if (Tgb_isAuto.IsChecked == true) {
                         // 手动输入
                         mInstockModel.InstockExpresses[index].Name = express.Name;
                         mInstockModel.InstockExpresses[index].FromStation = fromStation;
@@ -87,6 +91,14 @@ namespace ExpressTrack {
                 }
             } else {
                 Console.WriteLine("编号为" + coding + "的快递不存在");
+            }
+        }
+
+        private void Tgb_isAuto_Click(object sender, RoutedEventArgs e) {
+            if (Tgb_isAuto.IsChecked == true) {
+                manualAddPanelColumn.Width = new GridLength(250);
+            } else {
+                manualAddPanelColumn.Width = new GridLength(0);
             }
         }
     }

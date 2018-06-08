@@ -102,6 +102,7 @@
       <DependentUpon>WorkerPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Style\Animations\GridLengthAnimation.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ExpressDetailViewModel.cs" />
     <Compile Include="ViewModels\InStockViewModel.cs" />

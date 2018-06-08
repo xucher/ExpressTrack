@@ -32,24 +32,51 @@
             <TextBox Width="100" Text="{Binding InStockId}" IsEnabled="False"/>
 
             <Label Content="到达中转站：" Margin="80,0,0,0"/>
-            <TextBox Width="100" Text="{Binding NowStation, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
+            <TextBox Width="100" Text="{Binding NowStation, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=Tgb_isAuto, Path=IsChecked}"/>
 
             <Label Content="日期：" Margin="80,0,0,0"/>
             <DatePicker Width="100" VerticalAlignment="Bottom" 
                 SelectedDate="{Binding CheckDate}" IsEnabled="False"/>
         </StackPanel>
 
-        <DataGrid x:Name="DG_instock" Grid.Row="2" ItemsSource="{Binding InstockExpresses}" AutoGenerateColumns="False" Margin="10" CellEditEnding="DG_instock_CellEditEnding">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Coding, UpdateSourceTrigger=PropertyChanged}" Header="快递编号" Width="*" />
-                <DataGridTextColumn Binding="{Binding Name}" Header="名称" Width="*" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding FromStation}" Header="发自站点" Width="*" IsReadOnly="True"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition x:Name="manualAddPanelColumn" Width="0"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="DG_instock"  ItemsSource="{Binding InstockExpresses}" AutoGenerateColumns="False" Margin="10"
+                      CellEditEnding="DG_instock_CellEditEnding" CanUserAddRows="{Binding ElementName=Tgb_isAuto, Path=IsChecked}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Coding, UpdateSourceTrigger=PropertyChanged}" Header="快递编号" Width="*" />
+                    <DataGridTextColumn Binding="{Binding Name}" Header="名称" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding FromStation}" Header="发自站点" Width="*" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Grid.Column="1">
+                <GroupBox Header="通过快递编号逐个添加" Margin="8">
+                    <StackPanel>
+                        <TextBox materialDesign:HintAssist.Hint="快递编号" 
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <Button Margin="0,20,0,0" Content="添加"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="通过出库单批量添加" Margin="8">
+                    <StackPanel>
+                        <TextBox materialDesign:HintAssist.Hint="出库单号" 
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <Button Margin="0,20,0,0" Content="添加"/>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </Grid>
 
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="btnStart" Content="开始录入" Click="btnStart_Click" IsEnabled="{Binding DeviceState}"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Label Content="手动输入"/>
+                <ToggleButton x:Name="Tgb_isAuto" Style="{StaticResource MaterialDesignSwitchToggleButton}" Click="Tgb_isAuto_Click" />
+            </StackPanel>
+            <Button x:Name="btnStart" Content="开始录入" Margin="150,0,0,0" Click="btnStart_Click" IsEnabled="{Binding DeviceState}"/>
             <Button x:Name="btnEnd" Content="结束录入" Margin="80,0,0,0" Click="btnEnd_Click" IsEnabled="False"/>
             <Button x:Name="btnSave" Content="保存" Margin="80,0,0,0" IsEnabled="False"/>
         </StackPanel>
