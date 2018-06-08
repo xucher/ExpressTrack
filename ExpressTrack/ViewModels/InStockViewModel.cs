@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace ExpressTrack.ViewModels {
-    public class InStockViewModel {
-        #region Properties
+    public class InStockViewModel: BaseViewModel {
         // 入库单号
         public string InStockId { get; set; }
         // 中转站
@@ -12,17 +10,24 @@ namespace ExpressTrack.ViewModels {
         // 入库时间
         public DateTime CheckDate { get; set; }
         // 设备状态
-        public bool DeviceState { get; set; }
+        private bool mDeviceState;
+        public bool DeviceState {
+            get {
+                return mDeviceState;
+            }
+            set {
+                if (value != mDeviceState) {
+                    mDeviceState = value;
+                    Notify("DeviceState");
+                }
+            }
+        }
 
         // 入库快递列表
         public ObservableCollection<InstockModel> InstockExpresses { get; set; }
-        #endregion
-
-
     }
 
-    public class InstockModel: INotifyPropertyChanged {
-        public event PropertyChangedEventHandler PropertyChanged;
+    public class InstockModel: BaseViewModel {
         private string mCoding;
         private string mName;
         private string mFromStation;
@@ -53,10 +58,6 @@ namespace ExpressTrack.ViewModels {
                     Notify("FromStation");
                 }
             }
-        }
-
-        private void Notify(string propertyName){
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

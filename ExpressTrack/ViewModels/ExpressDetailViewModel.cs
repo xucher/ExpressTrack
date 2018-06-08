@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 
 namespace ExpressTrack.ViewModels {
-    class ExpressDetailViewModel {
+    class ExpressDetailViewModel: BaseViewModel {
         #region Properties
         // 当前快递信息
         public string ExpressCoding { get; set; }
