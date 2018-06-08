@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
+using ExpressTrack.DB;
 
 namespace ExpressTrack {
     public partial class ExpressListPage : Page {       
@@ -32,13 +33,7 @@ namespace ExpressTrack {
         // 从数据库中获取所有Express
         private void getExpress() {
             expresses.Clear();
-            List<Express> result;
-            using (ExpressDBContext db = new ExpressDBContext()) {
-                var query = from e in db.Express
-                            select e;
-                result = query.ToList();
-            }
-            foreach (var item in result) {
+            foreach (var item in MySqlHelper.getAllExpress()) {
                 expresses.Add(item);
             };
         }

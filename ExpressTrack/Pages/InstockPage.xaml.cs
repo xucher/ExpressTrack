@@ -1,4 +1,5 @@
-﻿using ExpressTrack.Libs;
+﻿using ExpressTrack.DB;
+using ExpressTrack.Libs;
 using ExpressTrack.ViewModels;
 using System;
 using System.Collections.ObjectModel;
@@ -20,13 +21,12 @@ namespace ExpressTrack {
         private DispatcherTimer mTimer;
 
         private void setDataContext() {
-            var stations = new ObservableCollection<string> { "station1", "station2", "station3" };
             var viewModel = new InStockViewModel {
-                StationIds = stations,
-                InStockId = "201806031159",
-                Shipments = new ObservableCollection<Models.Shipment>(),
-                Date = DateTime.Now,
-                DeviceState = true
+                InStockId = "I0001159",
+                NowStation = "StationA",
+                CheckDate = DateTime.Now,
+                DeviceState = true,
+                InstockExpresses = new ObservableCollection<InstockModel>()
             };
             DataContext = viewModel;
         }
@@ -39,9 +39,8 @@ namespace ExpressTrack {
                 mTimer.Tick += new EventHandler((s, ev) => {
                     var data = mReader.ReadData();
                     if (data != null) {
-                        (DataContext as InStockViewModel).Shipments.Add(
-                            new Models.Shipment { FromStation = data.EPC }
-                         );
+                        // TODO: data.Epc需要重新编码
+                        geneInstockByCoding(data.EPC, 0, true);
                     }
                 });
                 mTimer.Interval = new TimeSpan(0, 0, 1);
@@ -53,8 +52,42 @@ namespace ExpressTrack {
         // 停止读取
         private void btnEnd_Click(object sender, System.Windows.RoutedEventArgs e) {
             btnEnd.IsEnabled = false;
+     
             mTimer.Stop();
+            mTimer = null;
+
             btnStart.IsEnabled = true;
+        }
+
+        // 手动输入编号
+        private void DG_instock_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e) {
+            if (e.Column.DisplayIndex == 0) {
+                geneInstockByCoding((e.EditingElement as TextBox).Text, e.Row.GetIndex());
+            }
+        }
+
+        private void geneInstockByCoding(string coding, int index, bool isAuto= false) {
+            InStockViewModel mInstockModel = DataContext as InStockViewModel;
+            var express = MySqlHelper.getExpressByCoding(coding);
+            if (express != null) {
+                string fromStation = MySqlHelper.getFromStationByExpress(coding, mInstockModel.NowStation);
+                if (fromStation != "") {
+                    if (isAuto == false) {
+                        // 手动输入
+                        mInstockModel.InstockExpresses[index].Name = express.Name;
+                        mInstockModel.InstockExpresses[index].FromStation = fromStation;
+                    } else {
+                        // 通过读写器输入
+                        mInstockModel.InstockExpresses.Add(new InstockModel {
+                            Coding = coding,
+                            Name = express.Name,
+                            FromStation = fromStation
+                        });
+                    }
+                }
+            } else {
+                Console.WriteLine("编号为" + coding + "的快递不存在");
+            }
         }
     }
 }

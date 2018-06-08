@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace ExpressTrack.ViewModels {
     public class InStockViewModel {
@@ -20,9 +21,42 @@ namespace ExpressTrack.ViewModels {
 
     }
 
-    public class InstockModel {
-        public string Coding { get; set; }
-        public string Name { get; set; }
-        public string FromStation { get; set; } 
+    public class InstockModel: INotifyPropertyChanged {
+        public event PropertyChangedEventHandler PropertyChanged;
+        private string mCoding;
+        private string mName;
+        private string mFromStation;
+
+        public string Coding {
+            get { return mCoding; }
+            set {
+                if (value != mCoding) {
+                    mCoding = value;
+                    Notify("Coding");
+                }
+            }
+        }
+        public string Name {
+            get { return mName; }
+            set {
+                if (value != mName) {
+                    mName = value;
+                    Notify("Name");
+                }
+            }
+        }
+        public string FromStation {
+            get { return mFromStation; }
+            set {
+                if (value != mFromStation) {
+                    mFromStation = value;
+                    Notify("FromStation");
+                }
+            }
+        }
+
+        private void Notify(string propertyName){
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

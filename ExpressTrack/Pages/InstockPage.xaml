@@ -32,18 +32,18 @@
             <TextBox Width="100" Text="{Binding InStockId}" IsEnabled="False"/>
 
             <Label Content="到达中转站：" Margin="80,0,0,0"/>
-            <ComboBox Width="100" materialDesign:ComboBoxAssist.ClassicMode="true" ItemsSource="{Binding StationIds}"/>
+            <TextBox Width="100" Text="{Binding NowStation, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
 
             <Label Content="日期：" Margin="80,0,0,0"/>
             <DatePicker Width="100" VerticalAlignment="Bottom" 
-                SelectedDate="{Binding Date, UpdateSourceTrigger=PropertyChanged}"/>
+                SelectedDate="{Binding CheckDate}" IsEnabled="False"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="2" ItemsSource="{Binding Shipments}" AutoGenerateColumns="False" Margin="10">
+        <DataGrid x:Name="DG_instock" Grid.Row="2" ItemsSource="{Binding InstockExpresses}" AutoGenerateColumns="False" Margin="10" CellEditEnding="DG_instock_CellEditEnding">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding ExpressCoding}" Header="快递编号" Width="*"/>
-                <DataGridTextColumn Header="名称" Width="*"/>
-                <DataGridTextColumn Binding="{Binding FromStation}" Header="发自站点" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Coding, UpdateSourceTrigger=PropertyChanged}" Header="快递编号" Width="*" />
+                <DataGridTextColumn Binding="{Binding Name}" Header="名称" Width="*" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding FromStation}" Header="发自站点" Width="*" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
 

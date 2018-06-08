@@ -78,6 +78,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToStringConverter.cs" />
     <Compile Include="DB\ExpressDBContext.cs" />
+    <Compile Include="DB\MySqlHelper.cs" />
     <Compile Include="Libs\FixedReader.cs" />
     <Compile Include="Libs\Helpers.cs" />
     <Compile Include="Pages\ExpressDetailPage.xaml.cs">
