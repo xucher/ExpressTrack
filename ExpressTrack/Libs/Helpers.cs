@@ -17,6 +17,18 @@ namespace ExpressTrack {
                 (now.Day+"").PadLeft(2, '0') + (index + "").PadLeft(4, '0');
         }
 
+        public static int parseShipmentCoding(string coding) {
+            return int.Parse(coding.Substring(4));
+        }
+
+        public static string convertShipmentCoding(int index, int type) {
+            if (type == ShipmentPage.INSTOCK) {
+                return "I000" + (index + "").PadLeft(4, '0');
+            } else {
+                return "O000" + (index + "").PadLeft(4, '0');
+            }
+        }
+
         // 解析预定路线
         public static string[] parsePreTrack(string preTrack) {
             return preTrack.Split('-');

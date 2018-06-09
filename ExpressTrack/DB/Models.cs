@@ -28,11 +28,11 @@ namespace ExpressTrack.Models {
         [StringLength(8)]
         public string Coding { get; set; }
         public string ExpressCoding { get; set; }
-        public int FromStation { get; set; }
-        public int ToStation { get; set; }
+        public string FromStation { get; set; }
+        public string ToStation { get; set; }
         [StringLength(30)]
         public string CheckDate { get; set; }
-        public bool State { get; set; } 
+        public int State { get; set; } 
     }
 
     [Table("outstock")]
@@ -41,11 +41,11 @@ namespace ExpressTrack.Models {
         [StringLength(8)]
         public string Coding { get; set; }
         public string ExpressCoding { get; set; }
-        public int FromStation { get; set; }
-        public int ToStation { get; set; }
+        public string FromStation { get; set; }
+        public string ToStation { get; set; }
         [StringLength(30)]
         public string CheckDate { get; set; }
-        public bool State { get; set; }
+        public int State { get; set; }
     }
 
     [Table("station")]

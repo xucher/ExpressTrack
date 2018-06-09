@@ -23,55 +23,45 @@ namespace ExpressTrack.DB {
                             where e.Coding == coding
                             select e;
                 if (query.Count() > 0) {
-                    express = query.First();
+                    express = query.Single();
                 }
             }
             return express;
         }
 
+
         public static string getFromStationByExpress(string coding, string nowStation) {
             string fromStation = "";
             using (ExpressDBContext db = new ExpressDBContext()) {
-                // 查询nowStation对应Id
-                var query = from s in db.Station
-                                   where s.Name == nowStation
-                                   select s.Id;
-                if (query.Count() > 0) {
-                    int nowStationId = int.Parse(query.First().ToString());
-                    // 查询对应出库记录
-                    query = from e in db.Outstock
-                            where e.ExpressCoding == coding &&
-                            e.ToStation == nowStationId
-                            select e.FromStation;
-                    if (query.Count() > 0) {
-                        fromStation = query.First().ToString();
-                    } else {
-                        // 判断快递状态
-                        query = from e in db.Express
-                                where e.Coding == coding
-                                select e.State;
-                        if (query.Count() > 0) {
-                            // Todo: state 
-                            // 状态为init
-                            if (query.First().ToString() == "0") {
-                                // 起始虚拟中转站
-                                fromStation = "--";
-                            } else {
-                                // Todo: 判定错误
-                                Console.WriteLine("该快递不应该在本站入库！！！");
-                            }
-                        } else {
-                            Console.WriteLine("编号为" + coding + "的快递不存在");
-                        }
-                        
-                    }
+                // 查询对应出库记录
+                var query1 = from e in db.Outstock
+                        where e.ExpressCoding == coding &&
+                        e.ToStation == nowStation
+                        select e.FromStation;
+                if (query1.Count() > 0) {
+                    fromStation = query1.Single().ToString();
                 } else {
-                    Console.WriteLine("中转站"+ nowStation + "不存在");
+                    // 判断快递状态
+                    var query2 = from e in db.Express
+                                 where e.Coding == coding
+                                 select e.State;
+                    if (query2.Count() > 0) {
+                        // Todo: state 
+                        // 状态为init
+                        if (query2.Single() == 0) {
+                            // 起始虚拟中转站
+                            fromStation = "--";
+                        } else {
+                            // Todo: 判定错误
+                            Console.WriteLine("该快递不应该在本站入库！！！");
+                        }
+                    } else {
+                        Console.WriteLine("编号为" + coding + "的快递不存在");
+                    }
                 }
             }
             return fromStation;
         }
-
         public static string getNextStation(string coding, string nowStation) {
             string result = "";
             string preTrack = "";
@@ -80,24 +70,23 @@ namespace ExpressTrack.DB {
                             where e.Coding == coding
                             select e.PreTrack;
                 if (query.Count() > 0) {
-                    preTrack = query.First().ToString();
+                    preTrack = query.Single().ToString();
                 }
             }
             string[] preTrackArray = Helpers.parsePreTrack(preTrack);
             
             // TODO: 假定没有重复站点
             for (int i = 0;i < preTrackArray.Length;i++) {
-                if (preTrackArray[i] == "nowStation") {
+                if (preTrackArray[i] == nowStation.Last()+"") {
                     if (i + 1 == preTrackArray.Length) {
                         result = "--";
                     } else {
-                        result = preTrackArray[i + 1];
+                        result = "Station" + preTrackArray[i + 1];
                     }
                 }
             }
             return result;
         }
-
         public static List<string> getAllStationName() {
             List<string> stations = new List<string>();
             using (ExpressDBContext db = new ExpressDBContext()) {
@@ -108,6 +97,29 @@ namespace ExpressTrack.DB {
                 }
             }
             return stations;
+        }
+
+        public static int getLastInstockIndex() {
+            using (ExpressDBContext db = new ExpressDBContext()) {
+                var query = from s in db.Instock
+                            select s.Coding;
+                if (query.Count() > 0) {
+                    return Helpers.parseShipmentCoding(query.Single());
+                } else {
+                    return 0;
+                }
+            }
+        }
+        public static int getLastOutstockIndex() {
+            using (ExpressDBContext db = new ExpressDBContext()) {
+                var query = from s in db.Outstock
+                            select s.Coding;
+                if (query.Count() > 0) {
+                    return Helpers.parseShipmentCoding(query.Single());
+                } else {
+                    return 0;
+                }
+            }
         }
     }
 }

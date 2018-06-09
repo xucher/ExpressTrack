@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 namespace ExpressTrack.ViewModels {
     public class ShipmentViewModel: BaseViewModel {
         // 入库单号
-        public string InStockId { get; set; }
+        public string ShipmentId { get; set; }
         // 中转站
         public ObservableCollection<string> Stations { get; set; }
         private string mSelectedStation;
