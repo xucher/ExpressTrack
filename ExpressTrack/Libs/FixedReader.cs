@@ -67,7 +67,8 @@ namespace ExpressTrack.Libs {
 
         // 关闭连接
         public void Close() {
-            reader.Disconnect();
+            if (reader != null)
+                reader.Disconnect();
         }
 
         public TagInfo ReadData() {

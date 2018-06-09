@@ -105,7 +105,7 @@
     <Compile Include="Style\Animations\GridLengthAnimation.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ExpressDetailViewModel.cs" />
-    <Compile Include="ViewModels\InStockViewModel.cs" />
+    <Compile Include="ViewModels\ShipmentViewModel.cs" />
     <Page Include="Pages\ExpressDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

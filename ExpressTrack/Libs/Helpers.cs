@@ -17,6 +17,11 @@ namespace ExpressTrack {
                 (now.Day+"").PadLeft(2, '0') + (index + "").PadLeft(4, '0');
         }
 
+        // 解析预定路线
+        public static string[] parsePreTrack(string preTrack) {
+            return preTrack.Split('-');
+        }
+
         // 解析localsense数据
         public static int[] parseLocalsenseBlob(string data) {
             // Blob example:  CC-5F-01-01-3A-41-00-00-01-6C-00-00-02-E1-00-AE-01-02-00-03-58-F2-AC-01-01-27-07-AA-BB

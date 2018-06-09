@@ -3,12 +3,22 @@ using System;
 using System.Collections.ObjectModel;
 
 namespace ExpressTrack.ViewModels {
-    public class InStockViewModel: BaseViewModel {
+    public class ShipmentViewModel: BaseViewModel {
         // 入库单号
         public string InStockId { get; set; }
         // 中转站
         public ObservableCollection<string> Stations { get; set; }
-        public string SelectedStation { get; set; }
+        private string mSelectedStation;
+        public string SelectedStation {
+            get {
+                return mSelectedStation;
+            } set {
+                if (value != mSelectedStation) {
+                    mSelectedStation = value;
+                    Notify("SelectedStation");
+                }
+            }
+        }
         // 入库时间
         public DateTime CheckDate { get; set; }
         // 设备状态
@@ -26,13 +36,13 @@ namespace ExpressTrack.ViewModels {
         }
 
         // 入库快递列表
-        public ObservableCollection<InstockModel> InstockExpresses { get; set; }
+        public ObservableCollection<ShipmentModel> Shipments { get; set; }
     }
 
-    public class InstockModel: BaseViewModel {
+    public class ShipmentModel: BaseViewModel {
         private string mCoding;
         private string mName;
-        private string mFromStation;
+        private string mStation;
 
         public string Coding {
             get { return mCoding; }
@@ -52,12 +62,12 @@ namespace ExpressTrack.ViewModels {
                 }
             }
         }
-        public string FromStation {
-            get { return mFromStation; }
+        public string Station {
+            get { return mStation; }
             set {
-                if (value != mFromStation) {
-                    mFromStation = value;
-                    Notify("FromStation");
+                if (value != mStation) {
+                    mStation = value;
+                    Notify("Station");
                 }
             }
         }

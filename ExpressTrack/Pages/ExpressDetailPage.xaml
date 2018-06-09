@@ -30,7 +30,10 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Label Content="快递编号：" VerticalContentAlignment="Center"/>
-                <Label Content="{Binding ExpressCoding}" Grid.Column="1" VerticalContentAlignment="Center"/>
+                <StackPanel Margin="10,0,0,0" Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal">
+                    <TextBox Width="150" Text="{Binding ExpressCoding}" />
+                    <Button Content="查询" Margin="50,0,0,0"/>
+                </StackPanel>
 
                 <Label Content="快递名称：" VerticalContentAlignment="Center" Grid.Row="1"/>
                 <Label Content="{Binding ExpressName}" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="1"/>

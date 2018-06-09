@@ -7,7 +7,7 @@
       xmlns:localConverter="clr-namespace:ExpressTrack.Converters"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       d:DesignHeight="600" d:DesignWidth="880"
-      Title="InstockPage">
+      Title="InstockPage" Unloaded="Page_Unloaded">
     <Page.Resources>
         <localConverter:BoolToStringConverter x:Key="StateConverter"/>
     </Page.Resources>
@@ -19,7 +19,7 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <DockPanel LastChildFill="False">
-            <Label Content="快递入库单" FontSize="{DynamicResource HeaderTitleSize}"
+            <Label x:Name="labTitle" Content="快递入库单" FontSize="{DynamicResource HeaderTitleSize}"
                    VerticalContentAlignment="Center" Margin="370,0,0,0"/>
             <StackPanel Orientation="Horizontal" Margin="0,0,10,0" DockPanel.Dock="Right">
                 <Label Content="设备状态：" VerticalContentAlignment="Center"/>
@@ -28,11 +28,12 @@
         </DockPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,5" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="入库单号："/>
+            <Label x:Name="labListCoding" Content="入库单号："/>
             <TextBox Width="100" Text="{Binding InStockId}" IsEnabled="False"/>
 
             <Label Content="当前中转站：" Margin="80,0,0,0"/>
-            <ComboBox Width="100" materialDesign:ComboBoxAssist.ClassicMode="true" ItemsSource="{Binding Stations}"/>
+            <ComboBox Width="100" materialDesign:ComboBoxAssist.ClassicMode="true" ItemsSource="{Binding Stations}"
+                      SelectedValue="{Binding SelectedStation, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Content="日期：" Margin="80,0,0,0"/>
             <DatePicker Width="100" VerticalAlignment="Bottom" 
@@ -44,27 +45,27 @@
                 <ColumnDefinition />
                 <ColumnDefinition x:Name="manualAddPanelColumn" Width="0"/>
             </Grid.ColumnDefinitions>
-            <DataGrid x:Name="DG_instock"  ItemsSource="{Binding InstockExpresses}" AutoGenerateColumns="False" Margin="10"
-                      CellEditEnding="DG_instock_CellEditEnding" CanUserAddRows="{Binding ElementName=Tgb_isAuto, Path=IsChecked}">
+            <DataGrid x:Name="DG_instock"  ItemsSource="{Binding Shipments}" AutoGenerateColumns="False" Margin="10"
+                       CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Coding, UpdateSourceTrigger=PropertyChanged}" Header="快递编号" Width="*" />
                     <DataGridTextColumn Binding="{Binding Name}" Header="名称" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding FromStation}" Header="发自站点" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="columnFromStation" Binding="{Binding Station}" Header="发自站点" Width="*" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Grid.Column="1">
                 <GroupBox Header="通过快递编号逐个添加" Margin="8">
                     <StackPanel>
-                        <TextBox materialDesign:HintAssist.Hint="快递编号" 
+                        <TextBox x:Name="tbxAdd" materialDesign:HintAssist.Hint="快递编号" 
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        <Button Margin="0,20,0,0" Content="添加"/>
+                        <Button Margin="0,20,0,0" Content="添加" Click="btnAdd_Click"/>
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="通过出库单批量添加" Margin="8">
                     <StackPanel>
-                        <TextBox materialDesign:HintAssist.Hint="出库单号" 
+                        <TextBox x:Name="tbxAddBatch" materialDesign:HintAssist.Hint="出库单号" 
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        <Button Margin="0,20,0,0" Content="添加"/>
+                        <Button Margin="0,20,0,0" Content="批量添加" Click="btnAddBatch_Click"/>
                     </StackPanel>
                 </GroupBox>
             </StackPanel>

@@ -72,6 +72,32 @@ namespace ExpressTrack.DB {
             return fromStation;
         }
 
+        public static string getNextStation(string coding, string nowStation) {
+            string result = "";
+            string preTrack = "";
+            using (ExpressDBContext db = new ExpressDBContext()) {
+                var query = from e in db.Express
+                            where e.Coding == coding
+                            select e.PreTrack;
+                if (query.Count() > 0) {
+                    preTrack = query.First().ToString();
+                }
+            }
+            string[] preTrackArray = Helpers.parsePreTrack(preTrack);
+            
+            // TODO: 假定没有重复站点
+            for (int i = 0;i < preTrackArray.Length;i++) {
+                if (preTrackArray[i] == "nowStation") {
+                    if (i + 1 == preTrackArray.Length) {
+                        result = "--";
+                    } else {
+                        result = preTrackArray[i + 1];
+                    }
+                }
+            }
+            return result;
+        }
+
         public static List<string> getAllStationName() {
             List<string> stations = new List<string>();
             using (ExpressDBContext db = new ExpressDBContext()) {
