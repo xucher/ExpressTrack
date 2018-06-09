@@ -96,6 +96,7 @@ namespace ExpressTrack {
         }
 
         private void geneShipmentByCoding(string coding) {
+            // TODO: 判断出库单状态,更新快递状态
             ShipmentViewModel mShipmentModel = DataContext as ShipmentViewModel;
 
             var query = from s in mShipmentModel.Shipments
@@ -175,6 +176,7 @@ namespace ExpressTrack {
                     break;
             }
             mReader.ConnectAnt(ant);
+            showMsg("连接成功");
             btnStart.IsEnabled = true;
         }
 
@@ -192,7 +194,13 @@ namespace ExpressTrack {
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e) {
-            db.SaveChanges();
+            if (db.SaveChanges() > 0) {
+                showMsg("保存成功");
+            };
+        }
+
+        private void showMsg(string message) {
+            (Application.Current.MainWindow as MainWindow).showMessage(message);
         }
     }
 }

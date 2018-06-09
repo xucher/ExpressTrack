@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -13,5 +14,9 @@
         Title="MainWindow" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         MouseDown="Window_MouseDown" Width="{DynamicResource WindowWidth}" Height="{DynamicResource WindowHeight}">
-    <Frame Source="/ExpressTrack;component/Pages/MainPage.xaml" NavigationUIVisibility="Hidden"/>
+    <Grid>
+        <Frame Source="/ExpressTrack;component/Pages/MainPage.xaml" NavigationUIVisibility="Hidden"/>
+        <materialDesign:Snackbar x:Name="Snackbar" Message="hello 1"
+             Height="40" Margin="850,0,0,80" MinWidth="200"/>
+    </Grid>
 </Window>

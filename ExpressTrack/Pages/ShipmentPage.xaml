@@ -18,6 +18,7 @@
             <RowDefinition />
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
+
         <DockPanel LastChildFill="False">
             <Label x:Name="labTitle" Content="快递入库单" FontSize="{DynamicResource HeaderTitleSize}"
                    VerticalContentAlignment="Center" Margin="370,0,0,0"/>

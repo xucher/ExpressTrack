@@ -1,4 +1,5 @@
-﻿using ExpressTrack.ViewModels;
+﻿using ExpressTrack.DB;
+using ExpressTrack.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -14,11 +15,9 @@ namespace ExpressTrack {
         public ExpressDetailPage() {
             InitializeComponent();
             DataContext = new ExpressDetailViewModel {
-                ExpressCoding = "20181",
-                ExpressName = "快递",
-                PreTrack = new ObservableCollection<string> { "A", "B", "C"},
                 NowAddress = "未连接设备...",
-                Shipments = new ObservableCollection<Models.Instock>()
+                //ShipRecords = new ObservableCollection<ExpressDetailViewModel.ShipRecord>(
+                //    MySqlHelper.getShipRecord())
             };
         }
 

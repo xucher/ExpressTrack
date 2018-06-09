@@ -31,7 +31,7 @@
                 </Grid.RowDefinitions>
                 <Label Content="快递编号：" VerticalContentAlignment="Center"/>
                 <StackPanel Margin="10,0,0,0" Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal">
-                    <TextBox Width="150" Text="{Binding ExpressCoding}" />
+                    <TextBox Width="150" Text="{Binding ExpressCoding, UpdateSourceTrigger=PropertyChanged}" />
                     <Button Content="查询" Margin="50,0,0,0"/>
                 </StackPanel>
 
@@ -39,7 +39,6 @@
                 <Label Content="{Binding ExpressName}" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="1"/>
 
                 <Label Content="预定路线：" VerticalContentAlignment="Center" Grid.Row="2"/>
-                <!--<Label Content="{Binding PreTrack}" Grid.Row="2" Grid.Column="1"/>-->
                 <ListBox ItemsSource="{Binding PreTrack}" Grid.Row="2" Grid.Column="1">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -51,7 +50,7 @@
                 <Label Content="当前坐标：" VerticalContentAlignment="Center" Grid.Row="3"/>
                 <Label Content="{Binding NowAddress, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Grid.Row="3" Grid.Column="1"/>
             </Grid>
-            <ListView Height="400" ItemsSource="{Binding Shipments}"/>
+            <ListView Height="400" ItemsSource="{Binding ShipRecords}"/>
         </StackPanel>
         <Canvas Grid.Column="1" Background="#FFEAE1E1">
             <Path Stroke="Black">

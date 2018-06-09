@@ -1,4 +1,5 @@
 ﻿using ExpressTrack.Models;
+using ExpressTrack.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -104,7 +105,7 @@ namespace ExpressTrack.DB {
                 var query = from s in db.Instock
                             select s.Coding;
                 if (query.Count() > 0) {
-                    return Helpers.parseShipmentCoding(query.Single());
+                    return Helpers.parseShipmentCoding(query.ToList().Last());
                 } else {
                     return 0;
                 }
@@ -115,11 +116,18 @@ namespace ExpressTrack.DB {
                 var query = from s in db.Outstock
                             select s.Coding;
                 if (query.Count() > 0) {
-                    return Helpers.parseShipmentCoding(query.Single());
+                    return Helpers.parseShipmentCoding(query.ToList().Last());
                 } else {
                     return 0;
                 }
             }
+        }
+
+        public static List<ExpressDetailViewModel.ShipRecord> getShipRecord() {
+            List<ExpressDetailViewModel.ShipRecord> result = null;
+
+            
+            return result;
         }
     }
 }

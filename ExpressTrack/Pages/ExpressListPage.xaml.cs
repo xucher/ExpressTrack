@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using ExpressTrack.DB;
+using System.Windows;
 
 namespace ExpressTrack {
     public partial class ExpressListPage : Page {       
@@ -55,21 +56,21 @@ namespace ExpressTrack {
         }
 
         // 更新数据到数据库
-        private void btnUpdate_Click(object sender, System.Windows.RoutedEventArgs e) {
+        private void btnUpdate_Click(object sender, RoutedEventArgs e) {
             if (db.SaveChanges() > 0) {
-                Console.WriteLine("modified");
+                (Application.Current.MainWindow as MainWindow).showMessage("更新成功");
             };
         }
 
-        private void Page_Unloaded(object sender, System.Windows.RoutedEventArgs e) {
+        private void Page_Unloaded(object sender, RoutedEventArgs e) {
             // 关闭数据库连接
         }
 
-        private void btnRefresh_Click(object sender, System.Windows.RoutedEventArgs e) {
+        private void btnRefresh_Click(object sender, RoutedEventArgs e) {
             getExpress();
         }
 
-        private void btnInit_Click(object sender, System.Windows.RoutedEventArgs e) {
+        private void btnInit_Click(object sender, RoutedEventArgs e) {
             var expressList = new List<Express>();
 
             expressList.Add(new Express {
