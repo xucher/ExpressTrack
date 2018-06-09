@@ -29,7 +29,7 @@ namespace ExpressTrack.Models {
         public string Coding { get; set; }
         public string ExpressCoding { get; set; }
         public int FromStation { get; set; }
-        public int ArriveStation { get; set; }
+        public int ToStation { get; set; }
         [StringLength(30)]
         public string CheckDate { get; set; }
         public bool State { get; set; } 
@@ -41,23 +41,11 @@ namespace ExpressTrack.Models {
         [StringLength(8)]
         public string Coding { get; set; }
         public string ExpressCoding { get; set; }
-        public int NowStation { get; set; }
+        public int FromStation { get; set; }
         public int ToStation { get; set; }
         [StringLength(30)]
         public string CheckDate { get; set; }
         public bool State { get; set; }
-    }
-
-    [Table("shipment")]
-    public class Shipment {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        public string ExpressCoding { get; set; }
-        public string FromStation { get; set; }
-        public string ToStation { get; set; }
-        [StringLength(30)]
-        public string CheckDate { get; set; }
     }
 
     [Table("station")]

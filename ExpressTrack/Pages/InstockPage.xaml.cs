@@ -1,13 +1,10 @@
 ﻿using ExpressTrack.DB;
 using ExpressTrack.Libs;
-using ExpressTrack.Style.Animations;
 using ExpressTrack.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 namespace ExpressTrack {
@@ -15,13 +12,10 @@ namespace ExpressTrack {
         public InstockPage() {
             InitializeComponent();
 
-            // 连接天线
-            //mReader = new FixedReader();
-            //mReader.ConnectAnt(FixedReader.ANT1);
             setDataContext();
         }
 
-        private FixedReader mReader;
+        private FixedReader mReader = new FixedReader();
         private DispatcherTimer mTimer;
 
         private void setDataContext() {
@@ -54,7 +48,7 @@ namespace ExpressTrack {
         }
 
         // 停止读取
-        private void btnEnd_Click(object sender, System.Windows.RoutedEventArgs e) {
+        private void btnEnd_Click(object sender, RoutedEventArgs e) {
             btnEnd.IsEnabled = false;
      
             mTimer.Stop();
@@ -100,6 +94,12 @@ namespace ExpressTrack {
             } else {
                 manualAddPanelColumn.Width = new GridLength(0);
             }
+        }
+
+        private void btnConnect_Click(object sender, RoutedEventArgs e) {
+            // 判断要连接的天线
+            mReader.ConnectAnt(FixedReader.ANT1);
+            btnStart.IsEnabled = true;
         }
     }
 }

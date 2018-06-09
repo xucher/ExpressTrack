@@ -76,7 +76,8 @@
                 <Label Content="手动输入"/>
                 <ToggleButton x:Name="Tgb_isAuto" Style="{StaticResource MaterialDesignSwitchToggleButton}" Click="Tgb_isAuto_Click" />
             </StackPanel>
-            <Button x:Name="btnStart" Content="开始录入" Margin="150,0,0,0" Click="btnStart_Click" IsEnabled="{Binding DeviceState}"/>
+            <Button x:Name="btnConnect" Content= "连接天线" Margin="150,0,0,0" Click="btnConnect_Click"/>
+            <Button x:Name="btnStart" Content="开始录入" Margin="80,0,0,0" Click="btnStart_Click" IsEnabled="False"/>
             <Button x:Name="btnEnd" Content="结束录入" Margin="80,0,0,0" Click="btnEnd_Click" IsEnabled="False"/>
             <Button x:Name="btnSave" Content="保存" Margin="80,0,0,0" IsEnabled="False"/>
         </StackPanel>

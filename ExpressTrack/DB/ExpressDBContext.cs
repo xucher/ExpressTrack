@@ -12,8 +12,5 @@ namespace ExpressTrack {
 
         public DbSet<Instock> Instock { get; set; }
         public DbSet<Outstock> Outstock { get; set; }
-        public DbSet<Shipment> Shipment { get; set; }
-        
-        
     }
 }

@@ -42,7 +42,7 @@ namespace ExpressTrack.DB {
                     query = from e in db.Outstock
                             where e.ExpressCoding == coding &&
                             e.ToStation == nowStationId
-                            select e.NowStation;
+                            select e.FromStation;
                     if (query.Count() > 0) {
                         fromStation = query.First().ToString();
                     } else {

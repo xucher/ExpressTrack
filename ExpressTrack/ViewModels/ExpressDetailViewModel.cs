@@ -10,7 +10,7 @@ namespace ExpressTrack.ViewModels {
         public ObservableCollection<string> PreTrack { get; set; }
         public string NowAddress { get; set; }
 
-        public ObservableCollection<Shipment> Shipments { get; set; }
+        public ObservableCollection<Instock> Shipments { get; set; }
         #endregion
     }
 }
