@@ -18,15 +18,7 @@ namespace ExpressTrack {
                 ExpressName = "快递",
                 PreTrack = new ObservableCollection<string> { "A", "B", "C"},
                 NowAddress = "未连接设备...",
-                Shipments = new ObservableCollection<Models.Shipment> {
-                    new Models.Shipment(),
-                    new Models.Shipment(),
-                    new Models.Shipment(),
-                    new Models.Shipment(),
-                    new Models.Shipment(),
-                    new Models.Shipment(),
-                    new Models.Shipment()
-                }
+                Shipments = new ObservableCollection<Models.Instock>()
             };
         }
 

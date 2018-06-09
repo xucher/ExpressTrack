@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 
 namespace ExpressTrack.ViewModels {
-    class ExpressDetailViewModel: BaseViewModel{
+    class ExpressDetailViewModel: BaseViewModel {
         #region Properties
         // 当前快递信息
         public string ExpressCoding { get; set; }
@@ -10,7 +10,7 @@ namespace ExpressTrack.ViewModels {
         public ObservableCollection<string> PreTrack { get; set; }
         public string NowAddress { get; set; }
 
-        public ObservableCollection<Shipment> Shipments { get; set; }
+        public ObservableCollection<Instock> Shipments { get; set; }
         #endregion
     }
 }

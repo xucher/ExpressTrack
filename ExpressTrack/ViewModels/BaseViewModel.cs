@@ -1,9 +1,15 @@
-﻿using PropertyChanged;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ExpressTrack.ViewModels {
-    [AddINotifyPropertyChangedInterface]
     public class BaseViewModel : INotifyPropertyChanged {
-        public event PropertyChangedEventHandler PropertyChanged = (sender, e) => {};
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void Notify(string propertyName) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

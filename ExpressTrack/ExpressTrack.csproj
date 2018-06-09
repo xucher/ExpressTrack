@@ -52,9 +52,6 @@
       <HintPath>..\localDll\ModuleAPI.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
-    <Reference Include="PropertyChanged, Version=2.5.6.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
-      <HintPath>..\packages\PropertyChanged.Fody.2.5.6\lib\net452\PropertyChanged.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -81,6 +78,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToStringConverter.cs" />
     <Compile Include="DB\ExpressDBContext.cs" />
+    <Compile Include="DB\MySqlHelper.cs" />
     <Compile Include="Libs\FixedReader.cs" />
     <Compile Include="Libs\Helpers.cs" />
     <Compile Include="Pages\ExpressDetailPage.xaml.cs">
@@ -104,9 +102,10 @@
       <DependentUpon>WorkerPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Style\Animations\GridLengthAnimation.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ExpressDetailViewModel.cs" />
-    <Compile Include="ViewModels\InStockViewModel.cs" />
+    <Compile Include="ViewModels\ShipmentViewModel.cs" />
     <Page Include="Pages\ExpressDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,7 +114,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\InstockPage.xaml">
+    <Page Include="Pages\ShipmentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -130,8 +129,8 @@
     <Compile Include="Pages\ExpressListPage.xaml.cs">
       <DependentUpon>ExpressListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\InstockPage.xaml.cs">
-      <DependentUpon>InstockPage.xaml</DependentUpon>
+    <Compile Include="Pages\ShipmentPage.xaml.cs">
+      <DependentUpon>ShipmentPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
@@ -146,10 +145,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\OutstockPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\StockPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -162,10 +157,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Pages\OutstockPage.xaml.cs">
-      <DependentUpon>OutstockPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Page Include="Style\Boot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -217,18 +208,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="FodyWeavers.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\kuaidi.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\avatar01.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Fody.3.0.3\build\Fody.targets" Condition="Exists('..\packages\Fody.3.0.3\build\Fody.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Fody.3.0.3\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.3.0.3\build\Fody.targets'))" />
-  </Target>
 </Project>
