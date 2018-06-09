@@ -114,7 +114,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\InstockPage.xaml">
+    <Page Include="Pages\ShipmentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -129,8 +129,8 @@
     <Compile Include="Pages\ExpressListPage.xaml.cs">
       <DependentUpon>ExpressListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\InstockPage.xaml.cs">
-      <DependentUpon>InstockPage.xaml</DependentUpon>
+    <Compile Include="Pages\ShipmentPage.xaml.cs">
+      <DependentUpon>ShipmentPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
@@ -145,10 +145,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\OutstockPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\StockPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -161,10 +157,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Pages\OutstockPage.xaml.cs">
-      <DependentUpon>OutstockPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Page Include="Style\Boot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -71,5 +71,17 @@ namespace ExpressTrack.DB {
             }
             return fromStation;
         }
+
+        public static List<string> getAllStationName() {
+            List<string> stations = new List<string>();
+            using (ExpressDBContext db = new ExpressDBContext()) {
+                var query = from e in db.Station
+                            select e.Name;
+                if (query.Count() > 0) {
+                    stations.AddRange(query);
+                }
+            }
+            return stations;
+        }
     }
 }

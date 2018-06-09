@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExpressTrack.Models;
+using System;
 using System.Collections.ObjectModel;
 
 namespace ExpressTrack.ViewModels {
@@ -6,7 +7,8 @@ namespace ExpressTrack.ViewModels {
         // 入库单号
         public string InStockId { get; set; }
         // 中转站
-        public string NowStation { get; set; }
+        public ObservableCollection<string> Stations { get; set; }
+        public string SelectedStation { get; set; }
         // 入库时间
         public DateTime CheckDate { get; set; }
         // 设备状态

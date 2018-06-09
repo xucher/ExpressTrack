@@ -31,10 +31,12 @@ namespace ExpressTrack.Pages {
                         nav.Navigate(new Uri("Pages/ExpressListPage.xaml", UriKind.Relative));
                         break;
                     case "快递入站":
-                        nav.Navigate(new Uri("Pages/InstockPage.xaml", UriKind.Relative));
+                        ShipmentPage inStockPage = new ShipmentPage(ShipmentPage.INSTOCK);
+                        nav.Navigate(inStockPage);
                         break;
                     case "快递出站":
-                        nav.Navigate(new Uri("Pages/OutstockPage.xaml", UriKind.Relative));
+                        ShipmentPage outStockPage = new ShipmentPage(ShipmentPage.OUTSTOCK);
+                        nav.Navigate(outStockPage);
                         break;
                     case "快递详情":
                         nav.Navigate(new Uri("Pages/ExpressDetailPage.xaml", UriKind.Relative));

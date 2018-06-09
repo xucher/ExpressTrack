@@ -8,10 +8,13 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace ExpressTrack {
-    public partial class InstockPage : Page {
-        public InstockPage() {
+    public partial class ShipmentPage : Page {
+        public const int INSTOCK = 0;
+        public const int OUTSTOCK = 1;
+        private int type;
+        public ShipmentPage(int type) {
+            this.type = type;
             InitializeComponent();
-
             setDataContext();
         }
 
@@ -21,7 +24,8 @@ namespace ExpressTrack {
         private void setDataContext() {
             var viewModel = new InStockViewModel {
                 InStockId = "I0001159",
-                NowStation = "StationA",
+                Stations = new ObservableCollection<string>(MySqlHelper.getAllStationName()),
+                SelectedStation = "StationA",
                 CheckDate = DateTime.Now,
                 DeviceState = true,
                 InstockExpresses = new ObservableCollection<InstockModel>()
@@ -68,7 +72,7 @@ namespace ExpressTrack {
             InStockViewModel mInstockModel = DataContext as InStockViewModel;
             var express = MySqlHelper.getExpressByCoding(coding);
             if (express != null) {
-                string fromStation = MySqlHelper.getFromStationByExpress(coding, mInstockModel.NowStation);
+                string fromStation = MySqlHelper.getFromStationByExpress(coding, mInstockModel.SelectedStation);
                 if (fromStation != "") {
                     if (Tgb_isAuto.IsChecked == true) {
                         // 手动输入
@@ -98,6 +102,7 @@ namespace ExpressTrack {
 
         private void btnConnect_Click(object sender, RoutedEventArgs e) {
             // 判断要连接的天线
+            string station = (DataContext as InStockViewModel).SelectedStation;
             mReader.ConnectAnt(FixedReader.ANT1);
             btnStart.IsEnabled = true;
         }

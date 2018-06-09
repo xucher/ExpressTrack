@@ -1,4 +1,4 @@
-﻿<Page x:Class="ExpressTrack.InstockPage"
+﻿<Page x:Class="ExpressTrack.ShipmentPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -31,8 +31,8 @@
             <Label Content="入库单号："/>
             <TextBox Width="100" Text="{Binding InStockId}" IsEnabled="False"/>
 
-            <Label Content="到达中转站：" Margin="80,0,0,0"/>
-            <TextBox Width="100" Text="{Binding NowStation, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=Tgb_isAuto, Path=IsChecked}"/>
+            <Label Content="当前中转站：" Margin="80,0,0,0"/>
+            <ComboBox Width="100" materialDesign:ComboBoxAssist.ClassicMode="true" ItemsSource="{Binding Stations}"/>
 
             <Label Content="日期：" Margin="80,0,0,0"/>
             <DatePicker Width="100" VerticalAlignment="Bottom" 

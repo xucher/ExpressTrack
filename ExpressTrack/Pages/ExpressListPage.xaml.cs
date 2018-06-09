@@ -18,8 +18,6 @@ namespace ExpressTrack {
         private ExpressDBContext db = new ExpressDBContext();
 
         private void Page_Initialized(object sender, EventArgs e) {
-            //expressSeed();
-
             getExpress();
             DG_expressList.ItemsSource = expresses;
 
@@ -63,13 +61,19 @@ namespace ExpressTrack {
             };
         }
 
+        private void Page_Unloaded(object sender, System.Windows.RoutedEventArgs e) {
+            // 关闭数据库连接
+        }
 
-        // 数据库初始数据
-        private void expressSeed() {
+        private void btnRefresh_Click(object sender, System.Windows.RoutedEventArgs e) {
+            getExpress();
+        }
+
+        private void btnInit_Click(object sender, System.Windows.RoutedEventArgs e) {
             var expressList = new List<Express>();
-            
+
             expressList.Add(new Express {
-                Coding=Helpers.convertExpressCoding(1),
+                Coding = Helpers.convertExpressCoding(1),
                 Name = "Express1",
                 Start = "StationA",
                 Destination = "StationD",
@@ -84,14 +88,22 @@ namespace ExpressTrack {
             });
             db.Express.AddRange(expressList);
             db.SaveChanges();
-        }
 
-        private void Page_Unloaded(object sender, System.Windows.RoutedEventArgs e) {
-            // 关闭数据库连接
-        }
 
-        private void btnRefresh_Click(object sender, System.Windows.RoutedEventArgs e) {
-            getExpress();
+            db.Station.Add(new Station {
+                Name = "StationA"
+            });
+            db.Station.Add(new Station {
+                Name = "StationB"
+            });
+            db.Station.Add(new Station {
+                Name = "StationC"
+            });
+            db.Station.Add(new Station {
+                Name = "StationD"
+            });
+
+            db.SaveChanges();
         }
     }
 }
