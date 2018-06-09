@@ -89,5 +89,9 @@ namespace ExpressTrack {
         private void Page_Unloaded(object sender, System.Windows.RoutedEventArgs e) {
             // 关闭数据库连接
         }
+
+        private void btnRefresh_Click(object sender, System.Windows.RoutedEventArgs e) {
+            getExpress();
+        }
     }
 }
