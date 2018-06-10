@@ -1,4 +1,4 @@
-﻿<Page x:Class="ExpressTrack.UserPage"
+﻿<Page x:Class="ExpressTrack.InStockRecordPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,18 +11,20 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
             <RowDefinition />
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Label Content="用户信息表" FontSize="20" HorizontalContentAlignment="Center" Grid.Row="0" />
+        <Label Content="入库记录" FontSize="{DynamicResource HeaderTitleSize}"
+                   VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
 
-
-        <DataGrid Grid.Row="1">
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" Margin="10" x:Name="DG_Instocks"> 
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="职员编号" Width="*"/>
-                <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="用户名" Width="*"/>
-                <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="密码" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Coding}" Header="入库单号" Width="*"/>
+                <DataGridTextColumn Binding="{Binding ExpressCoding}" Header="快递编号" Width="*"/>
+                <DataGridTextColumn Binding="{Binding FromStation}" Header="发自站点" Width="*"/>
+                <DataGridTextColumn Binding="{Binding ToStation}" Header="发往站点" Width="*"/>
+                <DataGridTextColumn Binding="{Binding CheckDate}" Header="入库时间" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 

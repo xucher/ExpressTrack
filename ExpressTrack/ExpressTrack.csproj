@@ -84,18 +84,17 @@
     <Compile Include="Pages\ExpressDetailPage.xaml.cs">
       <DependentUpon>ExpressDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\OutStockRecordPage.xaml.cs">
+      <DependentUpon>OutStockRecordPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\StockPage.xaml.cs">
-      <DependentUpon>StockPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pages\UserPage.xaml.cs">
-      <DependentUpon>UserPage.xaml</DependentUpon>
+    <Compile Include="Pages\InStockRecordPage.xaml.cs">
+      <DependentUpon>InStockRecordPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Pages\WorkerPage.xaml.cs">
@@ -113,6 +112,10 @@
     <Page Include="Pages\ExpressListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\OutStockRecordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\ShipmentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -145,11 +148,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\StockPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\UserPage.xaml">
+    <Page Include="Pages\InStockRecordPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -158,10 +157,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Style\Boot.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Style\DataGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

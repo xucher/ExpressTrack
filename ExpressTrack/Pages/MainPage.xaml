@@ -44,9 +44,11 @@
                     <TreeViewItem Header="快递出站"/>
                     <TreeViewItem Header="快递详情"/>
                 </TreeViewItem>
-                <TreeViewItem Header="用户列表"/>
+                <TreeViewItem Header="库存管理">
+                    <TreeViewItem Header="入库记录"/>
+                    <TreeViewItem Header="出库记录"/>
+                </TreeViewItem>
                 <TreeViewItem Header="职员列表"/>
-                <TreeViewItem Header="库存明细"/>
             </TreeView>
         </Grid>
         <Frame x:Name="mainFrame" Grid.Row="1" Grid.Column="1" Source="/ExpressTrack;component/Pages/ExpressListPage.xaml" NavigationUIVisibility="Hidden" Padding="10,5" Background="LightGray"/>

@@ -100,6 +100,28 @@ namespace ExpressTrack.DB {
             return stations;
         }
 
+        public static List<Instock> getAllInstock() {
+            List<Instock> instocks = new List<Instock>();
+            using (ExpressDBContext db = new ExpressDBContext()) {
+                var query = from e in db.Instock
+                            select e;
+                if (query.Count() > 0) {
+                    instocks = query.ToList();
+                }
+            }
+            return instocks;
+        }
+        public static List<Outstock> getAllOutstock() {
+            List<Outstock> outstocks = new List<Outstock>();
+            using (ExpressDBContext db = new ExpressDBContext()) {
+                var query = from e in db.Outstock
+                            select e;
+                if (query.Count() > 0) {
+                    outstocks = query.ToList();
+                }
+            }
+            return outstocks;
+        }
         public static int getLastInstockIndex() {
             using (ExpressDBContext db = new ExpressDBContext()) {
                 var query = from s in db.Instock
@@ -122,7 +144,6 @@ namespace ExpressTrack.DB {
                 }
             }
         }
-
         public static List<ExpressDetailViewModel.ShipRecord> getShipRecord(string coding) {
             List<ExpressDetailViewModel.ShipRecord> result = new List<ExpressDetailViewModel.ShipRecord>();
 
@@ -163,6 +184,18 @@ namespace ExpressTrack.DB {
             });
             foreach (var item in result) {
                 Console.WriteLine(item.CheckDate);
+            }
+            return result;
+        }
+
+        public static List<User> getAllUser() {
+            List<User> result = null;
+            using (ExpressDBContext db = new ExpressDBContext()) {
+                var query = from u in db.User
+                            select u;
+                if (query.Count() > 0) {
+                    result = query.ToList();
+                }
             }
             return result;
         }

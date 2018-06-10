@@ -17,7 +17,7 @@
         <Label Content="快递列表" FontSize="{DynamicResource HeaderTitleSize}"
                    VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         <DataGrid x:Name="DG_expressList" AutoGenerateColumns="False" CellEditEnding="DG_expressList_CellEditEnding"
-                  CanUserAddRows="False" Margin="10" Grid.Row="1">
+                  CanUserAddRows="False" Grid.Row="1" Margin="10">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Coding}" Header="快递编号" IsReadOnly="True" CanUserResize="False"/>
                 <DataGridTextColumn Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="快递名称" CanUserResize="False"/>

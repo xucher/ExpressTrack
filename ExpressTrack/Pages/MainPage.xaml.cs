@@ -41,14 +41,14 @@ namespace ExpressTrack.Pages {
                     case "快递详情":
                         nav.Navigate(new Uri("Pages/ExpressDetailPage.xaml", UriKind.Relative));
                         break;
-                    case "用户列表":
-                        nav.Navigate(new Uri("Pages/UserPage.xaml", UriKind.Relative));
-                        break;
                     case "职员列表":
                         nav.Navigate(new Uri("Pages/WorkerPage.xaml", UriKind.Relative));
                         break;
-                    case "库存明细":
-                        nav.Navigate(new Uri("Pages/StockPage.xaml", UriKind.Relative));
+                    case "入库记录":
+                        nav.Navigate(new Uri("Pages/InStockRecordPage.xaml", UriKind.Relative));
+                        break;
+                    case "出库记录":
+                        nav.Navigate(new Uri("Pages/OutStockRecordPage.xaml", UriKind.Relative));
                         break;
                     default: break;
                 }
