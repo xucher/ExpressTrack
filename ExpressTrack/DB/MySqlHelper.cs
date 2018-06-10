@@ -149,7 +149,7 @@ namespace ExpressTrack.DB {
 
             using (ExpressDBContext db = new ExpressDBContext()) {
                 var query1 = from s in db.Instock
-                            where s.Coding == coding
+                            where s.ExpressCoding == coding
                             select s;
                 if (query1.Count() > 0) {
                     foreach(var item in query1) {
@@ -161,7 +161,7 @@ namespace ExpressTrack.DB {
                     }
 
                     var query2 = from s in db.Outstock
-                                 where s.Coding == coding
+                                 where s.ExpressCoding == coding
                                  select s;
                     if (query2.Count() > 0) {
                         foreach (var item in query2) {

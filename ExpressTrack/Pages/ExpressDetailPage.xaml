@@ -50,7 +50,7 @@
                 <Label Content="当前坐标：" VerticalContentAlignment="Center" Grid.Row="3"/>
                 <Label Content="{Binding NowAddress, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Grid.Row="3" Grid.Column="1"/>
             </Grid>
-            <ListView Height="400" ItemsSource="{Binding ShipRecords}"/>
+            <ListView Height="400" ItemsSource="{Binding ShipRecords}" DisplayMemberPath="FromStation"/>
         </StackPanel>
         <Canvas Grid.Column="1" Background="#FFEAE1E1">
             <Path Stroke="Black">

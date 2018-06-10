@@ -15,7 +15,7 @@ namespace ExpressTrack.Models {
         [StringLength(50)]
         public string Destination { get; set; }
         public string PreTrack { get; set; }
-        // 0: 初始   1: 运送中  2：中转站内  3：结束
+        // 0: 初始   1: 运送中  2：中转站内  3：完成
         [DefaultValue(0)]
         public int State { get; set; }
         [StringLength(30)]

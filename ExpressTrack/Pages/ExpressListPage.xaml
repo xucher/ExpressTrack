@@ -3,11 +3,13 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ExpressTrack"
+      xmlns:local="clr-namespace:ExpressTrack.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="880"
       Title="ExpressListPage" Initialized="Page_Initialized" Unloaded="Page_Unloaded">
-
+    <Page.Resources>
+        <local:ExpressStateConverter x:Key="StateConverter"></local:ExpressStateConverter>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -24,7 +26,7 @@
                 <DataGridTextColumn Binding="{Binding Start, UpdateSourceTrigger=PropertyChanged}" Header="发出点" CanUserResize="False"/>
                 <DataGridTextColumn Binding="{Binding Destination, UpdateSourceTrigger=PropertyChanged}" Header="终点" CanUserResize="False"/>
                 <DataGridTextColumn Binding="{Binding PreTrack, UpdateSourceTrigger=PropertyChanged}" Header="预定路线" CanUserResize="False"/>
-                <DataGridTextColumn Binding="{Binding State, UpdateSourceTrigger=PropertyChanged}" Header="状态" CanUserResize="False"/>
+                <DataGridTextColumn Binding="{Binding State, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StateConverter}}" Header="状态" CanUserResize="False"/>
                 <DataGridTextColumn Binding="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}" Header="发货时间" CanUserResize="False"/>
             </DataGrid.Columns>
         </DataGrid>

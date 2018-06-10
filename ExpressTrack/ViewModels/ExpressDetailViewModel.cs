@@ -5,7 +5,18 @@ namespace ExpressTrack.ViewModels {
         #region Properties
         // 当前快递信息
         public string ExpressCoding { get; set; }
-        public string ExpressName { get; set; }
+        private string mExpressName;
+        public string ExpressName {
+            get {
+                return mExpressName;
+            } set {
+                if (value != mExpressName) {
+                    mExpressName = value;
+                    Notify("ExpressName");
+                }
+            }
+        }
+
         public ObservableCollection<string> PreTrack { get; set; }
         public string NowAddress { get; set; }
 
@@ -13,20 +24,10 @@ namespace ExpressTrack.ViewModels {
         #endregion
 
         public class ShipRecord: BaseViewModel {
-            //private string mExpressCoding;
             private string mFromStation;
             private string mToStation;
             private string mCheckDate;
 
-            //public string ExpressCoding {
-            //    get { return mExpressCoding; }
-            //    set {
-            //        if (value != mExpressCoding) {
-            //            mExpressCoding = value;
-            //            Notify("ExpressCoding");
-            //        }
-            //    }
-            //}
             public string FromStation {
                 get { return mFromStation; }
                 set {
