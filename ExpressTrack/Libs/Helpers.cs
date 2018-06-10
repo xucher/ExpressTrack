@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace ExpressTrack {
     public class Helpers {
+        public static void showMsg(string message) {
+            (Application.Current.MainWindow as MainWindow).showMessage(message);
+        }
+
         // 解析快递编号  pattern: 2018 11 25 0000
         public static int parseExpressCoding(string coding) {
             return int.Parse(coding.Substring(8));

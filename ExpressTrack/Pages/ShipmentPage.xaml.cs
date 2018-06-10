@@ -140,11 +140,11 @@ namespace ExpressTrack {
                         }
                     }
                 } else {
-                    Console.WriteLine("编号为" + coding + "的快递不存在");
+                    Helpers.showMsg("编号为" + coding + "的快递不存在");
                 }
                 Console.WriteLine(mShipmentModel.Shipments.Count);
             } else {
-                Console.WriteLine("该快递已经添加过");
+                Helpers.showMsg("该快递已经添加过");
             }
         }
 
@@ -176,7 +176,7 @@ namespace ExpressTrack {
                     break;
             }
             mReader.ConnectAnt(ant);
-            showMsg("连接成功");
+            Helpers.showMsg("连接成功");
             btnStart.IsEnabled = true;
         }
 
@@ -195,12 +195,8 @@ namespace ExpressTrack {
 
         private void btnSave_Click(object sender, RoutedEventArgs e) {
             if (db.SaveChanges() > 0) {
-                showMsg("保存成功");
+                Helpers.showMsg("保存成功");
             };
-        }
-
-        private void showMsg(string message) {
-            (Application.Current.MainWindow as MainWindow).showMessage(message);
         }
     }
 }

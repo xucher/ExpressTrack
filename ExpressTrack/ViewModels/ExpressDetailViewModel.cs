@@ -1,5 +1,4 @@
-﻿using ExpressTrack.Models;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace ExpressTrack.ViewModels {
     class ExpressDetailViewModel: BaseViewModel {
@@ -14,20 +13,20 @@ namespace ExpressTrack.ViewModels {
         #endregion
 
         public class ShipRecord: BaseViewModel {
-            private string mExpressCoding;
+            //private string mExpressCoding;
             private string mFromStation;
             private string mToStation;
             private string mCheckDate;
 
-            public string ExpressCoding {
-                get { return mExpressCoding; }
-                set {
-                    if (value != mExpressCoding) {
-                        mExpressCoding = value;
-                        Notify("ExpressCoding");
-                    }
-                }
-            }
+            //public string ExpressCoding {
+            //    get { return mExpressCoding; }
+            //    set {
+            //        if (value != mExpressCoding) {
+            //            mExpressCoding = value;
+            //            Notify("ExpressCoding");
+            //        }
+            //    }
+            //}
             public string FromStation {
                 get { return mFromStation; }
                 set {

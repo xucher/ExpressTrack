@@ -25,7 +25,7 @@ namespace ExpressTrack.Pages {
                                 u.PassWord == userPassword.Password
                                 select u;
                     if (query.Count() > 0) {
-                        (Application.Current.MainWindow as MainWindow).showMessage("登录成功，即将跳转...");
+                        Helpers.showMsg("登录成功，即将跳转...");
                         NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
                     } else {
                         passwordError.Content = "密码错误";

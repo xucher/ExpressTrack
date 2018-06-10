@@ -1,6 +1,6 @@
 ﻿using ExpressTrack.Models;
 using ExpressTrack.ViewModels;
-using System;
+using System; 
 using System.Collections.Generic;
 using System.Linq;
 
@@ -123,10 +123,47 @@ namespace ExpressTrack.DB {
             }
         }
 
-        public static List<ExpressDetailViewModel.ShipRecord> getShipRecord() {
-            List<ExpressDetailViewModel.ShipRecord> result = null;
+        public static List<ExpressDetailViewModel.ShipRecord> getShipRecord(string coding) {
+            List<ExpressDetailViewModel.ShipRecord> result = new List<ExpressDetailViewModel.ShipRecord>();
 
-            
+            using (ExpressDBContext db = new ExpressDBContext()) {
+                var query1 = from s in db.Instock
+                            where s.Coding == coding
+                            select s;
+                if (query1.Count() > 0) {
+                    foreach(var item in query1) {
+                        result.Add(new ExpressDetailViewModel.ShipRecord {
+                            FromStation = item.FromStation,
+                            ToStation = item.ToStation,
+                            CheckDate = item.CheckDate
+                        });
+                    }
+
+                    var query2 = from s in db.Outstock
+                                 where s.Coding == coding
+                                 select s;
+                    if (query2.Count() > 0) {
+                        foreach (var item in query2) {
+                            result.Add(new ExpressDetailViewModel.ShipRecord {
+                                FromStation = item.FromStation,
+                                ToStation = item.ToStation,
+                                CheckDate = item.CheckDate
+                            });
+                        }
+                    }
+                } else {
+                    Console.WriteLine("还未到达第一个中转站");
+                }
+                
+            }
+            result.Sort((a, b) => {
+                if (DateTime.Parse(a.CheckDate) > DateTime.Parse(b.CheckDate))
+                    return 1;
+                return -1;
+            });
+            foreach (var item in result) {
+                Console.WriteLine(item.CheckDate);
+            }
             return result;
         }
     }

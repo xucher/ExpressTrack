@@ -12,15 +12,15 @@ using WebSocketSharp;
 
 namespace ExpressTrack {
     public partial class ExpressDetailPage : Page {
+       
         public ExpressDetailPage() {
             InitializeComponent();
             DataContext = new ExpressDetailViewModel {
-                NowAddress = "未连接设备...",
-                //ShipRecords = new ObservableCollection<ExpressDetailViewModel.ShipRecord>(
-                //    MySqlHelper.getShipRecord())
+                NowAddress = "未连接设备..."
             };
+            mViewModel = DataContext as ExpressDetailViewModel;
         }
-
+        private ExpressDetailViewModel mViewModel;
         private PathFigure pathFigure;
         private WebSocket ws;
         private Stopwatch timer;
@@ -103,6 +103,12 @@ namespace ExpressTrack {
         // 重置轨迹
         private void btnReset_Click(object sender, RoutedEventArgs e) {
             pathFigure.Segments.Clear();
+        }
+
+        private void btnFind_Click(object sender, RoutedEventArgs e) {
+            foreach (var record in MySqlHelper.getShipRecord(inputCoding.Text)) {
+                mViewModel.ShipRecords.Add(record);
+            }
         }
     }
 }

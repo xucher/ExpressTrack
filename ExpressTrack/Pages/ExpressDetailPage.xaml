@@ -31,8 +31,8 @@
                 </Grid.RowDefinitions>
                 <Label Content="快递编号：" VerticalContentAlignment="Center"/>
                 <StackPanel Margin="10,0,0,0" Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal">
-                    <TextBox Width="150" Text="{Binding ExpressCoding, UpdateSourceTrigger=PropertyChanged}" />
-                    <Button Content="查询" Margin="50,0,0,0"/>
+                    <TextBox x:Name="inputCoding" Width="150" Text="{Binding ExpressCoding, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button x:Name="btnFind" Content="查询" Margin="50,0,0,0" Click="btnFind_Click"/>
                 </StackPanel>
 
                 <Label Content="快递名称：" VerticalContentAlignment="Center" Grid.Row="1"/>

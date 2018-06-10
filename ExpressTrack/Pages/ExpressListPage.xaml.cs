@@ -58,7 +58,7 @@ namespace ExpressTrack {
         // 更新数据到数据库
         private void btnUpdate_Click(object sender, RoutedEventArgs e) {
             if (db.SaveChanges() > 0) {
-                (Application.Current.MainWindow as MainWindow).showMessage("更新成功");
+                Helpers.showMsg("更新成功");
             };
         }
 
