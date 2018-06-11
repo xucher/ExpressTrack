@@ -71,6 +71,5 @@ namespace ExpressTrack.ViewModels {
                 }
             }
         }
-        public int type;
     }
 }

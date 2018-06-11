@@ -55,6 +55,22 @@ namespace ExpressTrack.ViewModels {
                     }
                 }
             }
+            public int Type;
+            public string ShipDesc {
+                get {
+                    string desc = "";
+                    if (Type == ShipmentPage.INSTOCK) {
+                        if (FromStation == "--") {
+                            desc = "快递在 " + ToStation + " 揽收";
+                        } else {
+                            desc = "从 " + FromStation + " 发出, 已到达 " + ToStation;
+                        }
+                    } else {
+                        desc = "从 " + FromStation + " 发出, 即将发往 " + ToStation;
+                    }
+                    return desc;
+                }
+            }
         }
     }
 }

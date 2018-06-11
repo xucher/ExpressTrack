@@ -168,7 +168,8 @@ namespace ExpressTrack.DB {
                         result.Add(new ExpressDetailViewModel.ShipRecord {
                             FromStation = item.FromStation,
                             ToStation = item.ToStation,
-                            CheckDate = item.CheckDate
+                            CheckDate = item.CheckDate,
+                            Type = ShipmentPage.INSTOCK
                         });
                     }
 
@@ -180,7 +181,8 @@ namespace ExpressTrack.DB {
                             result.Add(new ExpressDetailViewModel.ShipRecord {
                                 FromStation = item.FromStation,
                                 ToStation = item.ToStation,
-                                CheckDate = item.CheckDate
+                                CheckDate = item.CheckDate,
+                                Type = ShipmentPage.OUTSTOCK
                             });
                         }
                     }

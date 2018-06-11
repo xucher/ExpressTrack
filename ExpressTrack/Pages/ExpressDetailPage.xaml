@@ -23,8 +23,7 @@
 
                 <materialDesign:PackIcon Kind="OctagonOutline" Foreground="SteelBlue" Background="LightGray"/>
                 <TextBlock Text="{Binding CheckDate}" Grid.Column="1"/>
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding FromStation}"/>
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ToStation}"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ShipDesc}"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -74,7 +73,7 @@
             <Canvas Height="400">
                 <Line x:Name="LTimeLine" Stroke="SteelBlue" X1="18" Y1="20" X2="18" Y2="70"
                       Visibility="Hidden" StrokeThickness="1"/>
-                <ListView Height="400" ItemsSource="{Binding ShipRecords}" ItemTemplate="{StaticResource ExpressRecordListItem}"/>
+                <ListView Height="400" Width="450" ItemsSource="{Binding ShipRecords}" ItemTemplate="{StaticResource ExpressRecordListItem}"/>
             </Canvas>
         </StackPanel>
         <Canvas Grid.Column="1" Background="#FFEAE1E1">
