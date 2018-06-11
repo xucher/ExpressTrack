@@ -8,6 +8,27 @@
       FontSize="16"
       d:DesignHeight="600" d:DesignWidth="880"
       Title="ExpressDetail">
+    <Page.Resources>
+        <DataTemplate x:Key="ExpressRecordListItem">
+            <Border BorderThickness="1" BorderBrush="SteelBlue" CornerRadius="4" Width="400">
+                <Grid Margin="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="{Binding CheckDate}" Grid.ColumnSpan="2"/>
+                    <TextBlock Grid.Row="1" Text="{Binding FromStation}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ToStation}"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Page.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -50,7 +71,7 @@
                 <Label Content="当前坐标：" VerticalContentAlignment="Center" Grid.Row="3"/>
                 <Label Content="{Binding NowAddress, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Grid.Row="3" Grid.Column="1"/>
             </Grid>
-            <ListView Height="400" ItemsSource="{Binding ShipRecords}" DisplayMemberPath="FromStation"/>
+            <ListView Height="400" ItemsSource="{Binding ShipRecords}" ItemTemplate="{StaticResource ExpressRecordListItem}"/>
         </StackPanel>
         <Canvas Grid.Column="1" Background="#FFEAE1E1">
             <Path Stroke="Black">

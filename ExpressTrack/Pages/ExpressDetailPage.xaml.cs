@@ -17,6 +17,7 @@ namespace ExpressTrack {
         public ExpressDetailPage() {
             InitializeComponent();
             DataContext = new ExpressDetailViewModel {
+                ExpressCoding = "201806090001",
                 NowAddress = "未连接设备...",
                 PreTrack = new ObservableCollection<string>(),
                 ShipRecords = new ObservableCollection<ExpressDetailViewModel.ShipRecord>()
@@ -111,10 +112,11 @@ namespace ExpressTrack {
         private void btnFind_Click(object sender, RoutedEventArgs e) {
             Express express = MySqlHelper.getExpressByCoding(inputCoding.Text);
             mViewModel.ExpressName = express.Name;
+            mViewModel.PreTrack.Clear();
             foreach (var item in Helpers.parsePreTrack(express.PreTrack)) {
                 mViewModel.PreTrack.Add(item);
             }
-
+            mViewModel.ShipRecords.Clear();
             foreach (var record in MySqlHelper.getShipRecord(inputCoding.Text)) {
                 mViewModel.ShipRecords.Add(record);
             }

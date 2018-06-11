@@ -31,7 +31,7 @@ namespace ExpressTrack.DB {
         }
 
 
-        public static string getFromStationByExpress(string coding, string nowStation) {
+        public static string getFromStation(string coding, string nowStation) {
             string fromStation = "";
             using (ExpressDBContext db = new ExpressDBContext()) {
                 // 查询对应出库记录
@@ -63,7 +63,7 @@ namespace ExpressTrack.DB {
             }
             return fromStation;
         }
-        public static string getNextStation(string coding, string nowStation) {
+        public static string getToStation(string coding, string nowStation) {
             string result = "";
             string preTrack = "";
             using (ExpressDBContext db = new ExpressDBContext()) {
