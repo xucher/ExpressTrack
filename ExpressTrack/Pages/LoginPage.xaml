@@ -8,7 +8,7 @@
       d:DesignHeight="650" d:DesignWidth="1040"
       Title="LoginPage">
     <Page.Background>
-        <ImageBrush ImageSource="/ExpressTrack;component/Resources/kuaidi.jpg"/>
+        <ImageBrush ImageSource="/ExpressTrack;component/Resources/kuaidi.jpg" Opacity="1"/>
     </Page.Background>
     <GroupBox Header="物流轨迹跟踪系统" Opacity="0.9"
           Width="400" Height="300" Background="White" FontSize="18">

@@ -20,7 +20,7 @@ namespace ExpressTrack.Libs {
         public Dictionary<string, TagInfo> tagDic = new Dictionary<string, TagInfo>();
 
         // 连接天线
-        public void ConnectAnt(string antIp) {
+        public void ConnectAnt(string antIp, int antIndex) {
             if (antIp == ANT1 | antIp == ANT2) {
                 reader = Reader.Create(antIp, ModuleTech.Region.NA, 1);
 
@@ -46,7 +46,7 @@ namespace ExpressTrack.Libs {
             if (antIp == ANT3) {
                 reader = Reader.Create(antIp, ModuleTech.Region.NA, 4);
 
-                int[] ants = new int[] { 3 };//货柜19
+                int[] ants = new int[] { antIndex };//货柜19
                 SimpleReadPlan searchPlan = new SimpleReadPlan(ants);
                 reader.ParamSet("ReadPlan", searchPlan);
                 AntPower[] antPower = new AntPower[4];

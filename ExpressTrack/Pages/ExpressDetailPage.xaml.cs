@@ -4,16 +4,13 @@ using ExpressTrack.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Media;
 using WebSocketSharp;
 
 namespace ExpressTrack {
     public partial class ExpressDetailPage : Page {
-       
         public ExpressDetailPage() {
             InitializeComponent();
             DataContext = new ExpressDetailViewModel {
@@ -111,15 +108,31 @@ namespace ExpressTrack {
 
         private void btnFind_Click(object sender, RoutedEventArgs e) {
             Express express = MySqlHelper.getExpressByCoding(inputCoding.Text);
-            mViewModel.ExpressName = express.Name;
-            mViewModel.PreTrack.Clear();
-            foreach (var item in Helpers.parsePreTrack(express.PreTrack)) {
-                mViewModel.PreTrack.Add(item);
+            if (express != null) {
+                mViewModel.ExpressName = express.Name;
+                mViewModel.PreTrack.Clear();
+
+                if (express.PreTrack != null) {
+                    foreach (var item in Helpers.parsePreTrack(express.PreTrack)) {
+                        mViewModel.PreTrack.Add(item);
+                    }
+                } else {
+                    Helpers.showMsg("未设置预定路线");
+                }
+                mViewModel.ShipRecords.Clear();
+                foreach (var record in MySqlHelper.getShipRecord(inputCoding.Text)) {
+                    mViewModel.ShipRecords.Add(record);
+                }
+                setTimeLine();
+            } else {
+                Helpers.showMsg("该编号的快递不存在");
             }
-            mViewModel.ShipRecords.Clear();
-            foreach (var record in MySqlHelper.getShipRecord(inputCoding.Text)) {
-                mViewModel.ShipRecords.Add(record);
-            }
+        }
+
+        private void setTimeLine() {
+            LTimeLine.Visibility = Visibility.Visible;
+            LTimeLine.Y2 = (mViewModel.ShipRecords.Count - 1) * 52 + 20;
+            LTimeLine.StrokeDashArray = new DoubleCollection { 5,1 };
         }
     }
 }

@@ -18,7 +18,6 @@ namespace ExpressTrack {
             InitializeComponent();
             initUI();
             
-
             inStockStartId = MySqlHelper.getLastInstockIndex() + 1;
             outStockStartId = MySqlHelper.getLastOutstockIndex() + 1;
             setDataContext();
@@ -99,53 +98,61 @@ namespace ExpressTrack {
         private void geneShipmentByCoding(string coding) {
             // TODO: 判断出库单状态,更新快递状态
             ShipmentViewModel mShipmentModel = DataContext as ShipmentViewModel;
-
-            var query = from s in mShipmentModel.Shipments
-                        where s.Coding == coding
-                        select s;
-            if (query.Count() == 0) {
-                if (btnSave.IsEnabled == false) {
-                    btnSave.IsEnabled = true;
-                }
-                var express = MySqlHelper.getExpressByCoding(coding);
-                if (express != null) {
-                    string station = "";
-                    if (type == INSTOCK) {
-                        station = MySqlHelper.getFromStation(coding, mShipmentModel.SelectedStation);
-                    } else if (type == OUTSTOCK) {
-                        station = MySqlHelper.getToStation(coding, mShipmentModel.SelectedStation);
+            // 判断中转站是否已选
+            if (mShipmentModel.SelectedStation != null) {
+                var query = from s in mShipmentModel.Shipments
+                            where s.Coding == coding
+                            select s;
+                if (query.Count() == 0) {
+                    if (btnSave.IsEnabled == false) {
+                        btnSave.IsEnabled = true;
                     }
-
-                    if (station != "") {
-                        mShipmentModel.Shipments.Add(new ShipmentModel {
-                            Coding = coding,
-                            Name = express.Name,
-                            Station = station
-                        });
+                    var express = MySqlHelper.getExpressByCoding(coding);
+                    if (express != null) {
+                        string station = "";
                         if (type == INSTOCK) {
-                            db.Instock.Add(new Models.Instock {
-                                Coding = mShipmentModel.ShipmentId,
-                                ExpressCoding = coding,
-                                FromStation = station,
-                                ToStation = mShipmentModel.SelectedStation,
-                                CheckDate = mShipmentModel.CheckDate.ToString()
-                            });
+                            station = MySqlHelper.getFromStation(coding, mShipmentModel.SelectedStation);
                         } else if (type == OUTSTOCK) {
-                            db.Outstock.Add(new Models.Outstock {
-                                Coding = mShipmentModel.ShipmentId,
-                                ExpressCoding = coding,
-                                FromStation = mShipmentModel.SelectedStation,
-                                ToStation = station,
-                                CheckDate = mShipmentModel.CheckDate.ToString()
-                            });
+                            station = MySqlHelper.getToStation(coding, mShipmentModel.SelectedStation);
                         }
+
+                        if (station != "") {
+                            mShipmentModel.Shipments.Add(new ShipmentModel {
+                                Coding = coding,
+                                Name = express.Name,
+                                Station = station
+                            });
+                            if (type == INSTOCK) {
+                                db.Instock.Add(new Models.Instock {
+                                    Coding = mShipmentModel.ShipmentId,
+                                    ExpressCoding = coding,
+                                    FromStation = station,
+                                    ToStation = mShipmentModel.SelectedStation,
+                                    CheckDate = mShipmentModel.CheckDate.ToString()
+                                });
+                                express.State = (int)ExpressListPage.ExpressState.INSTOCK;
+                                MySqlHelper.changeExpressState(express);
+                            } else if (type == OUTSTOCK) {
+                                db.Outstock.Add(new Models.Outstock {
+                                    Coding = mShipmentModel.ShipmentId,
+                                    ExpressCoding = coding,
+                                    FromStation = mShipmentModel.SelectedStation,
+                                    ToStation = station,
+                                    CheckDate = mShipmentModel.CheckDate.ToString()
+                                });
+                                express.State = (int)ExpressListPage.ExpressState.DELIVERING;
+                                MySqlHelper.changeExpressState(express);
+                            }
+                        }
+                    } else {
+                        Helpers.showMsg("编号为" + coding + "的快递不存在");
                     }
+                    Console.WriteLine(mShipmentModel.Shipments.Count);
                 } else {
-                    Helpers.showMsg("编号为" + coding + "的快递不存在");
+                    Helpers.showMsg("该快递已经添加过");
                 }
-                Console.WriteLine(mShipmentModel.Shipments.Count);
             } else {
-                Helpers.showMsg("该快递已经添加过");
+                Helpers.showMsg("未选择当前中转站");
             }
         }
 
@@ -154,31 +161,48 @@ namespace ExpressTrack {
                 btnConnect.IsEnabled = false;
                 manualAddPanelColumn.Width = new GridLength(250);
             } else {
+                btnConnect.IsEnabled = true;
                 manualAddPanelColumn.Width = new GridLength(0);
             }
         }
 
         private void btnConnect_Click(object sender, RoutedEventArgs e) {
-            string ant = "";
-            // 判断要连接的天线
-            string station = (DataContext as ShipmentViewModel).SelectedStation;
-            switch(station) {
-                case "StationA":
-                    ant = FixedReader.ANT1;
-                    break;
-                case "StationB":
-                    ant = FixedReader.ANT2;
-                    break;
-                case "StationC":
-                    ant = FixedReader.ANT3;
-                    break;
-                default:
-                    ant = FixedReader.ANT3;
-                    break;
+            if ((DataContext as ShipmentViewModel).SelectedStation != null) {
+                string ant = "";
+                // 默认连接10号
+                int antIndex = 1;
+                // 判断要连接的天线
+                string station = (DataContext as ShipmentViewModel).SelectedStation;
+                switch (station) {
+                    case "StationA":
+                        ant = FixedReader.ANT1;
+                        break;
+                    case "StationB":
+                        ant = FixedReader.ANT2;
+                        break;
+                    case "StationC":
+                        ant = FixedReader.ANT3;
+                        antIndex = 1;
+                        break;
+                    case "StationD":
+                        ant = FixedReader.ANT3;
+                        antIndex = 2;
+                        break;
+                    case "StationE":
+                        ant = FixedReader.ANT3;
+                        antIndex = 3;
+                        break;
+                    case "StationF":
+                        ant = FixedReader.ANT3;
+                        antIndex = 4;
+                        break;
+                }
+                mReader.ConnectAnt(ant, antIndex);
+                Helpers.showMsg("连接成功");
+                btnStart.IsEnabled = true;
+            } else {
+                Helpers.showMsg("未选择中转站");
             }
-            mReader.ConnectAnt(ant);
-            Helpers.showMsg("连接成功");
-            btnStart.IsEnabled = true;
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {

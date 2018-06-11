@@ -29,6 +29,13 @@ namespace ExpressTrack.DB {
             }
             return express;
         }
+        public static void changeExpressState(Express express) {
+            using (ExpressDBContext db = new ExpressDBContext()) {
+                db.Express.Attach(express);
+                db.Entry(express).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
 
 
         public static string getFromStation(string coding, string nowStation) {
@@ -45,19 +52,24 @@ namespace ExpressTrack.DB {
                     // 判断快递状态
                     var query2 = from e in db.Express
                                  where e.Coding == coding
-                                 select e.State;
+                                 select e;
                     if (query2.Count() > 0) {
-                        // Todo: state 
-                        // 状态为init
-                        if (query2.Single() == 0) {
-                            // 起始虚拟中转站
-                            fromStation = "--";
-                        } else {
-                            // Todo: 判定错误
-                            Console.WriteLine("该快递不应该在本站入库！！！");
+                        // 状态为  初始
+                        Express express = query2.Single();
+                        if (express.State == (int)ExpressListPage.ExpressState.INIT) {
+                            // 判断起始站点是否正确
+                            if (express.Start == nowStation) {
+                                // 起始虚拟中转站
+                                fromStation = "--";
+                                // 更新快递状态为在库
+                                express.State = (int)ExpressListPage.ExpressState.INSTOCK;
+                                changeExpressState(express);
+                            } else {
+                                Helpers.showMsg("该快递的起点不是本站");
+                            }
                         }
                     } else {
-                        Console.WriteLine("编号为" + coding + "的快递不存在");
+                        Helpers.showMsg("编号为" + coding + "的快递不存在");
                     }
                 }
             }

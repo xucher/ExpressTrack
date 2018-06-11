@@ -9,7 +9,10 @@ using ExpressTrack.DB;
 using System.Windows;
 
 namespace ExpressTrack {
-    public partial class ExpressListPage : Page {       
+    public partial class ExpressListPage : Page { 
+        public enum ExpressState {
+            INIT, DELIVERING, INSTOCK, FINISH
+        }
         public ExpressListPage() {
             InitializeComponent();
         }
@@ -102,6 +105,12 @@ namespace ExpressTrack {
             });
             db.Station.Add(new Station {
                 Name = "StationD"
+            });
+            db.Station.Add(new Station {
+                Name = "StationE"
+            });
+            db.Station.Add(new Station {
+                Name = "StationF"
             });
 
             db.SaveChanges();
