@@ -54,5 +54,14 @@ namespace ExpressTrack.Pages {
                 }
             }
         }
+
+        private void btnExit_Click(object sender, RoutedEventArgs e) {
+            Application.Current.Shutdown();
+        }
+
+        private void btnLogout_Click(object sender, RoutedEventArgs e) {
+            (Application.Current.MainWindow as MainWindow).windowFrame.
+                NavigationService.Navigate(new Uri("Pages/LoginPage.xaml", UriKind.Relative));
+        }
     }
 }

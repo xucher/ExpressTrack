@@ -58,7 +58,7 @@
                 <GroupBox Header="通过快递编号逐个添加" Margin="8">
                     <StackPanel>
                         <TextBox x:Name="tbxAdd" materialDesign:HintAssist.Hint="快递编号" 
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
                         <Button Margin="0,20,0,0" Content="添加" Click="btnAdd_Click"/>
                     </StackPanel>
                 </GroupBox>

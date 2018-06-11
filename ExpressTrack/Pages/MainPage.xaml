@@ -18,9 +18,15 @@
             <RowDefinition Height="50"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Background="#FF1C2438">
-            <Label Content="物流轨迹跟踪系统" FontSize="{DynamicResource HeaderTitleSize}" Margin="50,0,0,0" VerticalAlignment="Center" Foreground="#FF2D8CF0" />
-        </StackPanel>
+        <DockPanel Grid.ColumnSpan="2" Background="#FF1C2438" LastChildFill="False">
+            <Label Content="物流轨迹跟踪系统" FontSize="{DynamicResource HeaderTitleSize}" Margin="50,0,0,0" VerticalAlignment="Center" Foreground="#FF2D8CF0"/>
+            <Button x:Name="btnExit" Margin="0,0,50,0" Background="{x:Null}" DockPanel.Dock="Right" BorderBrush="{x:Null}" Padding="0" Click="btnExit_Click">
+                <materialDesign:PackIcon Kind="WindowClose" Foreground="#FF2D8CF0" Width="25" Height="25"/>
+            </Button>
+            <Button x:Name="btnLogout" Margin="0,0,20,0" Background="{x:Null}" DockPanel.Dock="Right" BorderBrush="{x:Null}" Padding="0" Click="btnLogout_Click">
+                <materialDesign:PackIcon Kind="Logout" Foreground="#FF2D8CF0" Width="25" Height="25"/>
+            </Button>
+        </DockPanel>
         <Grid Grid.Row="1" Background="#FF495060">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
@@ -49,6 +55,9 @@
                     <TreeViewItem Header="出库记录"/>
                 </TreeViewItem>
                 <TreeViewItem Header="职员列表"/>
+                <materialDesign:Badged Badge="3" Margin="-40,0,0,0">
+                    <TreeViewItem Header="消息通知"/>
+                </materialDesign:Badged>
             </TreeView>
         </Grid>
         <Frame x:Name="mainFrame" Grid.Row="1" Grid.Column="1" Source="/ExpressTrack;component/Pages/ExpressListPage.xaml" NavigationUIVisibility="Hidden" Padding="10,5" Background="LightGray"/>

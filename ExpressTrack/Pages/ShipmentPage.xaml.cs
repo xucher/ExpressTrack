@@ -17,6 +17,7 @@ namespace ExpressTrack {
             this.type = type;
             InitializeComponent();
             initUI();
+            
 
             inStockStartId = MySqlHelper.getLastInstockIndex() + 1;
             outStockStartId = MySqlHelper.getLastOutstockIndex() + 1;
@@ -110,9 +111,9 @@ namespace ExpressTrack {
                 if (express != null) {
                     string station = "";
                     if (type == INSTOCK) {
-                        station = MySqlHelper.getFromStationByExpress(coding, mShipmentModel.SelectedStation);
+                        station = MySqlHelper.getFromStation(coding, mShipmentModel.SelectedStation);
                     } else if (type == OUTSTOCK) {
-                        station = MySqlHelper.getNextStation(coding, mShipmentModel.SelectedStation);
+                        station = MySqlHelper.getToStation(coding, mShipmentModel.SelectedStation);
                     }
 
                     if (station != "") {

@@ -13,9 +13,10 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
+        WindowStyle="None"
         MouseDown="Window_MouseDown" Width="{DynamicResource WindowWidth}" Height="{DynamicResource WindowHeight}">
     <Grid>
-        <Frame Source="/ExpressTrack;component/Pages/MainPage.xaml" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="windowFrame" Source="/ExpressTrack;component/Pages/MainPage.xaml" NavigationUIVisibility="Hidden"/>
         <materialDesign:Snackbar x:Name="Snackbar"
              Height="40" Margin="750,0,0,80" MinWidth="250"/>
     </Grid>
