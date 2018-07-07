@@ -10,7 +10,6 @@ namespace ExpressTrack.Pages {
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e) {
-            // 用户名或密码为空时将按钮变为不可点击
             if (userCoding.Text.Trim() == "" || userPassword.Password == "") {
                 if (userCoding.Text.Trim() == "") {
                     codingError.Content = "用户编号必须填写！";
@@ -25,9 +24,7 @@ namespace ExpressTrack.Pages {
                                 u.PassWord == userPassword.Password
                                 select u;
                     if (query.Count() > 0) {
-                        Helpers.showMsg("登录成功，即将跳转...");
                         NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
-                        Helpers.connGlobalLocalSense();
                     } else {
                         passwordError.Content = "密码错误";
                     }

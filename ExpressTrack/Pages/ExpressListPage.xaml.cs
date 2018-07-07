@@ -21,65 +21,85 @@ namespace ExpressTrack {
         private int NextExpressID;
 
         private void Page_Initialized(object sender, EventArgs e) {
-            getExpress();
+            getAllExpress();
             DG_expressList.ItemsSource = expresses;
 
             if (expresses.Count > 0) {
                 NextExpressID = Helpers.parseExpressCoding(expresses.Last().Coding) + 1;
+                // 有数据后不允许初始化
+                btnInit.IsEnabled = false;
             } else {
                 NextExpressID = 1;
             }
         }
 
         // 从数据库中获取所有Express
-        private void getExpress() {
+        private void getAllExpress() {
             expresses.Clear();
             foreach (var item in MySqlHelper.getAllExpress()) {
                 expresses.Add(item);
             };
         }
 
-        // 添加更改标记
+        // 修改数据并更新到数据库
         private void DG_expressList_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e) {
-            //var index = e.Row.GetIndex();
-            // 新增
-            //if (index == expresses.Count - 1) {
-
-            //}
             var express = e.Row.Item as Express;
             
-            // TODO：不能同时对一条记录修改两次
-            using (ExpressDBContext db = new ExpressDBContext())
-            {
+            using (ExpressDBContext db = new ExpressDBContext()) {
                 db.Express.Attach(express);
                 db.Entry(express).State = EntityState.Modified;
-                if (db.SaveChanges() > 0)
-                {
-                    Helpers.showMsg("更新成功");
+                if (db.SaveChanges() > 0) {
+                    // Helpers.showMsg("更新成功");
                 };
             }
-            
-            
-            //Console.WriteLine("Count: " + expresses.Count);
-            //foreach (Express item in expresses) {
-            //    Console.WriteLine(item.Coding+ ":" +item.Name);
-            //}
         }
 
-        // 更新数据到数据库
-        private void btnUpdate_Click(object sender, RoutedEventArgs e) {
+        private void btnOpenAdd_Click(object sender, RoutedEventArgs e) {
+            tbx_expressCoding.Text = Helpers.convertExpressCoding(NextExpressID);
+            
+            cbx_fromStation.ItemsSource = MySqlHelper.getAllStationName();
+            cbx_toStation.ItemsSource = MySqlHelper.getAllStationName();
+        }
+        // 添加快递
+        private void btnAdd_Click(object sender, RoutedEventArgs e) {
+            if (tbx_expressName.Text.Trim() == "") {
+                nameError.Content = "快递名称不能为空";
+                Helpers.showMsg("添加失败！快递名称不能为空");
+            } else {
+                Express express = new Express {
+                    Coding = tbx_expressCoding.Text,
+                    Name = tbx_expressName.Text.Trim(),
+                    Start = cbx_fromStation.SelectedValue == null ? "" : cbx_fromStation.SelectedValue.ToString(),
+                    Destination = cbx_toStation.SelectedValue == null ? "" : cbx_toStation.SelectedValue.ToString(),
+                    StartDate = DateTime.Now.ToString()
+                };
+                using (ExpressDBContext db = new ExpressDBContext()) {
+                    db.Express.Add(express);
+                    if (db.SaveChanges() > 0) {
+                        NextExpressID++;
+                        expresses.Add(express);
 
+                        // 重置输入值
+                        tbx_expressName.Text = "";
+                        cbx_fromStation.SelectedValue = null;
+                        cbx_toStation.SelectedValue = null;
+                        Helpers.showMsg("添加成功");
+                    }
+                }
+            }
         }
 
-        private void Page_Unloaded(object sender, RoutedEventArgs e) {
-            // 关闭数据库连接
+        // 开启全局localsense
+        private void btnLocate_Click(object sender, RoutedEventArgs e) {
+            Helpers.connGlobalLocalSense();
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e) {
-            getExpress();
+            getAllExpress();
             Helpers.showMsg("刷新成功");
         }
 
+        // 初始化数据库
         private void btnInit_Click(object sender, RoutedEventArgs e) {
             var expressList = new List<Express>();
 
@@ -105,8 +125,7 @@ namespace ExpressTrack {
                 Destination = "StationE",
                 StartDate = DateTime.Now.ToString()
             });
-            using (ExpressDBContext db = new ExpressDBContext())
-            {
+            using (ExpressDBContext db = new ExpressDBContext()) {
                 db.Express.AddRange(expressList);
                 db.SaveChanges();
 
@@ -138,6 +157,10 @@ namespace ExpressTrack {
 
                 db.SaveChanges();
             }
+            getAllExpress();
+            Helpers.showMsg("数据库初始化成功");
         }
+
+       
     }
 }

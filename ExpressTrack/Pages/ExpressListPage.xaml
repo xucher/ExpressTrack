@@ -4,36 +4,88 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ExpressTrack.Converters"
+      xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="880"
-      Title="ExpressListPage" Initialized="Page_Initialized" Unloaded="Page_Unloaded">
+      Title="ExpressListPage" Initialized="Page_Initialized">
     <Page.Resources>
         <local:ExpressStateConverter x:Key="StateConverter"></local:ExpressStateConverter>
     </Page.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition />
-            <RowDefinition Height="50"/>
-        </Grid.RowDefinitions>
-        <Label Content="快递列表" FontSize="{DynamicResource HeaderTitleSize}"
+    <md:DialogHost>
+        <md:DialogHost.DialogContent>
+            <GroupBox Header="添加快递" Opacity="0.9" Width="400" 
+                      Height="500" Background="White" FontSize="16">
+                <Grid Margin="40, 20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+
+                    <DockPanel Grid.Row="0">
+                        <Label Content="快递编号：" Width="100"/>
+                        <TextBox x:Name="tbx_expressCoding" md:HintAssist.Hint="快递编号" DockPanel.Dock="Right" IsEnabled="False"
+                             Width="200"/>
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="1">
+                        <Label Content="快递名称：" Width="100"/>
+                        <TextBox x:Name="tbx_expressName" md:HintAssist.Hint="快递名称" DockPanel.Dock="Right"
+                             Width="200"/>
+                    </DockPanel>
+                    <Label Grid.Row="2" x:Name="nameError" Style="{StaticResource LabelError}" Margin="100, 0, 0, 0"/>
+
+                    <DockPanel Grid.Row="3">
+                        <Label Content="发自站点：" Width="100"/>
+                        <ComboBox x:Name="cbx_fromStation" IsEditable="True" 
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}" VerticalAlignment="Bottom" />
+                    </DockPanel>
+               
+                    <DockPanel Grid.Row="4">
+                        <Label Content="最终站点：" Width="100"/>
+                        <ComboBox x:Name="cbx_toStation" IsEditable="True" 
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}" VerticalAlignment="Bottom" />
+                    </DockPanel>
+                    <Label Grid.Row="5" x:Name="StationError" Style="{StaticResource LabelError}" Margin="100, 0, 0, 0"/>
+
+                    <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                        <Button x:Name="btnAdd" Content="添加" Width="100" Command="md:DialogHost.CloseDialogCommand" Click="btnAdd_Click"/>
+                        <Button x:Name="btnCancel"  Content="取消" Width="100" Margin="80,0,0,0" Command="md:DialogHost.CloseDialogCommand"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+        </md:DialogHost.DialogContent>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition />
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+        
+            <Label Content="快递列表" FontSize="{DynamicResource HeaderTitleSize}"
                    VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-        <DataGrid x:Name="DG_expressList" AutoGenerateColumns="False" CellEditEnding="DG_expressList_CellEditEnding"
-                  CanUserAddRows="False" Grid.Row="1" Margin="10">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Coding}" Header="快递编号" IsReadOnly="True" CanUserResize="False"/>
-                <DataGridTextColumn Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="快递名称" CanUserResize="False"/>
-                <DataGridTextColumn Binding="{Binding Start, UpdateSourceTrigger=PropertyChanged}" Header="发出点" CanUserResize="False"/>
-                <DataGridTextColumn Binding="{Binding Destination, UpdateSourceTrigger=PropertyChanged}" Header="终点" CanUserResize="False"/>
-                <DataGridTextColumn Binding="{Binding PreTrack, UpdateSourceTrigger=PropertyChanged}" Header="预定路线" CanUserResize="False"/>
-                <DataGridTextColumn Binding="{Binding State, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StateConverter}}" Header="状态" CanUserResize="False"/>
-                <DataGridTextColumn Binding="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}" Header="发货时间" CanUserResize="False"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <StackPanel x:Name="stackPanel" Grid.Row="2" Orientation="Horizontal" Margin="10, 0">
-            <Button x:Name="btnInit" Content="初始化数据库" Click="btnInit_Click"/>
-            <Button x:Name="btnRefresh" Content="刷新数据" Click="btnRefresh_Click" Margin="80,0,0,0"/>
-            <Button x:Name="btnUpdate" Content="更新数据" Click="btnUpdate_Click" Margin="80,0,0,0"/>
-        </StackPanel>
-    </Grid>
+            <DataGrid x:Name="DG_expressList" AutoGenerateColumns="False" CellEditEnding="DG_expressList_CellEditEnding"
+                      CanUserAddRows="False" Grid.Row="1" Margin="10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Coding}" Header="快递编号" IsReadOnly="True" CanUserResize="False"/>
+                    <DataGridTextColumn Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="快递名称" CanUserResize="False"/>
+                    <DataGridTextColumn Binding="{Binding Start, UpdateSourceTrigger=PropertyChanged}" Header="发出点" CanUserResize="False"/>
+                    <DataGridTextColumn Binding="{Binding Destination, UpdateSourceTrigger=PropertyChanged}" Header="终点" CanUserResize="False"/>
+                    <DataGridTextColumn Binding="{Binding PreTrack, UpdateSourceTrigger=PropertyChanged}" Header="预定路线" CanUserResize="False"/>
+                    <DataGridTextColumn Binding="{Binding State, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StateConverter}}" IsReadOnly="True" Header="状态" CanUserResize="False"/>
+                    <DataGridTextColumn Binding="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}" Header="发货时间" CanUserResize="False" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel x:Name="stackPanel" Grid.Row="2" Orientation="Horizontal" Margin="10, 0">
+                <Button x:Name="btnOpenAdd" Content="添加快递" Command="{x:Static md:DialogHost.OpenDialogCommand}" Click="btnOpenAdd_Click"/>
+                <Button x:Name="btnRefresh" Content="刷新数据" Click="btnRefresh_Click" Margin="80,0,0,0"/>
+                <Button x:Name="btnLocate" Content="定位快递位置" Click="btnLocate_Click" Margin="80,0,0,0"/>
+                <Button x:Name="btnInit" Content="初始化数据库" Click="btnInit_Click" Margin="80,0,0,0"/>
+            </StackPanel>
+        </Grid>
+    </md:DialogHost>
 </Page>

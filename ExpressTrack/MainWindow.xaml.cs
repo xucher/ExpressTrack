@@ -8,9 +8,8 @@ namespace ExpressTrack {
     public partial class MainWindow : Window {
 		public MainWindow() {
 			InitializeComponent();
-
+ 
             Snackbar.MessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue();
-
             initWebSocket();
 		}
 
@@ -35,17 +34,15 @@ namespace ExpressTrack {
             ws = new WebSocket(url: "ws://192.168.0.151:9001", protocols: "localSensePush-protocol");
 
             ws.OnOpen += (sender, e) => {
-                Helpers.showMsg("*已成功连接Localsense");
+                Helpers.showMsg("已成功连接*Localsense");
             };
             ws.OnMessage += readPosition;
             ws.OnClose += (sender, e) => {
                 Helpers.showMsg("*已断开连接");
-                
                 timer = null;
             };
             ws.OnError += (sender, e) => {
                 Helpers.showMsg("*Websocket异常");
-                Console.WriteLine("Websocket异常，错误信息为" + e.Message);
                 timer = null;
             };
         }
@@ -76,6 +73,7 @@ namespace ExpressTrack {
             return new int[] { x, y };
         }
 
+        // 窗口关闭时关闭全局连接
         private void windowFrame_Unloaded(object sender, RoutedEventArgs e) {
             if (ws.ReadyState == WebSocketState.Open) {
                 closeConn();

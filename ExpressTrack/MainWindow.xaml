@@ -16,7 +16,7 @@
         WindowStyle="None"
         MouseDown="Window_MouseDown" Width="{DynamicResource WindowWidth}" Height="{DynamicResource WindowHeight}">
     <Grid>
-        <Frame x:Name="windowFrame" Source="/ExpressTrack;component/Pages/LoginPage.xaml" NavigationUIVisibility="Hidden" Unloaded="windowFrame_Unloaded"/>
+        <Frame x:Name="windowFrame" Source="/ExpressTrack;component/Pages/MainPage.xaml" NavigationUIVisibility="Hidden" Unloaded="windowFrame_Unloaded"/>
         <materialDesign:Snackbar x:Name="Snackbar"
              Height="40" Margin="750,0,0,80" MinWidth="250"/>
     </Grid>
