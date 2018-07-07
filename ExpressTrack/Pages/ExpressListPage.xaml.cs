@@ -19,7 +19,6 @@ namespace ExpressTrack {
 
         private ObservableCollection<Express> expresses = new ObservableCollection<Express>();
         private int NextExpressID;
-        private ExpressDBContext db = new ExpressDBContext();
 
         private void Page_Initialized(object sender, EventArgs e) {
             getExpress();
@@ -49,8 +48,17 @@ namespace ExpressTrack {
             //}
             var express = e.Row.Item as Express;
             
-            db.Express.Attach(express);
-            db.Entry(express).State = EntityState.Modified;
+            // TODO：不能同时对一条记录修改两次
+            using (ExpressDBContext db = new ExpressDBContext())
+            {
+                db.Express.Attach(express);
+                db.Entry(express).State = EntityState.Modified;
+                if (db.SaveChanges() > 0)
+                {
+                    Helpers.showMsg("更新成功");
+                };
+            }
+            
             
             //Console.WriteLine("Count: " + expresses.Count);
             //foreach (Express item in expresses) {
@@ -60,9 +68,7 @@ namespace ExpressTrack {
 
         // 更新数据到数据库
         private void btnUpdate_Click(object sender, RoutedEventArgs e) {
-            if (db.SaveChanges() > 0) {
-                Helpers.showMsg("更新成功");
-            };
+
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e) {
@@ -71,6 +77,7 @@ namespace ExpressTrack {
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e) {
             getExpress();
+            Helpers.showMsg("刷新成功");
         }
 
         private void btnInit_Click(object sender, RoutedEventArgs e) {
@@ -90,30 +97,47 @@ namespace ExpressTrack {
                 Destination = "StationE",
                 StartDate = DateTime.Now.ToString()
             });
-            db.Express.AddRange(expressList);
-            db.SaveChanges();
+            expressList.Add(new Express
+            {
+                Coding = Helpers.convertExpressCoding(3),
+                Name = "Express3",
+                Start = "StationA",
+                Destination = "StationE",
+                StartDate = DateTime.Now.ToString()
+            });
+            using (ExpressDBContext db = new ExpressDBContext())
+            {
+                db.Express.AddRange(expressList);
+                db.SaveChanges();
 
 
-            db.Station.Add(new Station {
-                Name = "StationA"
-            });
-            db.Station.Add(new Station {
-                Name = "StationB"
-            });
-            db.Station.Add(new Station {
-                Name = "StationC"
-            });
-            db.Station.Add(new Station {
-                Name = "StationD"
-            });
-            db.Station.Add(new Station {
-                Name = "StationE"
-            });
-            db.Station.Add(new Station {
-                Name = "StationF"
-            });
+                db.Station.Add(new Station
+                {
+                    Name = "StationA"
+                });
+                db.Station.Add(new Station
+                {
+                    Name = "StationB"
+                });
+                db.Station.Add(new Station
+                {
+                    Name = "StationC"
+                });
+                db.Station.Add(new Station
+                {
+                    Name = "StationD"
+                });
+                db.Station.Add(new Station
+                {
+                    Name = "StationE"
+                });
+                db.Station.Add(new Station
+                {
+                    Name = "StationF"
+                });
 
-            db.SaveChanges();
+                db.SaveChanges();
+            }
         }
     }
 }

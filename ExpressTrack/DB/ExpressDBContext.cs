@@ -4,7 +4,7 @@ using System.Data.Entity;
 namespace ExpressTrack {
     class ExpressDBContext : DbContext {
         public ExpressDBContext(): base("name=ExpressDB") {
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ExpressDBContext>());
+            Database.SetInitializer(new CreateDatabaseIfNotExists<ExpressDBContext>());
         }
         public DbSet<Express> Express { get; set; }
         public DbSet<Station> Station { get; set; }

@@ -22,6 +22,8 @@ namespace ExpressTrack.Pages {
             InitializeComponent();
         }
 
+        private int msgCount;
+
         private void TreeView_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             NavigationService nav = mainFrame.NavigationService;
             if (actionTree.SelectedItem != null) {
@@ -50,6 +52,12 @@ namespace ExpressTrack.Pages {
                     case "出库记录":
                         nav.Navigate(new Uri("Pages/OutStockRecordPage.xaml", UriKind.Relative));
                         break;
+                    case "中转站列表":
+                        nav.Navigate(new Uri("Pages/StationListPage.xaml", UriKind.Relative));
+                        break;
+                    case "消息通知":
+                        nav.Navigate(new Uri("Pages/MessageListPage.xaml", UriKind.Relative));
+                        break;
                     default: break;
                 }
             }
@@ -62,6 +70,10 @@ namespace ExpressTrack.Pages {
         private void btnLogout_Click(object sender, RoutedEventArgs e) {
             (Application.Current.MainWindow as MainWindow).windowFrame.
                 NavigationService.Navigate(new Uri("Pages/LoginPage.xaml", UriKind.Relative));
+        }
+
+        private void PackIcon_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
+            mainFrame.NavigationService.Navigate(new Uri("Pages/MessageListPage.xaml", UriKind.Relative));
         }
     }
 }

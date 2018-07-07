@@ -3,13 +3,15 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:localConverter="clr-namespace:ExpressTrack.Converters"
+      xmlns:local="clr-namespace:ExpressTrack.Converters"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       FontSize="16"
       d:DesignHeight="600" d:DesignWidth="880"
       Title="ExpressDetail">
     <Page.Resources>
+        <local:ExpressStateConverter x:Key="StateConverter"></local:ExpressStateConverter>
+      
         <DataTemplate x:Key="ExpressRecordListItem">
             <Grid Margin="2">
                 <Grid.ColumnDefinitions>
@@ -27,7 +29,7 @@
             </Grid>
         </DataTemplate>
     </Page.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -38,12 +40,13 @@
             <ColumnDefinition Width="400"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.RowSpan="2" Margin="0,0,10,0">
-            <Grid Margin="0,0,0,30" Height="160">
+            <Grid Margin="0,0,0,30" Height="200">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="9*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
@@ -65,26 +68,48 @@
                             <StackPanel Orientation="Horizontal"/>
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
+                    <!--<ListBox.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="ListBoxItem.Foreground" Value="AliceBlue"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>-->
                 </ListBox>
 
                 <Label Content="当前坐标：" VerticalContentAlignment="Center" Grid.Row="3"/>
                 <Label Content="{Binding NowAddress, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Grid.Row="3" Grid.Column="1"/>
+
+                <Label Content="当前状态：" VerticalContentAlignment="Center" Grid.Row="4"/>
+                <Label Content="{Binding ExpressState, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource StateConverter}}" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="1"/>
             </Grid>
-            <Canvas Height="400">
+            <Canvas Height="360">
                 <Line x:Name="LTimeLine" Stroke="SteelBlue" X1="18" Y1="20" X2="18" Y2="70"
                       Visibility="Hidden" StrokeThickness="1"/>
-                <ListView Height="400" Width="450" ItemsSource="{Binding ShipRecords}" ItemTemplate="{StaticResource ExpressRecordListItem}"/>
+                <ListView Height="360" Width="450" ItemsSource="{Binding ShipRecords}" ItemTemplate="{StaticResource ExpressRecordListItem}"/>
             </Canvas>
         </StackPanel>
         <Canvas Grid.Column="1" Background="#FFEAE1E1">
-            <Path Stroke="Black">
+            <Rectangle Canvas.Left="0" Width="100" Height="40" Canvas.Top="50" RadiusX="10" RadiusY="15" Fill="#FF957C7C"/>
+            <Label Foreground="White" Content="StationF" Canvas.Left="10" Canvas.Top="55"/>
+            <Rectangle Canvas.Left="0" Width="100" Height="40" Canvas.Top="110" RadiusX="10" RadiusY="15" Fill="#FF957C7C"/>
+            <Label Foreground="White" Content="StationE" Canvas.Left="10" Canvas.Top="115"/>
+            <Rectangle Canvas.Left="0" Width="100" Height="40" Canvas.Top="170" RadiusX="10" RadiusY="15" Fill="#FF957C7C"/>
+            <Label Foreground="White" Content="StationD" Canvas.Left="10" Canvas.Top="175"/>
+            <Rectangle Canvas.Left="0" Width="100" Height="40" Canvas.Top="230" RadiusX="10" RadiusY="15" Fill="#FF957C7C"/>
+            <Label Foreground="White" Content="StationC" Canvas.Left="10" Canvas.Top="235"/>
+            
+            <Rectangle Canvas.Left="300" Width="100" Height="40" Canvas.Top="50" RadiusX="10" RadiusY="15" Fill="#FF957C7C"/>
+            <Label Foreground="White" Content="StationA" Canvas.Left="315" Canvas.Top="55"/>
+            <Rectangle Canvas.Left="300" Width="100" Height="40" Canvas.Top="500" RadiusX="10" RadiusY="15" Fill="#FF957C7C"/>
+            <Label Foreground="White" Content="StationB" Canvas.Left="315" Canvas.Top="505"/>
+
+            <Path Stroke="Black" StrokeThickness="2">
                 <Path.Data>
                     <PathGeometry x:Name="trackGeometry" />
                 </Path.Data>
             </Path>
         </Canvas>
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="50,10">
-            <Button x:Name="btnStart" Content="开始追踪" Click="btnStart_Click"/>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="20,10">
+            <Button x:Name="btnStart" Content="显示实时轨迹" Click="btnStart_Click"/>
             <Button x:Name="btnClose" Content="断开连接" Margin="30,0,0,0" Click="btnClose_Click" IsEnabled="False" />
             <Button x:Name="btnReset" Content="重置" Margin="30,0,0,0" Click="btnReset_Click" IsEnabled="False"/>
         </StackPanel>

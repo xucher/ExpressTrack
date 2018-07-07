@@ -8,13 +8,14 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>ExpressTrack</RootNamespace>
     <AssemblyName>ExpressTrack</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -85,6 +86,9 @@
     <Compile Include="Pages\ExpressDetailPage.xaml.cs">
       <DependentUpon>ExpressDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\MessageListPage.xaml.cs">
+      <DependentUpon>MessageListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\OutStockRecordPage.xaml.cs">
       <DependentUpon>OutStockRecordPage.xaml</DependentUpon>
     </Compile>
@@ -98,11 +102,13 @@
       <DependentUpon>InStockRecordPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Pages\StationListPage.xaml.cs">
+      <DependentUpon>StationListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\WorkerPage.xaml.cs">
       <DependentUpon>WorkerPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Style\Animations\GridLengthAnimation.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ExpressDetailViewModel.cs" />
     <Compile Include="ViewModels\ShipmentViewModel.cs" />
@@ -111,6 +117,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ExpressListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MessageListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -152,6 +162,10 @@
     <Page Include="Pages\InStockRecordPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\StationListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\WorkerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -208,6 +222,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\avatar01.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Style\Animations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

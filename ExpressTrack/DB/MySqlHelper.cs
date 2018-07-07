@@ -37,7 +37,17 @@ namespace ExpressTrack.DB {
             }
         }
 
-
+        public static List<Station> getAllStation() {
+            List<Station> stations = new List<Station>();
+            using (ExpressDBContext db = new ExpressDBContext()) {
+                var query = from e in db.Station
+                            select e;
+                if (query.Count() > 0) {
+                    stations = query.ToList();
+                }
+            }
+            return stations;
+        }
         public static string getFromStation(string coding, string nowStation) {
             string fromStation = "";
             using (ExpressDBContext db = new ExpressDBContext()) {
@@ -54,19 +64,18 @@ namespace ExpressTrack.DB {
                                  where e.Coding == coding
                                  select e;
                     if (query2.Count() > 0) {
-                        // 状态为  初始
                         Express express = query2.Single();
+                        // 状态为  初始
                         if (express.State == (int)ExpressListPage.ExpressState.INIT) {
                             // 判断起始站点是否正确
                             if (express.Start == nowStation) {
                                 // 起始虚拟中转站
                                 fromStation = "--";
-                                // 更新快递状态为在库
-                                express.State = (int)ExpressListPage.ExpressState.INSTOCK;
-                                changeExpressState(express);
                             } else {
                                 Helpers.showMsg("该快递的起点不是本站");
                             }
+                        } else {
+                            Helpers.showMsg("该快递已进入本站");
                         }
                     } else {
                         Helpers.showMsg("编号为" + coding + "的快递不存在");
@@ -77,22 +86,24 @@ namespace ExpressTrack.DB {
         }
         public static string getToStation(string coding, string nowStation) {
             string result = "";
-            string preTrack = "";
+            Express express = null;
             using (ExpressDBContext db = new ExpressDBContext()) {
                 var query = from e in db.Express
                             where e.Coding == coding
-                            select e.PreTrack;
+                            select e;
                 if (query.Count() > 0) {
-                    preTrack = query.Single().ToString();
+                    express = query.Single();
                 }
             }
-            string[] preTrackArray = Helpers.parsePreTrack(preTrack);
+            string[] preTrackArray = Helpers.parsePreTrack(express.PreTrack);
             
             // TODO: 假定没有重复站点
             for (int i = 0;i < preTrackArray.Length;i++) {
                 if (preTrackArray[i] == nowStation.Last()+"") {
                     if (i + 1 == preTrackArray.Length) {
                         result = "--";
+                        express.State = (int)ExpressListPage.ExpressState.FINISH;
+                        changeExpressState(express);
                     } else {
                         result = "Station" + preTrackArray[i + 1];
                     }
@@ -134,25 +145,25 @@ namespace ExpressTrack.DB {
             }
             return outstocks;
         }
-        public static int getLastInstockIndex() {
+        public static Instock getLastInstock() {
             using (ExpressDBContext db = new ExpressDBContext()) {
                 var query = from s in db.Instock
-                            select s.Coding;
+                            select s;
                 if (query.Count() > 0) {
-                    return Helpers.parseShipmentCoding(query.ToList().Last());
+                    return query.ToList().Last();
                 } else {
-                    return 0;
+                    return null; ;
                 }
             }
         }
-        public static int getLastOutstockIndex() {
+        public static Outstock getLastOutstock() {
             using (ExpressDBContext db = new ExpressDBContext()) {
                 var query = from s in db.Outstock
-                            select s.Coding;
+                            select s;
                 if (query.Count() > 0) {
-                    return Helpers.parseShipmentCoding(query.ToList().Last());
+                    return query.ToList().Last();
                 } else {
-                    return 0;
+                    return null;
                 }
             }
         }
@@ -187,7 +198,7 @@ namespace ExpressTrack.DB {
                         }
                     }
                 } else {
-                    Console.WriteLine("还未到达第一个中转站");
+                    Helpers.showMsg("还未到达第一个中转站");
                 }
                 
             }

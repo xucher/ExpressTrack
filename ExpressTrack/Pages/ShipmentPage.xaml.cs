@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Linq;
+using System.IO;
+using ExpressTrack.Models;
 
 namespace ExpressTrack {
     public partial class ShipmentPage : Page {
@@ -17,9 +19,17 @@ namespace ExpressTrack {
             this.type = type;
             InitializeComponent();
             initUI();
-            
-            inStockStartId = MySqlHelper.getLastInstockIndex() + 1;
-            outStockStartId = MySqlHelper.getLastOutstockIndex() + 1;
+
+            if (MySqlHelper.getLastInstock() != null) {
+                inStockStartId = Helpers.parseShipmentCoding(MySqlHelper.getLastInstock().Coding) + 1;
+            } else {
+                inStockStartId = 1;
+            }
+            if (MySqlHelper.getLastOutstock() != null) {
+                outStockStartId = Helpers.parseShipmentCoding(MySqlHelper.getLastOutstock().Coding) + 1;
+            } else {
+                outStockStartId = 1;
+            }
             setDataContext();
         }
 
@@ -52,7 +62,8 @@ namespace ExpressTrack {
                 ShipmentId = shipmentId,
                 Stations = new ObservableCollection<string>(MySqlHelper.getAllStationName()),
                 CheckDate = DateTime.Now,
-                DeviceState = true,
+                SelectedStation = Helpers.getStationByPosition(),
+                DeviceState = false,
                 Shipments = new ObservableCollection<ShipmentModel>()
             };
             DataContext = viewModel;
@@ -69,11 +80,11 @@ namespace ExpressTrack {
                         Console.WriteLine(data.EPC);
                         // TODO: data.Epc需要重新编码
                         if (data.EPC == "1234") {
-                            data.EPC = "201806090001";
+                            data.EPC = Helpers.convertExpressCoding(1);
                         } else if (data.EPC == "B002") {
-                            data.EPC = "201806090002";
-                        } else if (data.EPC == "2000") {
-                            data.EPC = "201806090003";
+                            data.EPC = Helpers.convertExpressCoding(2);
+                        } else {
+                            data.EPC = Helpers.convertExpressCoding(3);
                         }
 
                         geneShipmentByCoding(data.EPC);
@@ -96,10 +107,10 @@ namespace ExpressTrack {
         }
 
         private void geneShipmentByCoding(string coding) {
-            // TODO: 判断出库单状态,更新快递状态
             ShipmentViewModel mShipmentModel = DataContext as ShipmentViewModel;
             // 判断中转站是否已选
             if (mShipmentModel.SelectedStation != null) {
+                // 判断是否已经添加过
                 var query = from s in mShipmentModel.Shipments
                             where s.Coding == coding
                             select s;
@@ -110,38 +121,67 @@ namespace ExpressTrack {
                     var express = MySqlHelper.getExpressByCoding(coding);
                     if (express != null) {
                         string station = "";
-                        if (type == INSTOCK) {
-                            station = MySqlHelper.getFromStation(coding, mShipmentModel.SelectedStation);
-                        } else if (type == OUTSTOCK) {
-                            station = MySqlHelper.getToStation(coding, mShipmentModel.SelectedStation);
+                        int flag = 0;
+
+                        if (express.State == (int)ExpressListPage.ExpressState.DELIVERING) {
+                            station = MySqlHelper.getLastOutstock().ToStation;
+                            if (station != mShipmentModel.SelectedStation) {
+                                Helpers.showMsg("快递应该在 " + station + " 入库");
+                                flag = 1;
+                            }
+                        }
+                        if (express.State == (int)ExpressListPage.ExpressState.INSTOCK) {
+                            station = MySqlHelper.getLastInstock().ToStation;
+                            if (station != mShipmentModel.SelectedStation) {
+                                Helpers.showMsg("快递应该在 " + station + " 出库");
+                                flag = 1;
+                            }
+                        }
+                        if (express.State == (int)ExpressListPage.ExpressState.FINISH) {
+                            Helpers.showMsg("快递即将到达代收点");
+                            flag = 1;
                         }
 
-                        if (station != "") {
-                            mShipmentModel.Shipments.Add(new ShipmentModel {
-                                Coding = coding,
-                                Name = express.Name,
-                                Station = station
-                            });
+                        if (flag == 0) {
                             if (type == INSTOCK) {
-                                db.Instock.Add(new Models.Instock {
-                                    Coding = mShipmentModel.ShipmentId,
-                                    ExpressCoding = coding,
-                                    FromStation = station,
-                                    ToStation = mShipmentModel.SelectedStation,
-                                    CheckDate = mShipmentModel.CheckDate.ToString()
-                                });
-                                express.State = (int)ExpressListPage.ExpressState.INSTOCK;
-                                MySqlHelper.changeExpressState(express);
+                                station = MySqlHelper.getFromStation(coding, mShipmentModel.SelectedStation);
                             } else if (type == OUTSTOCK) {
-                                db.Outstock.Add(new Models.Outstock {
-                                    Coding = mShipmentModel.ShipmentId,
-                                    ExpressCoding = coding,
-                                    FromStation = mShipmentModel.SelectedStation,
-                                    ToStation = station,
-                                    CheckDate = mShipmentModel.CheckDate.ToString()
+                                station = MySqlHelper.getToStation(coding, mShipmentModel.SelectedStation);
+                            }
+
+                            if (station != "") {
+                                mShipmentModel.Shipments.Add(new ShipmentModel {
+                                    Coding = coding,
+                                    Name = express.Name,
+                                    Station = station
                                 });
-                                express.State = (int)ExpressListPage.ExpressState.DELIVERING;
-                                MySqlHelper.changeExpressState(express);
+                                if (type == INSTOCK) {
+                                    db.Instock.Add(new Models.Instock {
+                                        Coding = mShipmentModel.ShipmentId,
+                                        ExpressCoding = coding,
+                                        FromStation = station,
+                                        ToStation = mShipmentModel.SelectedStation,
+                                        CheckDate = mShipmentModel.CheckDate.ToString()
+                                    });
+                                    express.State = (int)ExpressListPage.ExpressState.INSTOCK;
+                                    MySqlHelper.changeExpressState(express);
+                                } else if (type == OUTSTOCK) {
+                                    db.Outstock.Add(new Models.Outstock {
+                                        Coding = mShipmentModel.ShipmentId,
+                                        ExpressCoding = coding,
+                                        FromStation = mShipmentModel.SelectedStation,
+                                        ToStation = station,
+                                        CheckDate = mShipmentModel.CheckDate.ToString()
+                                    });
+                                    if (station != "--") {
+                                        express.State = (int)ExpressListPage.ExpressState.DELIVERING;
+                                        MySqlHelper.changeExpressState(express);
+                                    }
+                                    if (station == "--") {
+                                        express.State = (int)ExpressListPage.ExpressState.FINISH;
+                                        MySqlHelper.changeExpressState(express);
+                                    }
+                                }
                             }
                         }
                     } else {
@@ -154,14 +194,16 @@ namespace ExpressTrack {
             } else {
                 Helpers.showMsg("未选择当前中转站");
             }
-        }
+        } 
 
         private void Tgb_isAuto_Click(object sender, RoutedEventArgs e) {
             if (Tgb_isAuto.IsChecked == true) {
                 btnConnect.IsEnabled = false;
+                cbxStation.IsEnabled = true;
                 manualAddPanelColumn.Width = new GridLength(250);
             } else {
                 btnConnect.IsEnabled = true;
+                cbxStation.IsEnabled = false;
                 manualAddPanelColumn.Width = new GridLength(0);
             }
         }
@@ -169,7 +211,7 @@ namespace ExpressTrack {
         private void btnConnect_Click(object sender, RoutedEventArgs e) {
             if ((DataContext as ShipmentViewModel).SelectedStation != null) {
                 string ant = "";
-                // 默认连接10号
+                // 默认连接10号柜子
                 int antIndex = 1;
                 // 判断要连接的天线
                 string station = (DataContext as ShipmentViewModel).SelectedStation;
@@ -197,9 +239,15 @@ namespace ExpressTrack {
                         antIndex = 4;
                         break;
                 }
-                mReader.ConnectAnt(ant, antIndex);
-                Helpers.showMsg("连接成功");
-                btnStart.IsEnabled = true;
+
+                try {
+                    mReader.ConnectAnt(ant, antIndex);
+                    Helpers.showMsg("连接成功，读写器可以使用");
+                    btnStart.IsEnabled = true;
+                    (DataContext as ShipmentViewModel).DeviceState = true;
+                } catch (IOException) {
+                    Helpers.showMsg("连接失败");
+                }
             } else {
                 Helpers.showMsg("未选择中转站");
             }

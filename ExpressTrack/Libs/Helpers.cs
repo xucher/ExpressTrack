@@ -3,8 +3,58 @@ using System.Windows;
 
 namespace ExpressTrack {
     public class Helpers {
+        // 全局localsense连接
+        public static void connGlobalLocalSense() {
+            (Application.Current.MainWindow as MainWindow).startConn();
+        }
+        public static void closeGlobalLocalSense() {
+            (Application.Current.MainWindow as MainWindow).closeConn();
+        }
+
         public static void showMsg(string message) {
             (Application.Current.MainWindow as MainWindow).showMessage(message);
+        }
+
+        public static int[] getPostion() {
+            return (Application.Current.MainWindow as MainWindow).getPosition();
+        }
+
+        // 根据定位数据获取station
+        public static string getStationByPosition() {
+            int[] position = getPostion();
+            if (position.Length == 2) {
+                if (position[0] < 100) {
+                    if (position[1] > 50 && position[1] < 90) {
+                        return "StationF";
+                    }
+                    if (position[1] > 110 && position[1] < 150) {
+                        return "StationE";
+                    }
+                    if (position[1] > 170 && position[1] < 210) {
+                        return "StationD";
+                    }
+                    if (position[1] > 230 && position[1] < 270) {
+                        return "StationC";
+                    }
+                } else if (position[0] > 300) {
+                    if (position[1] > 50 && position[1] < 90) {
+                        return "StationA";
+                    }
+                    if (position[1] > 500 && position[1] < 540) {
+                        return "StationB";
+                    }
+                }
+            }
+            return null;
+        }
+        // 判断是否即将到达StationB
+        public static bool isApproaching(int range) {
+            int[] position = getPostion();
+            if (position[0] > 300-range && 
+                position[1] > 500-range && position[1] < 540+range) {
+                return true;
+            }
+            return false;
         }
 
         // 解析快递编号  pattern: 2018 11 25 0000

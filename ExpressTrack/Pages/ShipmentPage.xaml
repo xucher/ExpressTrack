@@ -34,7 +34,8 @@
 
             <Label Content="当前中转站：" Margin="80,0,0,0"/>
             <ComboBox Width="100" materialDesign:ComboBoxAssist.ClassicMode="true" ItemsSource="{Binding Stations}"
-                      SelectedValue="{Binding SelectedStation, UpdateSourceTrigger=PropertyChanged}"/>
+                      SelectedValue="{Binding SelectedStation, UpdateSourceTrigger=PropertyChanged}"
+                      IsEnabled="False" x:Name="cbxStation"/>
 
             <Label Content="日期：" Margin="80,0,0,0"/>
             <DatePicker Width="100" VerticalAlignment="Bottom" 
@@ -75,7 +76,7 @@
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <Label Content="手动输入"/>
+                <Label Content="手动输入" FontSize="14"/>
                 <ToggleButton x:Name="Tgb_isAuto" Style="{StaticResource MaterialDesignSwitchToggleButton}" Click="Tgb_isAuto_Click" />
             </StackPanel>
             <Button x:Name="btnConnect" Content= "连接天线" Margin="150,0,0,0" Click="btnConnect_Click"/>

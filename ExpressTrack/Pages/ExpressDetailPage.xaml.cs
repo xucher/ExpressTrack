@@ -26,36 +26,39 @@ namespace ExpressTrack {
         private WebSocket ws;
         private Stopwatch timer;
         private int flag = 1;   // 标识是否为第一个数据
+
         // 处理获得的坐标数据
-        private void handleLocalSense(object sender, MessageEventArgs e) {   
+        private void handleLocalSense(object sender, MessageEventArgs e) { 
+            //  maxX=1000, maxY = 1375
             if (!timer.IsRunning) {
                 timer.Start();
             }
             
-            if (timer.ElapsedTicks > 80*1000) {
+            if (timer.ElapsedMilliseconds > 50) {
                 int[] location = Helpers.parseLocalsenseBlob(e.Data);
-                if (location[0] == 14913) {
-                    // 第一次发送数据
+                if (location[0] == 15027) {
+                    int x = (int)(location[1] / 2.5);
+                    int y = (int)(550 - location[2] / 2.5);
+                    
                     if (flag == 1) {
                         Dispatcher.Invoke(new Action(delegate {
-                            pathFigure = new PathFigure { StartPoint = new Point(location[1] / 2.4, location[2] / 2.5) };
+                            pathFigure = new PathFigure { StartPoint = new Point(x, y) };
                             trackGeometry.Figures.Add(pathFigure);
-                            
                         }));
                         flag = 0;
                     } else {
                         Dispatcher.Invoke(new Action(delegate {
                             if (pathFigure != null) {
-                                pathFigure.Segments.Add(new LineSegment(new Point(location[1] / 2.4, location[2] / 2.5), true));
+                                pathFigure.Segments.Add(new LineSegment(new Point(x, y), true));
                             }
-                            
                         }));
                     }
                     Dispatcher.Invoke(new Action(delegate {
                         (DataContext as ExpressDetailViewModel).NowAddress =
-                                "(" + location[1] + ", " + location[2] + ")";
+                                "(" + x + ", " + y + ")";
                     }));
                 }
+
                 timer.Reset();
                 timer.Start();
             }
@@ -63,14 +66,19 @@ namespace ExpressTrack {
 
         // 开始追踪
         private void btnStart_Click(object sender, RoutedEventArgs e) {
+            if (ws == null) {
+                initWebsocket();
+            }
+
             if (timer == null) {
                 timer = new Stopwatch();
             }
-            
-            initWebsocket();
-            btnStart.IsEnabled = false;
+            timer.Reset();
+
             ws.Connect();
-            
+            if (ws.ReadyState == WebSocketState.Closed) {
+                Helpers.showMsg("连接失败");
+            }
         }
 
         // 初始化websocket
@@ -78,26 +86,26 @@ namespace ExpressTrack {
             ws = new WebSocket(url: "ws://192.168.0.151:9001", protocols: "localSensePush-protocol");
             
             ws.OnOpen += (sender, e) => {
+                btnStart.IsEnabled = false;
                 btnClose.IsEnabled = true;
                 btnReset.IsEnabled = true;
-                Console.WriteLine("onOpen: " + ws.ReadyState);
+                Helpers.showMsg("已成功连接Localsense");
             };
             ws.OnMessage += handleLocalSense;
             ws.OnClose += (sender, e) => {
-                Console.WriteLine("onClose: " + ws.ReadyState);
-                Console.WriteLine("断开连接");
+                btnStart.IsEnabled = true;
+                btnClose.IsEnabled = false;
+                btnReset.IsEnabled = false;
+                Helpers.showMsg("已断开连接");
             };
             ws.OnError += (sender, e) => {
-                Console.WriteLine("onError: " + ws.ReadyState);
+                Helpers.showMsg("Websocket异常");
                 Console.WriteLine("Websocket异常，错误信息为" + e.Message);
             };
         }
 
         // 关闭连接
         private void btnClose_Click(object sender, RoutedEventArgs e) {
-            btnClose.IsEnabled = false;
-            btnStart.IsEnabled = true;
-            btnReset.IsEnabled = false;
             ws.Close();
         }
 
@@ -110,6 +118,7 @@ namespace ExpressTrack {
             Express express = MySqlHelper.getExpressByCoding(inputCoding.Text);
             if (express != null) {
                 mViewModel.ExpressName = express.Name;
+                mViewModel.ExpressState = express.State;
                 mViewModel.PreTrack.Clear();
 
                 if (express.PreTrack != null) {
@@ -131,7 +140,11 @@ namespace ExpressTrack {
 
         private void setTimeLine() {
             LTimeLine.Visibility = Visibility.Visible;
-            LTimeLine.Y2 = (mViewModel.ShipRecords.Count - 1) * 52 + 20;
+            if (mViewModel.ShipRecords.Count == 0) {
+                LTimeLine.Y2 = 20;
+            } else {
+                LTimeLine.Y2 = (mViewModel.ShipRecords.Count - 1) * 52 + 20;
+            }
             LTimeLine.StrokeDashArray = new DoubleCollection { 5,1 };
         }
     }

@@ -16,9 +16,32 @@ namespace ExpressTrack.ViewModels {
                 }
             }
         }
+        private int mExpressState;
+        public int ExpressState {
+            get {
+                return mExpressState;
+            }
+            set {
+                if (value != mExpressState) {
+                    mExpressState = value;
+                    Notify("ExpressState");
+                }
+            }
+        }
 
         public ObservableCollection<string> PreTrack { get; set; }
-        public string NowAddress { get; set; }
+        private string mNowAddress;
+        public string NowAddress {
+            get {
+                return mNowAddress;
+            }
+            set {
+                if (value != mNowAddress) {
+                    mNowAddress = value;
+                    Notify("NowAddress");
+                }
+            }
+        }
 
         public ObservableCollection<ShipRecord> ShipRecords { get; set; }
         #endregion
@@ -66,7 +89,12 @@ namespace ExpressTrack.ViewModels {
                             desc = "从 " + FromStation + " 发出, 已到达 " + ToStation;
                         }
                     } else {
-                        desc = "从 " + FromStation + " 发出, 即将发往 " + ToStation;
+                        if (ToStation == "--") {
+                            desc = "从 " + FromStation + " 发出, 即将发往代收点 ";
+                        } else {
+                            desc = "从 " + FromStation + " 发出, 即将发往 " + ToStation;
+                        }
+                        
                     }
                     return desc;
                 }

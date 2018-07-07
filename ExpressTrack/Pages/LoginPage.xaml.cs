@@ -27,6 +27,7 @@ namespace ExpressTrack.Pages {
                     if (query.Count() > 0) {
                         Helpers.showMsg("登录成功，即将跳转...");
                         NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
+                        Helpers.connGlobalLocalSense();
                     } else {
                         passwordError.Content = "密码错误";
                     }
