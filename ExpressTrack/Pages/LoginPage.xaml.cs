@@ -2,11 +2,16 @@
 using System.Windows;
 using System.Linq;
 using System.Windows.Controls;
+using ExpressTrack.DB;
 
 namespace ExpressTrack.Pages {
     public partial class LoginPage : Page {
         public LoginPage() {
             InitializeComponent();
+
+            if (MySqlHelper.getAllUser() == null) {
+                mainGbx.Height = 350;
+            }
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e) {
@@ -60,6 +65,22 @@ namespace ExpressTrack.Pages {
 
         private void btnExit_Click(object sender, RoutedEventArgs e) {
             Application.Current.Shutdown();
+        }
+
+        // 初始化初始用户
+        private void btnInit_Click(object sender, RoutedEventArgs e) {
+            using(ExpressDBContext db = new ExpressDBContext()) {
+                var user = new Models.User {
+                    Coding = "bdl239",
+                    Name = "bdl239",
+                    PassWord = "bdl239"
+                };
+                db.User.Add(user);
+                db.SaveChanges();
+                Helpers.showMsg("添加用户bdl239成功");
+
+                mainGbx.Height = 300;
+            }
         }
     }
 }

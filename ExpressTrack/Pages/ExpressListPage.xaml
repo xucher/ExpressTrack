@@ -41,14 +41,12 @@
 
                     <DockPanel Grid.Row="3">
                         <Label Content="发自站点：" Width="100"/>
-                        <ComboBox x:Name="cbx_fromStation" IsEditable="True" 
-                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}" VerticalAlignment="Bottom" />
+                        <ComboBox x:Name="cbx_fromStation" VerticalAlignment="Bottom" />
                     </DockPanel>
                
                     <DockPanel Grid.Row="4">
                         <Label Content="最终站点：" Width="100"/>
-                        <ComboBox x:Name="cbx_toStation" IsEditable="True" 
-                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}" VerticalAlignment="Bottom" />
+                        <ComboBox x:Name="cbx_toStation" VerticalAlignment="Bottom" />
                     </DockPanel>
                     <Label Grid.Row="5" x:Name="StationError" Style="{StaticResource LabelError}" Margin="100, 0, 0, 0"/>
 
@@ -84,6 +82,7 @@
                 <Button x:Name="btnOpenAdd" Content="添加快递" Command="{x:Static md:DialogHost.OpenDialogCommand}" Click="btnOpenAdd_Click"/>
                 <Button x:Name="btnRefresh" Content="刷新数据" Click="btnRefresh_Click" Margin="80,0,0,0"/>
                 <Button x:Name="btnLocate" Content="定位快递位置" Click="btnLocate_Click" Margin="80,0,0,0"/>
+                <Button x:Name="btnReset" Content="重置初始快递" Margin="80,0,0,0" Click="btnReset_Click"/>
                 <Button x:Name="btnInit" Content="初始化数据库" Click="btnInit_Click" Margin="80,0,0,0"/>
             </StackPanel>
         </Grid>

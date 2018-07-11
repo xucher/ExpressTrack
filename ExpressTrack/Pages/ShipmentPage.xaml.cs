@@ -199,11 +199,12 @@ namespace ExpressTrack {
         private void Tgb_isAuto_Click(object sender, RoutedEventArgs e) {
             if (Tgb_isAuto.IsChecked == true) {
                 btnConnect.IsEnabled = false;
-                cbxStation.IsEnabled = true;
                 manualAddPanelColumn.Width = new GridLength(250);
+
+                cbxAdd.ItemsSource = from a in MySqlHelper.getAllExpress()
+                                     select a.Coding;
             } else {
                 btnConnect.IsEnabled = true;
-                cbxStation.IsEnabled = false;
                 manualAddPanelColumn.Width = new GridLength(0);
             }
         }
@@ -254,7 +255,11 @@ namespace ExpressTrack {
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
-            geneShipmentByCoding(tbxAdd.Text.Trim());
+            if (cbxAdd.SelectedValue != null) {
+                geneShipmentByCoding(cbxAdd.SelectedValue.ToString());
+            } else {
+                Helpers.showMsg("未选择编号");
+            }
         }
 
         private void btnAddBatch_Click(object sender, RoutedEventArgs e) {

@@ -35,7 +35,7 @@
             <Label Content="当前中转站：" Margin="80,0,0,0"/>
             <ComboBox Width="100" materialDesign:ComboBoxAssist.ClassicMode="true" ItemsSource="{Binding Stations}"
                       SelectedValue="{Binding SelectedStation, UpdateSourceTrigger=PropertyChanged}"
-                      IsEnabled="False" x:Name="cbxStation"/>
+                      x:Name="cbxStation"/>
 
             <Label Content="日期：" Margin="80,0,0,0"/>
             <DatePicker Width="100" VerticalAlignment="Bottom" 
@@ -58,16 +58,8 @@
             <StackPanel Grid.Column="1">
                 <GroupBox Header="通过快递编号逐个添加" Margin="8">
                     <StackPanel>
-                        <TextBox x:Name="tbxAdd" materialDesign:HintAssist.Hint="快递编号" 
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <ComboBox x:Name="cbxAdd" VerticalAlignment="Bottom" />
                         <Button Margin="0,20,0,0" Content="添加" Click="btnAdd_Click"/>
-                    </StackPanel>
-                </GroupBox>
-                <GroupBox Header="通过出库单批量添加" Margin="8">
-                    <StackPanel>
-                        <TextBox x:Name="tbxAddBatch" materialDesign:HintAssist.Hint="出库单号" 
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        <Button Margin="0,20,0,0" Content="批量添加" Click="btnAddBatch_Click"/>
                     </StackPanel>
                 </GroupBox>
             </StackPanel>

@@ -8,16 +8,21 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using WebSocketSharp;
+using System.Linq;
 
 namespace ExpressTrack {
     public partial class ExpressDetailPage : Page {
         public ExpressDetailPage() {
             InitializeComponent();
+
+            inputCoding.ItemsSource = from e in MySqlHelper.getAllExpress()
+                                      select e.Coding;
+
             DataContext = new ExpressDetailViewModel {
-                ExpressCoding = "201806090001",
                 NowAddress = "未连接设备...",
                 PreTrack = new ObservableCollection<string>(),
-                ShipRecords = new ObservableCollection<ExpressDetailViewModel.ShipRecord>()
+                ShipRecords = new ObservableCollection<ExpressDetailViewModel.ShipRecord>(),
+                ExpressState = -1
             };
             mViewModel = DataContext as ExpressDetailViewModel;
         }

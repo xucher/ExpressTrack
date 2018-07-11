@@ -10,32 +10,35 @@
     <Page.Background>
         <ImageBrush ImageSource="/ExpressTrack;component/Resources/kuaidi.jpg" Opacity="1"/>
     </Page.Background>
-    <GroupBox Header="物流轨迹跟踪系统" Opacity="0.9"
-          Width="400" Height="300" Background="White" FontSize="18">
-        <Grid Margin="40, 20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="2*"/>
-            </Grid.RowDefinitions>
+    <GroupBox x:Name="mainGbx" Header="物流轨迹跟踪系统"  FontSize="18" Width="400" Height="300"
+                  Background="White" Opacity="0.9">
+        <StackPanel>
+            <Grid Margin="40, 20" Height="200">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
 
-            <DockPanel Grid.Row="0">
-                <Label Content="员工编号：" Width="100"/>
-                <TextBox x:Name="userCoding" materialDesign:HintAssist.Hint="员工编号" DockPanel.Dock="Right"
-                             Width="200" LostFocus="userCoding_LostFocus"/>
-            </DockPanel>
-            <Label Grid.Row="1" x:Name="codingError" Style="{StaticResource LabelError}" Margin="100, 0, 0, 0"/>
-            <DockPanel Grid.Row="2" >
-                <Label Content="密码：" Width="100"/>
-                <PasswordBox x:Name="userPassword" materialDesign:HintAssist.Hint="密码" Width="200" DockPanel.Dock="Right" LostFocus="userPassword_LostFocus"/>
-            </DockPanel>
-            <Label Grid.Row="3" x:Name="passwordError" Style="{StaticResource LabelError}" Margin="100, 0, 0, 0"/>
-            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <Button x:Name="btnLogin" Content="登录" Width="100" Click="btnLogin_Click"/>
-                <Button x:Name="btnExit"  Content="退出" Width="100" Margin="80,0,0,0" Click="btnExit_Click"/>
-            </StackPanel>
-        </Grid>
+                <DockPanel Grid.Row="0">
+                    <Label Content="员工编号：" Width="100"/>
+                    <TextBox x:Name="userCoding" materialDesign:HintAssist.Hint="员工编号" DockPanel.Dock="Right"
+                                 Width="200" LostFocus="userCoding_LostFocus"/>
+                </DockPanel>
+                <Label Grid.Row="1" x:Name="codingError" Style="{StaticResource LabelError}" Margin="100, 0, 0, 0"/>
+                <DockPanel Grid.Row="2" >
+                    <Label Content="密码：" Width="100"/>
+                    <PasswordBox x:Name="userPassword" materialDesign:HintAssist.Hint="密码" Width="200" DockPanel.Dock="Right" LostFocus="userPassword_LostFocus"/>
+                </DockPanel>
+                <Label Grid.Row="3" x:Name="passwordError" Style="{StaticResource LabelError}" Margin="100, 0, 0, 0"/>
+                <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                    <Button x:Name="btnLogin" Content="登录" Width="100" Click="btnLogin_Click"/>
+                    <Button x:Name="btnExit"  Content="退出" Width="100" Margin="80,0,0,0" Click="btnExit_Click"/>
+                </StackPanel>
+            </Grid>
+            <Button Content="初始化初始用户" Margin="10" Click="btnInit_Click"/>
+        </StackPanel>
     </GroupBox>
 </Page>

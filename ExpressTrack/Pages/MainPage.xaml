@@ -55,7 +55,7 @@
                     <TreeViewItem Header="快递出站"/>
                     <TreeViewItem Header="快递详情"/>
                 </TreeViewItem>
-                <TreeViewItem Header="库存管理">
+                <TreeViewItem Header="库存管理" IsExpanded="True">
                     <TreeViewItem Header="入库记录"/>
                     <TreeViewItem Header="出库记录"/>
                 </TreeViewItem>

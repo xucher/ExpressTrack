@@ -117,18 +117,9 @@ namespace ExpressTrack {
                 Destination = "StationE",
                 StartDate = DateTime.Now.ToString()
             });
-            expressList.Add(new Express
-            {
-                Coding = Helpers.convertExpressCoding(3),
-                Name = "Express3",
-                Start = "StationA",
-                Destination = "StationE",
-                StartDate = DateTime.Now.ToString()
-            });
             using (ExpressDBContext db = new ExpressDBContext()) {
                 db.Express.AddRange(expressList);
                 db.SaveChanges();
-
 
                 db.Station.Add(new Station
                 {
@@ -161,6 +152,32 @@ namespace ExpressTrack {
             Helpers.showMsg("数据库初始化成功");
         }
 
-       
+        private void btnReset_Click(object sender, RoutedEventArgs e) {
+            using (ExpressDBContext db = new ExpressDBContext()) {
+                var express1 = new Express {
+                    Coding = Helpers.convertExpressCoding(1),
+                    Name = "Express1",
+                    Start = "StationA",
+                    Destination = "StationD",
+                    StartDate = DateTime.Now.ToString()
+                };
+                var express2 = new Express {
+                    Coding = Helpers.convertExpressCoding(2),
+                    Name = "Express2",
+                    Start = "StationA",
+                    Destination = "StationE",
+                    StartDate = DateTime.Now.ToString()
+                };
+                
+                db.Express.Attach(express1);
+                db.Entry(express1).State = EntityState.Modified;
+                db.Express.Attach(express2);
+                db.Entry(express2).State = EntityState.Modified;
+                if (db.SaveChanges() > 0) {
+                    Helpers.showMsg("重置成功");
+                }
+                getAllExpress();
+            }
+        }
     }
 }
